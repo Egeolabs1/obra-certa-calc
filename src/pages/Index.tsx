@@ -82,8 +82,8 @@ const Index = () => {
               <CalculatorCard
                 icon={Boxes}
                 title="Calculadora de Tijolos"
-                description="Saiba quantos tijolos são necessários para erguer uma parede, considerando o tipo de tijolo."
-                comingSoon
+                description="Saiba quantos tijolos e argamassa são necessários para erguer uma parede."
+                href="/calculadora-tijolos"
                 delay={200}
               />
             </div>
