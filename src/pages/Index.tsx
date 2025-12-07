@@ -76,7 +76,7 @@ const Index = () => {
                 icon={LayoutGrid}
                 title="Calculadora de Pisos"
                 description="Calcule a quantidade exata de pisos e revestimentos para sua área, incluindo a margem de corte."
-                comingSoon
+                href="/calculadora-pisos"
                 delay={100}
               />
               <CalculatorCard

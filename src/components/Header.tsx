@@ -24,7 +24,10 @@ const Header = () => {
             Início
           </Link>
           <Link to="/calculadora-tinta" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-            Calculadora de Tinta
+            Tinta
+          </Link>
+          <Link to="/calculadora-pisos" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+            Pisos
           </Link>
           <span className="text-sm font-medium text-muted-foreground/50 cursor-not-allowed">
             Mais em breve
@@ -60,6 +63,13 @@ const Header = () => {
               onClick={() => setIsMenuOpen(false)}
             >
               Calculadora de Tinta
+            </Link>
+            <Link 
+              to="/calculadora-pisos" 
+              className="px-4 py-2 text-sm font-medium text-foreground hover:bg-muted rounded-lg transition-colors"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Calculadora de Pisos
             </Link>
             <span className="px-4 py-2 text-sm font-medium text-muted-foreground/50">
               Mais em breve
