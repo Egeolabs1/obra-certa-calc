@@ -1,4 +1,4 @@
-import { Paintbrush, LayoutGrid, Boxes, Calculator, ArrowRight } from "lucide-react";
+import { Paintbrush, LayoutGrid, Boxes, Container, Calculator, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -64,27 +64,34 @@ const Index = () => {
               </p>
             </div>
             
-            <div className="mx-auto grid max-w-4xl gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div className="mx-auto grid max-w-5xl gap-6 sm:grid-cols-2 lg:grid-cols-4">
               <CalculatorCard
                 icon={Paintbrush}
                 title="Calculadora de Tinta"
-                description="Descubra quantos litros de tinta você precisa para pintar paredes, com desconto de portas e janelas."
+                description="Descubra quantos litros de tinta você precisa para pintar paredes."
                 href="/calculadora-tinta"
                 delay={0}
               />
               <CalculatorCard
                 icon={LayoutGrid}
                 title="Calculadora de Pisos"
-                description="Calcule a quantidade exata de pisos e revestimentos para sua área, incluindo a margem de corte."
+                description="Calcule cerâmica e porcelanato com margem de corte inclusa."
                 href="/calculadora-pisos"
                 delay={100}
               />
               <CalculatorCard
                 icon={Boxes}
                 title="Calculadora de Tijolos"
-                description="Saiba quantos tijolos e argamassa são necessários para erguer uma parede."
+                description="Tijolos e argamassa para erguer suas paredes."
                 href="/calculadora-tijolos"
                 delay={200}
+              />
+              <CalculatorCard
+                icon={Container}
+                title="Calculadora de Concreto"
+                description="Cimento, areia, brita e água para fundações e lajes."
+                href="/calculadora-concreto"
+                delay={300}
               />
             </div>
           </div>
