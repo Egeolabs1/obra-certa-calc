@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Paintbrush, Calculator, ShoppingCart, ExternalLink, ArrowLeft } from "lucide-react";
+import { Paintbrush, Calculator, ShoppingCart, ExternalLink, ArrowLeft, Info } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -8,20 +8,26 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface ResultadoCalculo {
   litrosNecessarios: number;
-  areaLiquida: number;
+  areaParedes: number;
+  areaTeto: number;
+  areaTotal: number;
   sugestaoEmbalagem: string;
 }
 
 const CalculadoraTinta = () => {
   const [altura, setAltura] = useState("");
   const [largura, setLargura] = useState("");
+  const [comprimento, setComprimento] = useState("");
   const [portas, setPortas] = useState("");
   const [janelas, setJanelas] = useState("");
   const [demaos, setDemaos] = useState("2");
   const [rendimento, setRendimento] = useState("10");
+  const [pintarTeto, setPintarTeto] = useState(false);
   const [resultado, setResultado] = useState<ResultadoCalculo | null>(null);
   const [erro, setErro] = useState("");
 
@@ -37,6 +43,7 @@ const CalculadoraTinta = () => {
 
     const alturaNum = parseNumero(altura);
     const larguraNum = parseNumero(largura);
+    const comprimentoNum = parseNumero(comprimento);
     const portasNum = parseNumero(portas) || 0;
     const janelasNum = parseNumero(janelas) || 0;
     const demaosNum = parseInt(demaos);
@@ -44,11 +51,15 @@ const CalculadoraTinta = () => {
 
     // Validações
     if (alturaNum <= 0) {
-      setErro("Por favor, informe a altura da parede.");
+      setErro("Por favor, informe a altura do ambiente.");
       return;
     }
     if (larguraNum <= 0) {
-      setErro("Por favor, informe a largura total das paredes.");
+      setErro("Por favor, informe a largura do ambiente.");
+      return;
+    }
+    if (comprimentoNum <= 0) {
+      setErro("Por favor, informe o comprimento do ambiente.");
       return;
     }
 
@@ -56,18 +67,26 @@ const CalculadoraTinta = () => {
     // Área da janela padrão: 1.20m x 1.20m = 1.44m²
     const areaPortas = portasNum * 1.68;
     const areaJanelas = janelasNum * 1.44;
-    
-    const areaBruta = alturaNum * larguraNum;
     const areaDesconto = areaPortas + areaJanelas;
-    const areaLiquida = Math.max(0, areaBruta - areaDesconto);
 
-    if (areaLiquida <= 0) {
-      setErro("A área líquida é zero ou negativa. Verifique os valores informados.");
+    // Área Paredes = Perímetro * Altura
+    // Perímetro = 2 * (Largura + Comprimento)
+    const perimetro = 2 * (larguraNum + comprimentoNum);
+    const areaParedesBruta = perimetro * alturaNum;
+    const areaParedesLiquida = Math.max(0, areaParedesBruta - areaDesconto);
+
+    // Área Teto
+    const areaTetoCalc = pintarTeto ? (larguraNum * comprimentoNum) : 0;
+
+    const areaTotalPintura = areaParedesLiquida + areaTetoCalc;
+
+    if (areaTotalPintura <= 0) {
+      setErro("A área total de pintura é zero ou negativa. Verifique os valores.");
       return;
     }
 
-    // Litros = (Área Líquida / Rendimento) * Demãos
-    const litros = (areaLiquida / rendimentoNum) * demaosNum;
+    // Litros = (Área Total / Rendimento) * Demãos
+    const litros = (areaTotalPintura / rendimentoNum) * demaosNum;
     const litrosArredondados = Math.ceil(litros * 10) / 10;
 
     // Sugestão de embalagem
@@ -82,7 +101,9 @@ const CalculadoraTinta = () => {
 
     setResultado({
       litrosNecessarios: litrosArredondados,
-      areaLiquida: Math.round(areaLiquida * 100) / 100,
+      areaParedes: Math.round(areaParedesLiquida * 100) / 100,
+      areaTeto: Math.round(areaTetoCalc * 100) / 100,
+      areaTotal: Math.round(areaTotalPintura * 100) / 100,
       sugestaoEmbalagem: sugestao,
     });
   };
@@ -90,7 +111,7 @@ const CalculadoraTinta = () => {
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Header />
-      
+
       <main className="flex-1">
         {/* Ad Placeholder - Topo */}
         <div className="container pt-6">
@@ -100,8 +121,8 @@ const CalculadoraTinta = () => {
         <div className="container py-8 md:py-12">
           <div className="mx-auto max-w-2xl">
             {/* Breadcrumb */}
-            <Link 
-              to="/" 
+            <Link
+              to="/"
               className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
               <ArrowLeft className="h-4 w-4" />
@@ -119,42 +140,98 @@ const CalculadoraTinta = () => {
                 </h1>
               </div>
               <p className="text-muted-foreground">
-                Quantos litros você realmente precisa? Preencha os dados abaixo e descubra em segundos.
+                Calcule a tinta necessária para paredes e teto. Evite sobras e economize.
               </p>
             </div>
 
             {/* Form Card */}
             <div className="rounded-xl border border-border bg-card p-6 shadow-card animate-fade-up" style={{ animationDelay: "100ms" }}>
               <div className="grid gap-5">
-                {/* Altura e Largura */}
-                <div className="grid gap-5 sm:grid-cols-2">
-                  <div className="space-y-2">
-                    <Label htmlFor="altura" className="text-foreground font-medium">
-                      Altura da parede (metros)
-                    </Label>
-                    <Input
-                      id="altura"
-                      type="text"
-                      inputMode="decimal"
-                      placeholder="Ex: 2.80"
-                      value={altura}
-                      onChange={(e) => setAltura(e.target.value)}
-                      className="h-12 text-base"
-                    />
+
+                {/* Switch Pintar Teto */}
+                <div className="flex items-center justify-between rounded-lg border border-border p-4 bg-muted/20">
+                  <div className="space-y-0.5">
+                    <Label className="text-base font-medium">Vou pintar o teto também?</Label>
+                    <p className="text-sm text-muted-foreground">
+                      Adiciona a área do teto ao cálculo total
+                    </p>
                   </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="largura" className="text-foreground font-medium">
-                      Largura total das paredes (metros)
-                    </Label>
-                    <Input
-                      id="largura"
-                      type="text"
-                      inputMode="decimal"
-                      placeholder="Ex: 12.50"
-                      value={largura}
-                      onChange={(e) => setLargura(e.target.value)}
-                      className="h-12 text-base"
-                    />
+                  <Switch
+                    checked={pintarTeto}
+                    onCheckedChange={setPintarTeto}
+                  />
+                </div>
+
+                {/* Dimensões do Ambiente */}
+                <div className="space-y-3">
+                  <Label className="text-foreground font-medium">Dimensões do Ambiente</Label>
+                  <div className="grid gap-4 sm:grid-cols-3">
+                    <div className="space-y-2">
+                      <Label htmlFor="altura" className="text-sm text-muted-foreground">
+                        Altura (m)
+                      </Label>
+                      <Input
+                        id="altura"
+                        type="text"
+                        inputMode="decimal"
+                        placeholder="Ex: 2.80"
+                        value={altura}
+                        onChange={(e) => setAltura(e.target.value)}
+                        className="h-12 text-base"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2">
+                        <Label htmlFor="largura" className="text-sm text-muted-foreground">
+                          Largura (m)
+                        </Label>
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Info className="h-3 w-3 text-muted-foreground cursor-help" />
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Largura de uma das paredes</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      </div>
+                      <Input
+                        id="largura"
+                        type="text"
+                        inputMode="decimal"
+                        placeholder="Ex: 3.50"
+                        value={largura}
+                        onChange={(e) => setLargura(e.target.value)}
+                        className="h-12 text-base"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2">
+                        <Label htmlFor="comprimento" className="text-sm text-muted-foreground">
+                          Comprimento (m)
+                        </Label>
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Info className="h-3 w-3 text-muted-foreground cursor-help" />
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Comprimento da outra parede</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      </div>
+                      <Input
+                        id="comprimento"
+                        type="text"
+                        inputMode="decimal"
+                        placeholder="Ex: 4.00"
+                        value={comprimento}
+                        onChange={(e) => setComprimento(e.target.value)}
+                        className="h-12 text-base"
+                      />
+                    </div>
                   </div>
                 </div>
 
@@ -174,7 +251,7 @@ const CalculadoraTinta = () => {
                       onChange={(e) => setPortas(e.target.value)}
                       className="h-12 text-base"
                     />
-                    <p className="text-xs text-muted-foreground">Padrão: 0,80m × 2,10m</p>
+                    <p className="text-xs text-muted-foreground">Desconta 1,68m² por porta</p>
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="janelas" className="text-foreground font-medium">
@@ -190,7 +267,7 @@ const CalculadoraTinta = () => {
                       onChange={(e) => setJanelas(e.target.value)}
                       className="h-12 text-base"
                     />
-                    <p className="text-xs text-muted-foreground">Padrão: 1,20m × 1,20m</p>
+                    <p className="text-xs text-muted-foreground">Desconta 1,44m² por janela</p>
                   </div>
                 </div>
 
@@ -213,16 +290,16 @@ const CalculadoraTinta = () => {
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="rendimento" className="text-foreground font-medium">
-                      Tipo de tinta / Rendimento
+                      Tipo de tinta
                     </Label>
                     <Select value={rendimento} onValueChange={setRendimento}>
                       <SelectTrigger className="h-12 text-base">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="8">Econômica (~8 m²/L)</SelectItem>
-                        <SelectItem value="10">Standard (~10 m²/L)</SelectItem>
-                        <SelectItem value="15">Premium (~15 m²/L)</SelectItem>
+                        <SelectItem value="8">Econômica (rende ~8 m²/L)</SelectItem>
+                        <SelectItem value="10">Standard (rende ~10 m²/L)</SelectItem>
+                        <SelectItem value="15">Premium (rende ~15 m²/L)</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -238,7 +315,7 @@ const CalculadoraTinta = () => {
                 {/* Botão Calcular */}
                 <Button onClick={calcular} size="xl" className="w-full mt-2">
                   <Calculator className="h-5 w-5" />
-                  CALCULAR QUANTIDADE
+                  CALCULAR LITROS
                 </Button>
               </div>
             </div>
@@ -247,16 +324,28 @@ const CalculadoraTinta = () => {
             {resultado && (
               <div className="mt-6 rounded-xl border-2 border-primary bg-gradient-result p-6 animate-scale-in">
                 <div className="text-center">
-                  <p className="text-sm font-medium text-muted-foreground mb-2">
-                    Área a ser pintada: {resultado.areaLiquida} m²
-                  </p>
+                  <div className="mb-4 grid grid-cols-2 gap-4 text-left sm:grid-cols-3">
+                    <div className="rounded bg-card/50 p-2">
+                      <p className="text-xs text-muted-foreground">Área Paredes</p>
+                      <p className="font-semibold">{resultado.areaParedes} m²</p>
+                    </div>
+                    <div className="rounded bg-card/50 p-2">
+                      <p className="text-xs text-muted-foreground">Área Teto</p>
+                      <p className="font-semibold">{resultado.areaTeto} m²</p>
+                    </div>
+                    <div className="col-span-2 sm:col-span-1 rounded bg-card/50 p-2">
+                      <p className="text-xs text-muted-foreground">Área Total</p>
+                      <p className="font-semibold text-primary">{resultado.areaTotal} m²</p>
+                    </div>
+                  </div>
+
                   <p className="text-lg font-medium text-foreground mb-1">
                     Você precisa de aproximadamente
                   </p>
                   <p className="text-5xl font-extrabold text-primary mb-2">
                     {resultado.litrosNecessarios} Litros
                   </p>
-                  <p className="text-sm text-muted-foreground">de tinta</p>
+                  <p className="text-sm text-muted-foreground">de tinta ({demaos} demãos)</p>
                 </div>
 
                 <div className="mt-4 rounded-lg bg-card/80 p-4 text-center">
@@ -272,15 +361,15 @@ const CalculadoraTinta = () => {
 
                 {/* Botão Afiliado */}
                 <div className="mt-6">
-                  <Button 
-                    asChild 
-                    variant="success" 
-                    size="xl" 
+                  <Button
+                    asChild
+                    variant="success"
+                    size="xl"
                     className="w-full"
                   >
                     <a href="#" target="_blank" rel="noopener noreferrer">
                       <ShoppingCart className="h-5 w-5" />
-                      VER PREÇO DAS TINTAS NA AMAZON (Promoção)
+                      VER PREÇO DAS TINTAS NA AMAZON
                       <ExternalLink className="h-4 w-4" />
                     </a>
                   </Button>
@@ -294,20 +383,20 @@ const CalculadoraTinta = () => {
             {/* Informações extras */}
             <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up" style={{ animationDelay: "200ms" }}>
               <h2 className="mb-4 text-lg font-semibold text-foreground">
-                📋 Como calcular a quantidade de tinta?
+                📋 Como é feito o cálculo?
               </h2>
               <div className="space-y-3 text-sm text-muted-foreground">
                 <p>
-                  Nossa calculadora usa a fórmula padrão do mercado: <strong>(Área × Demãos) ÷ Rendimento</strong>.
+                  Nossa calculadora de tinta considera a área total das paredes (e teto, se selecionado) subtraindo as aberturas.
                 </p>
-                <p>
-                  • A área é calculada multiplicando a altura pela largura total das paredes.
-                </p>
-                <p>
-                  • Descontamos automaticamente as portas (0,80m × 2,10m = 1,68m²) e janelas (1,20m × 1,20m = 1,44m²).
-                </p>
-                <p>
-                  • Recomendamos sempre 2 demãos para uma cobertura uniforme.
+                <ul className="list-inside list-disc space-y-1">
+                  <li><strong>Área das Paredes:</strong> Perímetro do ambiente × Altura.</li>
+                  <li><strong>Área do Teto:</strong> Largura × Comprimento.</li>
+                  <li><strong>Descontos:</strong> Portas (1,68m²) e Janelas (1,44m²).</li>
+                  <li><strong>Litragem Final:</strong> (Área Total ÷ Rendimento da Tinta) × Número de Demãos.</li>
+                </ul>
+                <p className="mt-2 font-medium text-foreground">
+                  Dica: O rendimento varia conforme a marca, mas usamos médias de mercado (Econômica, Standard e Premium) para garantir uma estimativa segura.
                 </p>
               </div>
             </div>
