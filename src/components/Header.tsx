@@ -32,6 +32,9 @@ const Header = () => {
           <Link to="/calculadora-tijolos" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
             Tijolos
           </Link>
+          <Link to="/calculadora-concreto" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+            Concreto
+          </Link>
         </nav>
 
         {/* Mobile Menu Button */}
@@ -77,6 +80,13 @@ const Header = () => {
               onClick={() => setIsMenuOpen(false)}
             >
               Calculadora de Tijolos
+            </Link>
+            <Link 
+              to="/calculadora-concreto" 
+              className="px-4 py-2 text-sm font-medium text-foreground hover:bg-muted rounded-lg transition-colors"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Calculadora de Concreto
             </Link>
           </div>
         </nav>
