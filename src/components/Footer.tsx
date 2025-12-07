@@ -14,7 +14,7 @@ const Footer = () => {
               Sua<span className="text-accent">Obra</span>Certa
             </span>
           </div>
-          
+
           <nav className="flex flex-wrap items-center justify-center gap-4 text-sm">
             <Link to="/" className="text-muted-foreground hover:text-foreground transition-colors">
               Início
@@ -23,7 +23,13 @@ const Footer = () => {
               Calculadora de Tinta
             </Link>
           </nav>
-          
+
+          <div className="flex items-center gap-4">
+            <Link to="/calculadora-churrasco" className="flex items-center gap-2 text-sm font-bold text-red-500 hover:text-red-600 transition-colors bg-red-50 px-3 py-1 rounded-full">
+              🔥 Churrasco (Bônus)
+            </Link>
+          </div>
+
           <p className="text-sm text-muted-foreground">
             © {new Date().getFullYear()} SuaObraCerta. Todos os direitos reservados.
           </p>

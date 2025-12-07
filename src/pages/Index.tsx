@@ -241,11 +241,23 @@ const Index = () => {
                 description="Tecido para cortinas sob medida."
                 href="/calculadora-cortinas"
               />
+            </div>
+          </div>
+        </section>
+
+        {/* BÔNUS */}
+        <section id="bonus" className="py-12 bg-gradient-to-r from-red-50 to-orange-50 dark:from-red-950/20 dark:to-orange-950/20 border-y border-red-100 dark:border-red-900/30">
+          <div className="container">
+            <h2 className="mb-8 text-2xl font-bold text-foreground border-l-4 border-red-500 pl-4 flex items-center gap-2">
+              🎁 Ferramentas Bônus <span className="text-sm font-normal text-muted-foreground">(Viral)</span>
+            </h2>
+            <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
               <CalculatorCard
                 icon={Flame}
-                title="Churrasco"
-                description="Calculadora de carnes e bebidas."
+                title="Calculadora de Churrasco"
+                description="Vai fazer uma festa? Calcule carne, cerveja e carvão para a galera. Inclui lista para WhatsApp!"
                 href="/calculadora-churrasco"
+                badge="Bônus"
               />
             </div>
           </div>
