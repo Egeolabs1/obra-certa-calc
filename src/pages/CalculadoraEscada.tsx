@@ -1,4 +1,5 @@
 import { useState } from "react";
+import SEO from "@/components/SEO";
 import { ArrowUpFromLine, Calculator, ShoppingCart, ArrowLeft, Ruler } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
@@ -37,6 +38,11 @@ const CalculadoraEscada = () => {
 
     return (
         <div className="flex min-h-screen flex-col bg-background">
+            <SEO
+                title="Calculadora de Escada (Blondel)"
+                description="Use a Lei de Blondel para calcular uma escada confortável e segura. Descubra a altura e pisada dos degraus."
+                url="https://suaobracerta.com.br/calculadora-escada"
+            />
             <Header />
             <main className="flex-1">
                 <div className="container pt-6"><AdPlaceholder id="ad-escada" className="max-w-3xl mx-auto" /></div>
@@ -89,6 +95,28 @@ const CalculadoraEscada = () => {
                                 </div>
                             </div>
                         )}
+                    </div>
+
+                    {/* SEO Content Section */}
+                    <div className="mx-auto max-w-2xl mt-12 prose dark:prose-invert">
+                        <section>
+                            <h2 className="text-xl font-bold mb-4">Como calcular degraus de escada?</h2>
+                            <p className="text-muted-foreground mb-4">
+                                Para calcular uma escada corretamente, utilizamos a <strong>Fórmula de Blondel</strong> (ou Lei de Blondel), criada pelo arquiteto francês Nicolas-François Blondel.
+                                Essa regra estabelece a relação ideal entre a altura do degrau (espelho) e a profundidade da pisada (passo) para que o caminhar seja confortável e seguro.
+                            </p>
+                            <h3 className="text-lg font-semibold mb-2">A Fórmula de Blondel:</h3>
+                            <div className="bg-muted p-4 rounded-lg mb-4 font-mono text-center">
+                                2E + P = 63cm a 65cm
+                            </div>
+                            <ul className="list-disc pl-5 space-y-2 text-muted-foreground">
+                                <li><strong>E (Espelho):</strong> Altura do degrau. O ideal é entre 16cm e 18cm.</li>
+                                <li><strong>P (Pisada):</strong> Onde colocamos o pé. O ideal é entre 25cm e 32cm.</li>
+                            </ul>
+                            <p className="text-muted-foreground mt-4">
+                                Nossa calculadora faz essa conta automaticamente: ela divide a altura total do seu desnível por 17.5cm (altura ideal) para encontrar o número de degraus, e então ajusta a pisada para que a soma fique dentro da norma de segurança (aproximadamente 64cm).
+                            </p>
+                        </section>
                     </div>
                 </div>
             </main>

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Paintbrush, Calculator, ShoppingCart, ExternalLink, ArrowLeft, Info } from "lucide-react";
+import SEO from "@/components/SEO";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -110,6 +111,11 @@ const CalculadoraTinta = () => {
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
+      <SEO
+        title="Calculadora de Tinta"
+        description="Calcule a quantidade exata de tinta para paredes e tetos. Evite desperdícios na sua obra."
+        url="https://suaobracerta.com.br/calculadora-tinta"
+      />
       <Header />
 
       <main className="flex-1">

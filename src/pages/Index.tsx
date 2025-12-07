@@ -1,4 +1,5 @@
 import { Paintbrush, LayoutGrid, Boxes, Container, Calculator, ArrowRight, Wind, Layers, Grid3X3, Home, Lightbulb, Droplets, Flower2, LayoutDashboard, Waves, Scroll, Blinds, Zap, Flame, ArrowUpFromLine, TrendingUp, AppWindow, Hammer, AlignHorizontalJustifyStart, Plug } from "lucide-react";
+import SEO from "@/components/SEO";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -9,6 +10,11 @@ import { Button } from "@/components/ui/button";
 const Index = () => {
   return (
     <div className="flex min-h-screen flex-col bg-background">
+      <SEO
+        title="Sua Obra Certa - Ferramentas para Construção"
+        description="mais de 20 calculadoras gratuitas para sua obra. Tijolos, Tinta, Telhado, Concreto e muito mais."
+        url="https://suaobracerta.com.br/"
+      />
       <Header />
 
       <main className="flex-1">

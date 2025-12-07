@@ -1,4 +1,5 @@
 import { useState } from "react";
+import SEO from "@/components/SEO";
 import { Zap, Calculator, ShoppingCart, ArrowLeft, AlertTriangle } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
@@ -60,6 +61,11 @@ const CalculadoraFios = () => {
 
     return (
         <div className="flex min-h-screen flex-col bg-background">
+            <SEO
+                title="Calculadora de Fios Elétricos"
+                description="Descubra a bitola de fio e o disjuntor ideal para chuveiros e tomadas. Cálculo baseado na NBR 5410."
+                url="https://suaobracerta.com.br/calculadora-fios"
+            />
             <Header />
             <main className="flex-1">
                 <div className="container pt-6"><AdPlaceholder id="ad-fios" className="max-w-3xl mx-auto" /></div>

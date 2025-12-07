@@ -1,4 +1,5 @@
 import { useState } from "react";
+import SEO from "@/components/SEO";
 import { AppWindow, Calculator, ArrowLeft, Weight } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
@@ -37,6 +38,11 @@ const CalculadoraVidro = () => {
 
     return (
         <div className="flex min-h-screen flex-col bg-background">
+            <SEO
+                title="Calculadora de Peso de Vidro"
+                description="Estime o peso de vidros temperados ou laminados para escolher as roldanas e ferragens corretas."
+                url="https://suaobracerta.com.br/calculadora-vidro"
+            />
             <Header />
             <main className="flex-1">
                 <div className="container pt-6"><AdPlaceholder id="ad-vidro" className="max-w-3xl mx-auto" /></div>

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import SEO from "@/components/SEO";
 import { AlignHorizontalJustifyStart, Calculator, ShoppingCart, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
@@ -39,6 +40,11 @@ const CalculadoraRodape = () => {
 
     return (
         <div className="flex min-h-screen flex-col bg-background">
+            <SEO
+                title="Calculadora de Rodapé"
+                description="Quantas barras de rodapé comprar? Calcule metros lineares e tubos de cola ou prego líquido."
+                url="https://suaobracerta.com.br/calculadora-rodape"
+            />
             <Header />
             <main className="flex-1">
                 <div className="container pt-6"><AdPlaceholder id="ad-rodape" className="max-w-3xl mx-auto" /></div>

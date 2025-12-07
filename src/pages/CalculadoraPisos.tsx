@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { LayoutGrid, Calculator, ShoppingCart, ExternalLink, ArrowLeft, Info } from "lucide-react";
 import { Link } from "react-router-dom";
+import SEO from "@/components/SEO";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AdPlaceholder from "@/components/AdPlaceholder";
@@ -72,7 +73,7 @@ const CalculadoraPisos = () => {
     // Cálculos
     const areaTotal = compAmbiente * largAmbiente;
     const areaLiquida = Math.max(0, areaTotal - areaDescontoMoveis);
-    
+
     if (areaLiquida <= 0) {
       setErro("A área líquida é zero ou negativa. Verifique os valores informados.");
       return;
@@ -108,8 +109,13 @@ const CalculadoraPisos = () => {
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
+      <SEO
+        title="Calculadora de Pisos e Porcelanatos"
+        description="Descubra a quantidade de caixas de piso, rodapés e argamassa. Inclui cálculo de perda (quebra)."
+        url="https://suaobracerta.com.br/calculadora-pisos"
+      />
       <Header />
-      
+
       <main className="flex-1">
         {/* Ad Placeholder - Topo */}
         <div className="container pt-6">
@@ -119,8 +125,8 @@ const CalculadoraPisos = () => {
         <div className="container py-8 md:py-12">
           <div className="mx-auto max-w-2xl">
             {/* Breadcrumb */}
-            <Link 
-              to="/" 
+            <Link
+              to="/"
               className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
               <ArrowLeft className="h-4 w-4" />
@@ -402,10 +408,10 @@ const CalculadoraPisos = () => {
 
                 {/* Botão Afiliado */}
                 <div className="mt-6">
-                  <Button 
-                    asChild 
-                    variant="success" 
-                    size="xl" 
+                  <Button
+                    asChild
+                    variant="success"
+                    size="xl"
                     className="w-full"
                   >
                     <a href="#" target="_blank" rel="noopener noreferrer">

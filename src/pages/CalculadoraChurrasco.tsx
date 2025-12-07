@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Flame, Calculator, ShoppingCart, ArrowLeft, Beer } from "lucide-react";
+import { Flame, Calculator, ShoppingCart, ArrowLeft, Beer, Share2 } from "lucide-react";
+import SEO from "@/components/SEO";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -38,8 +39,27 @@ const CalculadoraChurrasco = () => {
         });
     };
 
+    const compartilharWhatsApp = () => {
+        if (!resultado) return;
+
+        const texto = `🔥 *Lista do Churrasco - Sua Obra Certa*\n\n` +
+            `🥩 Carne: ${resultado.carne} kg\n` +
+            `🍺 Cerveja: ${resultado.cerveja} L\n` +
+            `🥤 Refri/Água: ${resultado.refri} L\n` +
+            `🔥 Carvão: ${resultado.carvao} kg\n\n` +
+            `Calculado em: https://suaobracerta.com.br/calculadora-churrasco`;
+
+        const link = `https://wa.me/?text=${encodeURIComponent(texto)}`;
+        window.open(link, '_blank');
+    };
+
     return (
         <div className="flex min-h-screen flex-col bg-background">
+            <SEO
+                title="Calculadora de Churrasco"
+                description="Vai fazer um churrasco? Calcule a quantidade certa de carne, cerveja, refrigerante e carvão para seus convidados."
+                url="https://suaobracerta.com.br/calculadora-churrasco"
+            />
             <Header />
             <main className="flex-1">
                 <div className="container pt-6"><AdPlaceholder id="ad-churras" className="max-w-3xl mx-auto" /></div>
@@ -88,8 +108,11 @@ const CalculadoraChurrasco = () => {
                                     <p className="text-3xl font-bold">🔥 {resultado.carvao} kg</p>
                                     <p className="text-sm text-muted-foreground">de Carvão</p>
                                 </div>
-                                <div className="col-span-2 mt-2">
-                                    <Button asChild variant="default" className="w-full"><a href="#" className="flex gap-2 justify-center items-center"><Beer className="h-4 w-4" /> COMPRAR BEBIDAS SEM SAIR DE CASA</a></Button>
+                                <div className="col-span-2 mt-4 space-y-3">
+                                    <Button onClick={compartilharWhatsApp} size="lg" className="w-full bg-green-500 hover:bg-green-600 text-white font-bold animate-pulse">
+                                        <Share2 className="mr-2 h-5 w-5" /> COMPARTILHAR NO WHATSAPP
+                                    </Button>
+                                    <Button asChild variant="outline" className="w-full"><a href="#" className="flex gap-2 justify-center items-center"><Beer className="h-4 w-4" /> COMPRAR BEBIDAS SEM SAIR DE CASA</a></Button>
                                 </div>
                             </div>
                         )}

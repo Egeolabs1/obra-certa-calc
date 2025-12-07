@@ -133,13 +133,13 @@ const CalculadoraConcreto = () => {
     // Cálculo dos materiais
     const cimentoKg = Math.ceil(volumeComPerdas * tracoSelecionado.cimento);
     const sacosCimento = Math.ceil(cimentoKg / 50);
-    
+
     const areiaKg = Math.ceil(volumeComPerdas * tracoSelecionado.areia);
     const areiaM3 = Math.round((areiaKg / 1500) * 100) / 100; // densidade areia ~1500 kg/m³
-    
+
     const britaKg = Math.ceil(volumeComPerdas * tracoSelecionado.brita);
     const britaM3 = Math.round((britaKg / 1400) * 100) / 100; // densidade brita ~1400 kg/m³
-    
+
     const aguaLitros = Math.ceil(volumeComPerdas * tracoSelecionado.agua);
 
     setResultado({
@@ -160,8 +160,13 @@ const CalculadoraConcreto = () => {
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
+      <SEO
+        title="Calculadora de Concreto"
+        description="Calcule o traço de concreto (cimento, areia, pedra) para lajes, pilares e pisos. Volume exato em m³."
+        url="https://suaobracerta.com.br/calculadora-concreto"
+      />
       <Header />
-      
+
       <main className="flex-1">
         {/* Ad Placeholder - Topo */}
         <div className="container pt-6">
@@ -171,8 +176,8 @@ const CalculadoraConcreto = () => {
         <div className="container py-8 md:py-12">
           <div className="mx-auto max-w-2xl">
             {/* Breadcrumb */}
-            <Link 
-              to="/" 
+            <Link
+              to="/"
               className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
               <ArrowLeft className="h-4 w-4" />
@@ -435,7 +440,7 @@ const CalculadoraConcreto = () => {
                   {/* Dica */}
                   <div className="mt-4 rounded-lg bg-accent/10 border border-accent/20 p-4 text-center">
                     <p className="text-sm text-foreground">
-                      💡 <strong>Dica:</strong> A quantidade de água pode variar conforme a umidade da areia. 
+                      💡 <strong>Dica:</strong> A quantidade de água pode variar conforme a umidade da areia.
                       Adicione aos poucos até obter a consistência desejada.
                     </p>
                   </div>
@@ -446,10 +451,10 @@ const CalculadoraConcreto = () => {
 
                 {/* Botão Afiliado */}
                 <div className="rounded-xl border border-border bg-card p-6">
-                  <Button 
-                    asChild 
-                    variant="success" 
-                    size="xl" 
+                  <Button
+                    asChild
+                    variant="success"
+                    size="xl"
                     className="w-full"
                   >
                     <a href="#" target="_blank" rel="noopener noreferrer">

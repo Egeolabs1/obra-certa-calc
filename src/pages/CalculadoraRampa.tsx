@@ -1,4 +1,5 @@
 import { useState } from "react";
+import SEO from "@/components/SEO";
 import { TrendingUp, Calculator, ArrowLeft, Accessibility } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
@@ -39,6 +40,11 @@ const CalculadoraRampa = () => {
 
     return (
         <div className="flex min-h-screen flex-col bg-background">
+            <SEO
+                title="Calculadora de Rampa Acessível"
+                description="Calcule a inclinação e comprimento de rampas conforme a NBR 9050 para acessibilidade e garagens."
+                url="https://suaobracerta.com.br/calculadora-rampa"
+            />
             <Header />
             <main className="flex-1">
                 <div className="container pt-6"><AdPlaceholder id="ad-rampa" className="max-w-3xl mx-auto" /></div>
