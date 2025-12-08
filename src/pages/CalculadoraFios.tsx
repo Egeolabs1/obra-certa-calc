@@ -8,6 +8,7 @@ import AdPlaceholder from "@/components/AdPlaceholder";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { affiliateLinks } from "@/config/affiliateLinks";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const CalculadoraFios = () => {
@@ -128,7 +129,7 @@ const CalculadoraFios = () => {
                                 </div>
 
                                 <div className="mt-6">
-                                    <Button asChild variant="secondary" className="w-full" size="lg"><a href="#" target="_blank"><ShoppingCart className="mr-2" /> COMPRAR FIOS SIL/CORFIO</a></Button>
+                                    <Button asChild variant="secondary" className="w-full" size="lg"><a href={affiliateLinks.electrical.wires} target="_blank" rel="noopener noreferrer"><ShoppingCart className="mr-2" /> COMPRAR FIOS SIL/CORFIO</a></Button>
                                 </div>
                             </div>
                         )}

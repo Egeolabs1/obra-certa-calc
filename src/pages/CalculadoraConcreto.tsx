@@ -7,8 +7,10 @@ import AdPlaceholder from "@/components/AdPlaceholder";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { affiliateLinks } from "@/config/affiliateLinks";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import SEO from "@/components/SEO";
 
 interface TracoConcreto {
   nome: string;
@@ -457,7 +459,7 @@ const CalculadoraConcreto = () => {
                     size="xl"
                     className="w-full"
                   >
-                    <a href="#" target="_blank" rel="noopener noreferrer">
+                    <a href={affiliateLinks.structural.cement} target="_blank" rel="noopener noreferrer">
                       <ShoppingCart className="h-5 w-5" />
                       VER BETONEIRAS NA AMAZON
                       <ExternalLink className="h-4 w-4" />

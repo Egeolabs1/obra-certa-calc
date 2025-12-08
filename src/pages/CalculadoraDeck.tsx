@@ -7,6 +7,7 @@ import AdPlaceholder from "@/components/AdPlaceholder";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { affiliateLinks } from "@/config/affiliateLinks";
 
 const CalculadoraDeck = () => {
     const [area, setArea] = useState("");
@@ -86,7 +87,7 @@ const CalculadoraDeck = () => {
                                     </div>
                                 </div>
                                 <div className="mt-6">
-                                    <Button asChild className="w-full" variant="secondary" size="lg"><a href="#" target="_blank"><ShoppingCart className="mr-2" /> ENCONTRAR VERNIZ POLISTEN</a></Button>
+                                    <Button asChild className="w-full" variant="secondary" size="lg"><a href={affiliateLinks.flooring.deckVarnish} target="_blank" rel="noopener noreferrer"><ShoppingCart className="mr-2" /> ENCONTRAR VERNIZ POLISTEN</a></Button>
                                 </div>
                             </div>
                         )}

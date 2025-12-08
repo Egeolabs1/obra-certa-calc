@@ -7,6 +7,7 @@ import AdPlaceholder from "@/components/AdPlaceholder";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { affiliateLinks } from "@/config/affiliateLinks";
 
 const CalculadoraGrama = () => {
     const [area, setArea] = useState("");
@@ -66,7 +67,7 @@ const CalculadoraGrama = () => {
                                 </div>
                                 <div className="col-span-1 sm:col-span-2 mt-4">
                                     <Button asChild variant="success" size="lg" className="w-full">
-                                        <a href="#" target="_blank"><ShoppingCart className="mr-2" /> VER CORTADORES DE GRAMA</a>
+                                        <a href={affiliateLinks.garden.mowers} target="_blank" rel="noopener noreferrer"><ShoppingCart className="mr-2" /> VER CORTADORES DE GRAMA</a>
                                     </Button>
                                 </div>
                             </div>

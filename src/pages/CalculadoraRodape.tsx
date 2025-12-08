@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AdPlaceholder from "@/components/AdPlaceholder";
 import { Button } from "@/components/ui/button";
+import { affiliateLinks } from "@/config/affiliateLinks";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
@@ -88,7 +89,7 @@ const CalculadoraRodape = () => {
                                     <p className="text-xs text-muted-foreground">ou Prego Líquido (400g)</p>
                                 </div>
                                 <div className="col-span-2">
-                                    <Button asChild variant="outline" className="w-full"><a href="#" target="_blank"><ShoppingCart className="mr-2" /> VER RODAPÉS SANTA LUZIA</a></Button>
+                                    <Button asChild variant="outline" className="w-full"><a href={affiliateLinks.flooring.baseboards} target="_blank" rel="noopener noreferrer"><ShoppingCart className="mr-2" /> VER RODAPÉS SANTA LUZIA</a></Button>
                                 </div>
                             </div>
                         )}

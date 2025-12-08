@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AdPlaceholder from "@/components/AdPlaceholder";
 import { Button } from "@/components/ui/button";
+import { affiliateLinks } from "@/config/affiliateLinks";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
@@ -91,7 +92,7 @@ const CalculadoraEscada = () => {
                                 </div>
 
                                 <div className="mt-6">
-                                    <Button asChild variant="outline" className="w-full"><a href="#" target="_blank"><ShoppingCart className="mr-2" /> VER PROTETORES DE DEGRAU</a></Button>
+                                    <Button asChild variant="outline" className="w-full"><a href={affiliateLinks.structural.stairs} target="_blank" rel="noopener noreferrer"><ShoppingCart className="mr-2" /> VER PROTETORES DE DEGRAU</a></Button>
                                 </div>
                             </div>
                         )}

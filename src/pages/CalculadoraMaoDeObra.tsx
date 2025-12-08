@@ -7,6 +7,7 @@ import AdPlaceholder from "@/components/AdPlaceholder";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { affiliateLinks } from "@/config/affiliateLinks";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import SEO from "@/components/SEO";
@@ -157,7 +158,7 @@ const CalculadoraMaoDeObra = () => {
 
                                 <div className="grid gap-4 md:grid-cols-2">
                                     <Button variant="outline" className="h-16 text-lg border-blue-200 hover:bg-blue-50 text-blue-700" asChild>
-                                        <a href="#">
+                                        <a href={affiliateLinks.services.findProfessional}>
                                             <Briefcase className="mr-2 h-5 w-5" /> Encontrar Profissionais (Breve)
                                         </a>
                                     </Button>

@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AdPlaceholder from "@/components/AdPlaceholder";
 import { Button } from "@/components/ui/button";
+import { affiliateLinks } from "@/config/affiliateLinks";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -89,7 +90,7 @@ const CalculadoraIluminacao = () => {
                                 <p className="text-5xl font-extrabold text-primary my-3">{resultado.lumens} Lúmens</p>
                                 <p className="text-muted-foreground mb-4">Aprox. <strong>{resultado.wattsLed}W</strong> em lâmpadas LED</p>
                                 <Button asChild variant="success" size="lg" className="w-full">
-                                    <a href="#" target="_blank"><ShoppingCart className="mr-2" /> COMPRAR LÂMPADAS LED</a>
+                                    <a href={affiliateLinks.electrical.lighting} target="_blank" rel="noopener noreferrer"><ShoppingCart className="mr-2" /> COMPRAR LÂMPADAS LED</a>
                                 </Button>
                             </div>
                         )}

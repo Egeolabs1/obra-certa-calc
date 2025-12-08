@@ -8,6 +8,7 @@ import AdPlaceholder from "@/components/AdPlaceholder";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { affiliateLinks } from "@/config/affiliateLinks";
 import { generateCalculatorSchema } from "@/utils/schemas";
 
 const CalculadoraChurrasco = () => {
@@ -339,7 +340,7 @@ const CalculadoraChurrasco = () => {
                                         <Button onClick={compartilharWhatsApp} size="lg" className="w-full bg-green-500 hover:bg-green-600 text-white font-bold text-lg shadow-md hover:shadow-xl transition-all">
                                             <Share2 className="mr-2 h-5 w-5" /> ENVIAR NO GRUPO
                                         </Button>
-                                        <Button asChild variant="outline" className="w-full"><a href="#" className="flex gap-2 justify-center items-center"><Beer className="h-4 w-4" /> COMPRAR BEBIDAS AGORA</a></Button>
+                                        <Button asChild variant="outline" className="w-full"><a href={affiliateLinks.bbq.general} className="flex gap-2 justify-center items-center" target="_blank" rel="noopener noreferrer"><Beer className="h-4 w-4" /> COMPRAR BEBIDAS AGORA</a></Button>
                                     </div>
                                 </div>
                             )

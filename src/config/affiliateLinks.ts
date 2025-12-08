@@ -13,11 +13,17 @@ export const affiliateLinks = {
         hdPurple8TB: "https://amzn.to/3XlXq9d",
     },
 
+    // Services
+    services: {
+        findProfessional: "#", // Placeholder for GetNinjas or similar
+    },
+
     // Furniture & Decor
     furniture: {
         modularKitchen: "https://shopee.com.br/search?keyword=cozinha%20modulada",
         bedroomSet: "https://shopee.com.br/search?keyword=quarto%20modulado",
         general: "https://amzn.to/3XlXq9d",
+        curtains: "https://amzn.to/3XlXq9d", // New
     },
 
     // Finishing Materials
@@ -29,12 +35,39 @@ export const affiliateLinks = {
 
     flooring: {
         general: "https://amzn.to/3XlXq9d",
+        baseboards: "https://amzn.to/3XlXq9d", // Rodapé
+        grout: "https://amzn.to/3XlXq9d", // Rejunte
+        deckVarnish: "https://amzn.to/3XlXq9d", // Deck
+    },
+
+    // Structural & Construction
+    structural: {
+        bricks: "https://amzn.to/3XlXq9d",
+        cement: "https://amzn.to/3XlXq9d",
+        drywall: "https://amzn.to/3XlXq9d",
+        stairs: "https://amzn.to/3XlXq9d", // Protectors/Safety
+    },
+
+    // Electrical & Air
+    electrical: {
+        wires: "https://amzn.to/3XlXq9d",
+        lighting: "https://amzn.to/3XlXq9d", // Lamps
+        ac: "https://amzn.to/3XlXq9d",
     },
 
     // Energy & Utility
     solar: {
         offGridKit: "https://www.amazon.com.br/s?k=kit+energia+solar+off+grid&tag=suaobracerta-20",
         onGridKit: "https://www.amazon.com.br/s?k=kit+energia+solar+on+grid&tag=suaobracerta-20",
+    },
+
+    water: {
+        tank: "https://amzn.to/3XlXq9d", // Caixa d'água
+    },
+
+    // Garden & Outdoor
+    garden: {
+        mowers: "https://amzn.to/3XlXq9d", // Grama
     },
 
     // Pool Construction
@@ -45,6 +78,11 @@ export const affiliateLinks = {
         ledKit: "https://www.amazon.com.br/s?k=kit+led+piscina&tag=suaobracerta-20",
         robot: "https://www.amazon.com.br/s?k=robo+aspirador+piscina&tag=suaobracerta-20",
         heating: "https://www.amazon.com.br/s?k=aquecimento+solar+piscina&tag=suaobracerta-20",
+    },
+
+    // Lifestyle
+    bbq: {
+        general: "https://amzn.to/3XlXq9d", // Drinks/Meat/Grill
     },
 
     // Tools & General

@@ -7,6 +7,7 @@ import AdPlaceholder from "@/components/AdPlaceholder";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { affiliateLinks } from "@/config/affiliateLinks";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const CalculadoraCortinas = () => {
@@ -90,7 +91,7 @@ const CalculadoraCortinas = () => {
                                     </div>
                                 </div>
                                 <p className="text-sm text-muted-foreground mb-4">Já incluindo margens laterais e barra.</p>
-                                <Button asChild className="w-full" variant="secondary" size="lg"><a href="#" target="_blank"><ShoppingCart className="mr-2" /> VER TECIDOS E CORTINAS</a></Button>
+                                <Button asChild className="w-full" variant="secondary" size="lg"><a href={affiliateLinks.furniture.curtains} target="_blank" rel="noopener noreferrer"><ShoppingCart className="mr-2" /> VER TECIDOS E CORTINAS</a></Button>
                             </div>
                         )}
                     </div>

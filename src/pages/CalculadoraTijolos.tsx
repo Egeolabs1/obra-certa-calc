@@ -7,6 +7,7 @@ import AdPlaceholder from "@/components/AdPlaceholder";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { affiliateLinks } from "@/config/affiliateLinks";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
@@ -109,13 +110,13 @@ const CalculadoraTijolos = () => {
 
     // Cálculos de área
     const areaBruta = altura * comprimento;
-    
+
     // Área porta padrão: 0.80m x 2.10m = 1.68m²
     // Área janela padrão: 1.20m x 1.20m = 1.44m²
     const areaPortas = portas * 1.68;
     const areaJanelas = janelas * 1.44;
     const areaDescontada = areaPortas + areaJanelas;
-    
+
     const areaLiquida = Math.max(0, areaBruta - areaDescontada);
 
     if (areaLiquida <= 0) {
@@ -133,13 +134,13 @@ const CalculadoraTijolos = () => {
     // Proporção traço 1:4 (1 cimento : 4 areia)
     const consumoArgamassaPorM2 = 18; // litros
     const volumeArgamassa = areaLiquida * consumoArgamassaPorM2;
-    
+
     // Rendimento: 1 saco de 50kg de cimento = ~35-40 litros de argamassa (traço 1:4)
     // Areia: proporção 4:1, então 4x mais areia
     const rendimentoCimentoPorSaco = 38; // litros por saco de 50kg
     const sacosCimento = Math.ceil(volumeArgamassa / rendimentoCimentoPorSaco);
     const cimentoKg = sacosCimento * 50;
-    
+
     // Areia: ~1.2 ton/m³, traço 1:4 em volume
     // Para cada saco de cimento, usamos ~0.16m³ de areia (~180kg)
     const areiaKg = sacosCimento * 180;
@@ -165,7 +166,7 @@ const CalculadoraTijolos = () => {
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Header />
-      
+
       <main className="flex-1">
         {/* Ad Placeholder - Topo */}
         <div className="container pt-6">
@@ -175,8 +176,8 @@ const CalculadoraTijolos = () => {
         <div className="container py-8 md:py-12">
           <div className="mx-auto max-w-2xl">
             {/* Breadcrumb */}
-            <Link 
-              to="/" 
+            <Link
+              to="/"
               className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
               <ArrowLeft className="h-4 w-4" />
@@ -399,7 +400,7 @@ const CalculadoraTijolos = () => {
                     🧱 Argamassa Necessária
                     <span className="text-xs font-normal text-muted-foreground">(Traço 1:4)</span>
                   </h3>
-                  
+
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div className="rounded-lg bg-muted/50 p-4 text-center">
                       <p className="text-3xl font-bold text-foreground mb-1">
@@ -435,13 +436,13 @@ const CalculadoraTijolos = () => {
 
                 {/* Botão Afiliado */}
                 <div className="rounded-xl border border-border bg-card p-6">
-                  <Button 
-                    asChild 
-                    variant="success" 
-                    size="xl" 
+                  <Button
+                    asChild
+                    variant="success"
+                    size="xl"
                     className="w-full"
                   >
-                    <a href="#" target="_blank" rel="noopener noreferrer">
+                    <a href={affiliateLinks.structural.bricks} target="_blank" rel="noopener noreferrer">
                       <ShoppingCart className="h-5 w-5" />
                       VER MATERIAIS NA AMAZON
                       <ExternalLink className="h-4 w-4" />

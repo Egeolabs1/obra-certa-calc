@@ -7,6 +7,7 @@ import AdPlaceholder from "@/components/AdPlaceholder";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { affiliateLinks } from "@/config/affiliateLinks";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
@@ -225,7 +226,7 @@ const CalculadoraDrywall = () => {
                                 </div>
 
                                 <Button asChild variant="success" size="xl" className="w-full">
-                                    <a href="#" target="_blank"><ShoppingCart className="mr-2 h-5 w-5" /> ORÇAR MATERIAIS ONLINE</a>
+                                    <a href={affiliateLinks.structural.drywall} target="_blank" rel="noopener noreferrer"><ShoppingCart className="mr-2 h-5 w-5" /> ORÇAR MATERIAIS ONLINE</a>
                                 </Button>
                             </div>
                         )}

@@ -7,6 +7,7 @@ import AdPlaceholder from "@/components/AdPlaceholder";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { affiliateLinks } from "@/config/affiliateLinks";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 interface ResultadoBTU {
@@ -238,7 +239,7 @@ const CalculadoraArCondicionado = () => {
                                         size="xl"
                                         className="w-full"
                                     >
-                                        <a href="#" target="_blank" rel="noopener noreferrer">
+                                        <a href={affiliateLinks.electrical.ac} target="_blank" rel="noopener noreferrer">
                                             <ShoppingCart className="h-5 w-5" />
                                             VER AR CONDICIONADO EM OFERTA
                                             <ExternalLink className="h-4 w-4" />

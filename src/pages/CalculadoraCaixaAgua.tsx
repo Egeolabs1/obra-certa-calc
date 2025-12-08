@@ -7,6 +7,7 @@ import AdPlaceholder from "@/components/AdPlaceholder";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { affiliateLinks } from "@/config/affiliateLinks";
 
 const CalculadoraCaixaAgua = () => {
     const [pessoas, setPessoas] = useState("4");
@@ -68,7 +69,7 @@ const CalculadoraCaixaAgua = () => {
                                 </div>
 
                                 <Button asChild variant="success" size="lg" className="w-full">
-                                    <a href="#" target="_blank"><ShoppingCart className="mr-2" /> VER PREÇOS DE CAIXAS</a>
+                                    <a href={affiliateLinks.water.tank} target="_blank" rel="noopener noreferrer"><ShoppingCart className="mr-2" /> VER PREÇOS DE CAIXAS</a>
                                 </Button>
                             </div>
                         )}
