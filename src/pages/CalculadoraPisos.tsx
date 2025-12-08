@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { affiliateLinks } from "@/config/affiliateLinks";
 
 interface ResultadoCalculo {
   areaTotal: number;
@@ -22,7 +23,10 @@ interface ResultadoCalculo {
   pecasPorCaixa: number;
 }
 
+import { useOrcamento } from "@/context/OrcamentoContext";
+
 const CalculadoraPisos = () => {
+  const { addItem } = useOrcamento();
   const [comprimentoAmbiente, setComprimentoAmbiente] = useState("");
   const [larguraAmbiente, setLarguraAmbiente] = useState("");
   const [comprimentoPiso, setComprimentoPiso] = useState("");
@@ -407,17 +411,37 @@ const CalculadoraPisos = () => {
                 </div>
 
                 {/* Botão Afiliado */}
-                <div className="mt-6">
+                {/* Botão Afiliado & Orçamento */}
+                <div className="mt-6 space-y-3">
+                  <Button
+                    onClick={() => {
+                      addItem({
+                        id: crypto.randomUUID(),
+                        name: `Piso ${tipoPiso.charAt(0).toUpperCase() + tipoPiso.slice(1)}`,
+                        description: `Área cobrível: ${resultado.areaComMargem}m² | Margem ${margemCorte}%`,
+                        quantity: resultado.qtdPecas,
+                        unit: "Peças",
+                        category: "Acabamento - Piso",
+                        estimatedPrice: resultado.areaComMargem * 60 // Estimativa R$60/m²
+                      });
+                    }}
+                    variant="outline"
+                    size="xl"
+                    className="w-full border-2 hover:bg-slate-50 text-slate-700"
+                  >
+                    <ShoppingCart className="h-5 w-5 mr-2" />
+                    Adicionar Piso ao Orçamento
+                  </Button>
+
                   <Button
                     asChild
                     variant="success"
                     size="xl"
                     className="w-full"
                   >
-                    <a href="#" target="_blank" rel="noopener noreferrer">
-                      <ShoppingCart className="h-5 w-5" />
+                    <a href={affiliateLinks.flooring.general} target="_blank" rel="noopener noreferrer">
+                      <ExternalLink className="h-5 w-5 mr-2" />
                       VER PISOS NA AMAZON (Promoção)
-                      <ExternalLink className="h-4 w-4" />
                     </a>
                   </Button>
                   <p className="mt-2 text-center text-xs text-muted-foreground">

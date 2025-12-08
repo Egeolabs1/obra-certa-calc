@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { HardHat, Menu, X, ChevronDown } from "lucide-react";
+import { HardHat, Menu, X, ChevronDown, ShoppingCart } from "lucide-react";
 import { useState } from "react";
 import { Button } from "./ui/button";
 import {
@@ -10,9 +10,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useOrcamento } from "@/context/OrcamentoContext";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { totalItems } = useOrcamento();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/80">
@@ -73,20 +75,49 @@ const Header = () => {
               <DropdownMenuItem asChild><Link to="/calculadora-energia">Conta de Luz</Link></DropdownMenuItem>
               <DropdownMenuItem asChild><Link to="/calculadora-caixa-agua">Caixa D'água</Link></DropdownMenuItem>
               <DropdownMenuItem asChild><Link to="/calculadora-churrasco">Churrasco 🍖</Link></DropdownMenuItem>
+
+              <DropdownMenuSeparator />
+              <DropdownMenuLabel>Gestão</DropdownMenuLabel>
+              <DropdownMenuItem asChild><Link to="/checklist-vistoria">Checklist Vistoria</Link></DropdownMenuItem>
+              <DropdownMenuItem asChild><Link to="/calculadora-cronograma">Cronograma</Link></DropdownMenuItem>
+              <DropdownMenuItem asChild><Link to="/calculadora-mao-de-obra">Mão de Obra</Link></DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+
+          <Button asChild size="sm" variant={totalItems > 0 ? "default" : "outline"} className="gap-2 relative">
+            <Link to="/meu-orcamento">
+              <ShoppingCart className="h-4 w-4" />
+              Meu Orçamento
+              {totalItems > 0 && (
+                <span className="bg-red-500 text-white text-[10px] h-5 w-5 flex items-center justify-center rounded-full absolute -top-2 -right-2 font-bold shadow-sm animate-in zoom-in">
+                  {totalItems}
+                </span>
+              )}
+            </Link>
+          </Button>
         </nav>
 
         {/* Mobile Menu Button */}
-        <Button
-          variant="ghost"
-          size="icon"
-          className="md:hidden"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          aria-label="Toggle menu"
-        >
-          {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </Button>
+        <div className="flex md:hidden items-center gap-2">
+          <Button asChild variant="ghost" size="icon" className="relative">
+            <Link to="/meu-orcamento">
+              <ShoppingCart className="h-5 w-5" />
+              {totalItems > 0 && (
+                <span className="bg-red-500 text-white text-[10px] h-4 w-4 flex items-center justify-center rounded-full absolute top-0 right-0 font-bold">
+                  {totalItems}
+                </span>
+              )}
+            </Link>
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </Button>
+        </div>
       </div>
 
       {/* Mobile Navigation */}
@@ -94,6 +125,10 @@ const Header = () => {
         <nav className="md:hidden border-t border-border bg-card animate-fade-in max-h-[calc(100vh-4rem)] overflow-y-auto pb-8">
           <div className="container py-4 flex flex-col gap-3">
             <Link to="/" onClick={() => setIsMenuOpen(false)} className="font-bold text-lg">Início</Link>
+
+            <Link to="/meu-orcamento" onClick={() => setIsMenuOpen(false)} className="flex items-center gap-2 font-bold text-primary py-2 px-2 bg-primary/10 rounded">
+              <ShoppingCart className="h-4 w-4" /> Meu Orçamento ({totalItems})
+            </Link>
 
             <div className="space-y-1">
               <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Estrutura</p>
@@ -128,6 +163,13 @@ const Header = () => {
               <Link to="/calculadora-ar-condicionado" onClick={() => setIsMenuOpen(false)} className="block py-2 px-2 hover:bg-muted rounded">Ar Condicionado</Link>
               <Link to="/calculadora-iluminacao" onClick={() => setIsMenuOpen(false)} className="block py-2 px-2 hover:bg-muted rounded">Iluminação</Link>
               <Link to="/calculadora-caixa-agua" onClick={() => setIsMenuOpen(false)} className="block py-2 px-2 hover:bg-muted rounded">Caixa D'água</Link>
+            </div>
+
+            <div className="space-y-1">
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Gestão</p>
+              <Link to="/checklist-vistoria" onClick={() => setIsMenuOpen(false)} className="block py-2 px-2 hover:bg-muted rounded">Checklist</Link>
+              <Link to="/calculadora-cronograma" onClick={() => setIsMenuOpen(false)} className="block py-2 px-2 hover:bg-muted rounded">Cronograma</Link>
+              <Link to="/calculadora-mao-de-obra" onClick={() => setIsMenuOpen(false)} className="block py-2 px-2 hover:bg-muted rounded">Mão de Obra</Link>
             </div>
           </div>
         </nav>

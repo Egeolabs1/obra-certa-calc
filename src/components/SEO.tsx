@@ -6,6 +6,7 @@ interface SEOProps {
     url?: string;
     image?: string;
     type?: string;
+    keywords?: string;
     schema?: object; // JSON-LD Structured Data
 }
 
@@ -15,6 +16,7 @@ const SEO = ({
     url = window.location.href,
     image = "/og-image.png", // Assuming a default image exists or we will create one placeholder
     type = "website",
+    keywords,
     schema
 }: SEOProps) => {
     const siteTitle = "Sua Obra Certa - Calculadoras de Construção";
@@ -24,6 +26,7 @@ const SEO = ({
             {/* Standard Metadata */}
             <title>{`${title} | ${siteTitle}`}</title>
             <meta name="description" content={description} />
+            {keywords && <meta name="keywords" content={keywords} />}
             <link rel="canonical" href={url} />
 
             {/* Open Graph / Facebook */}

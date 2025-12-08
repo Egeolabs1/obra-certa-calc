@@ -1,4 +1,4 @@
-import { Paintbrush, LayoutGrid, Boxes, Container, Calculator, ArrowRight, Wind, Layers, Grid3X3, Home, Lightbulb, Droplets, Flower2, LayoutDashboard, Waves, Scroll, Blinds, Zap, Flame, ArrowUpFromLine, TrendingUp, AppWindow, Hammer, AlignHorizontalJustifyStart, Plug } from "lucide-react";
+import { Paintbrush, LayoutGrid, Boxes, Container, Calculator, ArrowRight, Wind, Layers, Grid3X3, Home, Lightbulb, Droplets, Flower2, LayoutDashboard, Waves, Scroll, Blinds, Zap, Flame, ArrowUpFromLine, TrendingUp, AppWindow, Hammer, AlignHorizontalJustifyStart, Plug, ClipboardCheck, CalendarDays, HardHat, Cctv, Armchair, Landmark } from "lucide-react";
 import SEO from "@/components/SEO";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import CalculatorCard from "@/components/CalculatorCard";
 import AdPlaceholder from "@/components/AdPlaceholder";
 import { Button } from "@/components/ui/button";
+import { generateWebSiteSchema } from "@/utils/schemas";
 
 const Index = () => {
   return (
@@ -14,6 +15,7 @@ const Index = () => {
         title="Sua Obra Certa - Ferramentas para Construção"
         description="mais de 20 calculadoras gratuitas para sua obra. Tijolos, Tinta, Telhado, Concreto e muito mais."
         url="https://suaobracerta.com.br/"
+        schema={generateWebSiteSchema()}
       />
       <Header />
 
@@ -52,6 +54,70 @@ const Index = () => {
                   </Link>
                 </Button>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* FASE 3: SERVIÇOS & TECNOLOGIA (Premium - High Value) */}
+        <section id="servicos-premium" className="py-12 bg-slate-900 border-b border-slate-800">
+          <div className="container">
+            <h2 className="mb-8 text-2xl font-bold text-white border-l-4 border-emerald-500 pl-4 flex items-center gap-2">
+              💎 Financeiro & Segurança <span className="text-xs font-normal text-slate-900 bg-emerald-400 px-2 py-1 rounded-full uppercase tracking-wider">Premium</span>
+            </h2>
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              <CalculatorCard
+                icon={Landmark}
+                title="Simulador de Financiamento"
+                description="Simule parcelas de Construcard ou Home Equity para reformar."
+                href="/calculadora-financiamento"
+                badge="Hot"
+              />
+              <CalculatorCard
+                icon={Cctv}
+                title="Projeto de Câmeras (CFTV)"
+                description="Quantas câmeras e qual HD você precisa para seu negócio?"
+                href="/calculadora-cftv"
+                badge="Novo"
+              />
+              <CalculatorCard
+                icon={Armchair}
+                title="Móveis Planejados"
+                description="Estimativa de custo para Cozinha e Quartos sob medida."
+                href="/calculadora-moveis-planejados"
+                badge="Novo"
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* FASE 0: GESTÃO & PLANEJAMENTO (New Phase 2) */}
+        <section id="gestao" className="py-12 bg-indigo-50/50 dark:bg-indigo-950/20 border-b border-indigo-100 dark:border-indigo-900/30">
+          <div className="container">
+            <h2 className="mb-8 text-2xl font-bold text-foreground border-l-4 border-indigo-500 pl-4 flex items-center gap-2">
+              📋 Gestão e Planejamento <span className="text-xs font-normal text-indigo-600 bg-indigo-100 px-2 py-1 rounded-full uppercase tracking-wider">Novo</span>
+            </h2>
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              <CalculatorCard
+                icon={ClipboardCheck}
+                title="Checklist de Vistoria"
+                description="Vai receber as chaves? Use nosso checklist interativo para não perder nada."
+                href="/checklist-vistoria"
+                badge="Novo"
+              />
+              <CalculatorCard
+                icon={CalendarDays}
+                title="Cronograma de Obra"
+                description="Estimativa de tempo e etapas (Construção ou Reforma)."
+                href="/calculadora-cronograma"
+                badge="Novo"
+              />
+              <CalculatorCard
+                icon={HardHat}
+                title="Mão de Obra"
+                description="Quanto custa o pedreiro? Estimativa de piso, pintura e mais."
+                href="/calculadora-mao-de-obra"
+                badge="Beta"
+              />
             </div>
           </div>
         </section>
@@ -179,9 +245,10 @@ const Index = () => {
               />
               <CalculatorCard
                 icon={Zap}
-                title="Conta de Luz"
-                description="Simulador de consumo mensal."
+                title="Energia Solar"
+                description="Simule painéis e economia."
                 href="/calculadora-energia"
+                badge="Novo"
               />
             </div>
           </div>

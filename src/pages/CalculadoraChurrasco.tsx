@@ -8,6 +8,7 @@ import AdPlaceholder from "@/components/AdPlaceholder";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { generateCalculatorSchema } from "@/utils/schemas";
 
 const CalculadoraChurrasco = () => {
     const [homens, setHomens] = useState("5");
@@ -171,6 +172,11 @@ const CalculadoraChurrasco = () => {
                 title="Calculadora de Churrasco e Rateio Estimado"
                 description="Calcule carne, cerveja e o valor do rateio por pessoa (carne, frango, linguiça). Inclui opção para vegetarianos."
                 url="https://suaobracerta.com.br/calculadora-churrasco"
+                schema={generateCalculatorSchema(
+                    "Calculadora de Churrasco",
+                    "Calcule a quantidade exata de carne e bebidas para seu churrasco, com divisão de custos.",
+                    "https://suaobracerta.com.br/calculadora-churrasco"
+                )}
             />
             <Header />
             <main className="flex-1">
@@ -281,66 +287,68 @@ const CalculadoraChurrasco = () => {
                             </Button>
                         </div>
 
-                        {resultado && (
-                            <div className="mt-8 animate-scale-in">
-                                {/* Nota Fiscal UI */}
-                                <div className="bg-[#fff9c4] dark:bg-card text-card-foreground p-6 rounded-sm shadow-xl border-t-8 border-green-600 relative font-mono text-sm">
+                        {
+                            resultado && (
+                                <div className="mt-8 animate-scale-in">
+                                    {/* Nota Fiscal UI */}
+                                    <div className="bg-[#fff9c4] dark:bg-card text-card-foreground p-6 rounded-sm shadow-xl border-t-8 border-green-600 relative font-mono text-sm">
 
-                                    <div className="text-center mb-6">
-                                        <h2 className="text-3xl font-black text-green-700 dark:text-green-500">R$ {resultado.financeiro.porPessoa},00</h2>
-                                        <p className="text-muted-foreground font-sans font-medium uppercase tracking-widest text-xs">Valor por Pessoa ({homens != "0" && mulheres != "0" && vegetarianos != "0" ? 'H + M + V' : 'Pagantes'})</p>
-                                        <p className="text-[10px] text-muted-foreground mt-1">Total Estimado do Evento: R$ {resultado.financeiro.total},00</p>
-                                    </div>
+                                        <div className="text-center mb-6">
+                                            <h2 className="text-3xl font-black text-green-700 dark:text-green-500">R$ {resultado.financeiro.porPessoa},00</h2>
+                                            <p className="text-muted-foreground font-sans font-medium uppercase tracking-widest text-xs">Valor por Pessoa ({homens != "0" && mulheres != "0" && vegetarianos != "0" ? 'H + M + V' : 'Pagantes'})</p>
+                                            <p className="text-[10px] text-muted-foreground mt-1">Total Estimado do Evento: R$ {resultado.financeiro.total},00</p>
+                                        </div>
 
-                                    <div className="border-t-2 border-dashed border-gray-400 my-4"></div>
+                                        <div className="border-t-2 border-dashed border-gray-400 my-4"></div>
 
-                                    <h3 className="font-bold text-base mb-2">🥩 LISTA DE COMPRAS</h3>
+                                        <h3 className="font-bold text-base mb-2">🥩 LISTA DE COMPRAS</h3>
 
-                                    <div className="space-y-1 text-card-foreground/80">
-                                        <div className="flex justify-between"><span>Picanha/Contra (50%)</span> <span>{resultado.picanha} kg</span></div>
-                                        <div className="flex justify-between"><span>Linguiça (25%)</span> <span>{resultado.linguica} kg</span></div>
-                                        <div className="flex justify-between"><span>Frango (25%)</span> <span>{resultado.frango} kg</span></div>
-                                        {resultado.queijo > 0 && (
-                                            <div className="flex justify-between font-bold text-green-700"><span>Queijo/Veggie</span> <span>{resultado.queijo} kg</span></div>
-                                        )}
-                                        <div className="flex justify-between border-t border-dotted border-gray-400 pt-1 mt-1 font-bold">
-                                            <span>TOTAL CARNES</span> <span>{resultado.carneTotal} kg</span>
+                                        <div className="space-y-1 text-card-foreground/80">
+                                            <div className="flex justify-between"><span>Picanha/Contra (50%)</span> <span>{resultado.picanha} kg</span></div>
+                                            <div className="flex justify-between"><span>Linguiça (25%)</span> <span>{resultado.linguica} kg</span></div>
+                                            <div className="flex justify-between"><span>Frango (25%)</span> <span>{resultado.frango} kg</span></div>
+                                            {resultado.queijo > 0 && (
+                                                <div className="flex justify-between font-bold text-green-700"><span>Queijo/Veggie</span> <span>{resultado.queijo} kg</span></div>
+                                            )}
+                                            <div className="flex justify-between border-t border-dotted border-gray-400 pt-1 mt-1 font-bold">
+                                                <span>TOTAL CARNES</span> <span>{resultado.carneTotal} kg</span>
+                                            </div>
+                                        </div>
+
+                                        <h3 className="font-bold text-base mt-4 mb-2">🍺 BEBIDAS</h3>
+                                        <div className="space-y-1 text-card-foreground/80">
+                                            <div className="flex justify-between"><span>Cerveja ({resultado.latasCerveja} latas)</span> <span>{resultado.cerveja} L</span></div>
+                                            <div className="flex justify-between"><span>Refri/Água ({resultado.garrafasRefri} garrafas 2L)</span> <span>{resultado.refri} L</span></div>
+                                        </div>
+
+                                        <h3 className="font-bold text-base mt-4 mb-2">🛒 EXTRAS</h3>
+                                        <div className="space-y-1 text-card-foreground/80">
+                                            <div className="flex justify-between"><span>Pão de Alho</span> <span>{resultado.paoAlho} un.</span></div>
+                                            <div className="flex justify-between"><span>Carvão</span> <span>{resultado.carvao} kg</span></div>
+                                            <div className="flex justify-between"><span>Gelo</span> <span>{resultado.gelo} kg</span></div>
+                                            <div className="flex justify-between"><span>Sal Grosso</span> <span>{resultado.sal} kg</span></div>
+                                        </div>
+
+                                        <div className="mt-8 text-center text-xs text-muted-foreground opacity-70">
+                                            *Preços estimados. A variação pode ocorrer dependendo da região e marca.
+                                            <br />Calculado por SuaObraCerta.com.br
                                         </div>
                                     </div>
 
-                                    <h3 className="font-bold text-base mt-4 mb-2">🍺 BEBIDAS</h3>
-                                    <div className="space-y-1 text-card-foreground/80">
-                                        <div className="flex justify-between"><span>Cerveja ({resultado.latasCerveja} latas)</span> <span>{resultado.cerveja} L</span></div>
-                                        <div className="flex justify-between"><span>Refri/Água ({resultado.garrafasRefri} garrafas 2L)</span> <span>{resultado.refri} L</span></div>
-                                    </div>
-
-                                    <h3 className="font-bold text-base mt-4 mb-2">🛒 EXTRAS</h3>
-                                    <div className="space-y-1 text-card-foreground/80">
-                                        <div className="flex justify-between"><span>Pão de Alho</span> <span>{resultado.paoAlho} un.</span></div>
-                                        <div className="flex justify-between"><span>Carvão</span> <span>{resultado.carvao} kg</span></div>
-                                        <div className="flex justify-between"><span>Gelo</span> <span>{resultado.gelo} kg</span></div>
-                                        <div className="flex justify-between"><span>Sal Grosso</span> <span>{resultado.sal} kg</span></div>
-                                    </div>
-
-                                    <div className="mt-8 text-center text-xs text-muted-foreground opacity-70">
-                                        *Preços estimados. A variação pode ocorrer dependendo da região e marca.
-                                        <br />Calculado por SuaObraCerta.com.br
+                                    <div className="mt-6 space-y-3">
+                                        <Button onClick={compartilharWhatsApp} size="lg" className="w-full bg-green-500 hover:bg-green-600 text-white font-bold text-lg shadow-md hover:shadow-xl transition-all">
+                                            <Share2 className="mr-2 h-5 w-5" /> ENVIAR NO GRUPO
+                                        </Button>
+                                        <Button asChild variant="outline" className="w-full"><a href="#" className="flex gap-2 justify-center items-center"><Beer className="h-4 w-4" /> COMPRAR BEBIDAS AGORA</a></Button>
                                     </div>
                                 </div>
-
-                                <div className="mt-6 space-y-3">
-                                    <Button onClick={compartilharWhatsApp} size="lg" className="w-full bg-green-500 hover:bg-green-600 text-white font-bold text-lg shadow-md hover:shadow-xl transition-all">
-                                        <Share2 className="mr-2 h-5 w-5" /> ENVIAR NO GRUPO
-                                    </Button>
-                                    <Button asChild variant="outline" className="w-full"><a href="#" className="flex gap-2 justify-center items-center"><Beer className="h-4 w-4" /> COMPRAR BEBIDAS AGORA</a></Button>
-                                </div>
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </main>
+                            )
+                        }
+                    </div >
+                </div >
+            </main >
             <Footer />
-        </div>
+        </div >
     );
 };
 export default CalculadoraChurrasco;

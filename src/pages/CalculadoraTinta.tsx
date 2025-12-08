@@ -11,6 +11,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { affiliateLinks } from "@/config/affiliateLinks";
 
 interface ResultadoCalculo {
   litrosNecessarios: number;
@@ -20,7 +21,10 @@ interface ResultadoCalculo {
   sugestaoEmbalagem: string;
 }
 
+import { useOrcamento } from "@/context/OrcamentoContext";
+
 const CalculadoraTinta = () => {
+  const { addItem } = useOrcamento();
   const [altura, setAltura] = useState("");
   const [largura, setLargura] = useState("");
   const [comprimento, setComprimento] = useState("");
@@ -365,18 +369,37 @@ const CalculadoraTinta = () => {
                   <AdPlaceholder id="ad-meio-resultado" />
                 </div>
 
-                {/* Botão Afiliado */}
-                <div className="mt-6">
+                {/* Botão Afiliado & Orçamento */}
+                <div className="mt-6 space-y-3">
+                  <Button
+                    onClick={() => {
+                      addItem({
+                        id: crypto.randomUUID(),
+                        name: "Tinta de Parede",
+                        description: `Área: ${resultado.areaTotal}m² | ${demaos} Demãos`,
+                        quantity: resultado.litrosNecessarios,
+                        unit: "Litros",
+                        category: "Acabamento - Pintura",
+                        estimatedPrice: resultado.litrosNecessarios * 30 // Estimativa grosseira R$30/L
+                      });
+                    }}
+                    variant="outline"
+                    size="xl"
+                    className="w-full border-2 hover:bg-slate-50 text-slate-700"
+                  >
+                    <ShoppingCart className="h-5 w-5 mr-2" />
+                    Adicionar ao Meu Orçamento
+                  </Button>
+
                   <Button
                     asChild
                     variant="success"
                     size="xl"
                     className="w-full"
                   >
-                    <a href="#" target="_blank" rel="noopener noreferrer">
-                      <ShoppingCart className="h-5 w-5" />
+                    <a href={affiliateLinks.paints.general} target="_blank" rel="noopener noreferrer">
+                      <ExternalLink className="h-5 w-5 mr-2" />
                       VER PREÇO DAS TINTAS NA AMAZON
-                      <ExternalLink className="h-4 w-4" />
                     </a>
                   </Button>
                   <p className="mt-2 text-center text-xs text-muted-foreground">
