@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import SEO from "@/components/SEO";
+import { generateCalculatorSchema } from "@/utils/schemas";
 
 const CalculadoraPavers = () => {
     const [area, setArea] = useState("");
@@ -34,6 +36,16 @@ const CalculadoraPavers = () => {
 
     return (
         <div className="flex min-h-screen flex-col bg-background">
+            <SEO
+                title="Calculadora de Pavers"
+                description="Calcule a quantidade de pavers (bloquetes) para calçadas e garagens."
+                url="https://suaobracerta.com.br/calculadora-pavers"
+                schema={generateCalculatorSchema(
+                    "Calculadora de Pavers",
+                    "Calcule a quantidade de blocos de concreto (pavers) por metro quadrado.",
+                    "https://suaobracerta.com.br/calculadora-pavers"
+                )}
+            />
             <Header />
             <main className="flex-1">
                 <div className="container pt-6"><AdPlaceholder id="ad-pavers" className="max-w-3xl mx-auto" /></div>

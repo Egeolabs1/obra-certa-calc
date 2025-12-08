@@ -11,6 +11,7 @@ import { affiliateLinks } from "@/config/affiliateLinks";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import SEO from "@/components/SEO";
+import { generateCalculatorSchema } from "@/utils/schemas";
 
 interface TracoConcreto {
   nome: string;
@@ -166,6 +167,11 @@ const CalculadoraConcreto = () => {
         title="Calculadora de Concreto"
         description="Calcule o traço de concreto (cimento, areia, pedra) para lajes, pilares e pisos. Volume exato em m³."
         url="https://suaobracerta.com.br/calculadora-concreto"
+        schema={generateCalculatorSchema(
+          "Calculadora de Concreto",
+          "Calculadora de traço de concreto para lajes, pisos e fundações.",
+          "https://suaobracerta.com.br/calculadora-concreto"
+        )}
       />
       <Header />
 

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import SEO from "@/components/SEO";
+import { generateCalculatorSchema } from "@/utils/schemas";
 import { Zap, Calculator, ShoppingCart, ArrowLeft, AlertTriangle } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
@@ -66,6 +67,11 @@ const CalculadoraFios = () => {
                 title="Calculadora de Fios Elétricos"
                 description="Descubra a bitola de fio e o disjuntor ideal para chuveiros e tomadas. Cálculo baseado na NBR 5410."
                 url="https://suaobracerta.com.br/calculadora-fios"
+                schema={generateCalculatorSchema(
+                    "Calculadora de Fios",
+                    "Calcule a bitola de fios elétricos e disjuntores para sua instalação.",
+                    "https://suaobracerta.com.br/calculadora-fios"
+                )}
             />
             <Header />
             <main className="flex-1">

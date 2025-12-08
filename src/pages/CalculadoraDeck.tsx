@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { affiliateLinks } from "@/config/affiliateLinks";
+import SEO from "@/components/SEO";
+import { generateCalculatorSchema } from "@/utils/schemas";
 
 const CalculadoraDeck = () => {
     const [area, setArea] = useState("");
@@ -45,6 +47,16 @@ const CalculadoraDeck = () => {
 
     return (
         <div className="flex min-h-screen flex-col bg-background">
+            <SEO
+                title="Calculadora de Deck de Madeira"
+                description="Calcule a quantidade de réguas de madeira, barrotes e parafusos para seu deck."
+                url="https://suaobracerta.com.br/calculadora-deck"
+                schema={generateCalculatorSchema(
+                    "Calculadora de Deck",
+                    "Calcule materiais para construção de decks de madeira.",
+                    "https://suaobracerta.com.br/calculadora-deck"
+                )}
+            />
             <Header />
             <main className="flex-1">
                 <div className="container pt-6"><AdPlaceholder id="ad-deck" className="max-w-3xl mx-auto" /></div>

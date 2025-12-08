@@ -11,6 +11,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { affiliateLinks } from "@/config/affiliateLinks";
+import { generateCalculatorSchema } from "@/utils/schemas";
 
 interface ResultadoCalculo {
   areaTotal: number;
@@ -117,6 +118,11 @@ const CalculadoraPisos = () => {
         title="Calculadora de Pisos e Porcelanatos"
         description="Descubra a quantidade de caixas de piso, rodapés e argamassa. Inclui cálculo de perda (quebra)."
         url="https://suaobracerta.com.br/calculadora-pisos"
+        schema={generateCalculatorSchema(
+          "Calculadora de Pisos",
+          "Calcule a quantidade de pisos, revestimentos e rodapés.",
+          "https://suaobracerta.com.br/calculadora-pisos"
+        )}
       />
       <Header />
 

@@ -7,6 +7,8 @@ import AdPlaceholder from "@/components/AdPlaceholder";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import SEO from "@/components/SEO";
+import { generateCalculatorSchema } from "@/utils/schemas";
 
 const CalculadoraRejunte = () => {
     const [area, setArea] = useState("");
@@ -45,6 +47,16 @@ const CalculadoraRejunte = () => {
 
     return (
         <div className="flex min-h-screen flex-col bg-background">
+            <SEO
+                title="Calculadora de Rejunte"
+                description="Descubra a quantidade de rejunte (kg) necessária para seu piso ou revestimento."
+                url="https://suaobracerta.com.br/calculadora-rejunte"
+                schema={generateCalculatorSchema(
+                    "Calculadora de Rejunte",
+                    "Calcule o consumo de rejunte para pisos e azulejos.",
+                    "https://suaobracerta.com.br/calculadora-rejunte"
+                )}
+            />
             <Header />
             <main className="flex-1">
                 <div className="container pt-6"><AdPlaceholder id="ad-rejunte" className="max-w-3xl mx-auto" /></div>

@@ -10,6 +10,8 @@ import { Label } from "@/components/ui/label";
 import { affiliateLinks } from "@/config/affiliateLinks";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import SEO from "@/components/SEO";
+import { generateCalculatorSchema } from "@/utils/schemas";
 
 interface TipoTijolo {
   nome: string;
@@ -165,6 +167,16 @@ const CalculadoraTijolos = () => {
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
+      <SEO
+        title="Calculadora de Tijolos"
+        description="Calcule quantos tijolos e argamassa você precisa para erguer suas paredes."
+        url="https://suaobracerta.com.br/calculadora-tijolos"
+        schema={generateCalculatorSchema(
+          "Calculadora de Tijolos",
+          "Calcule a quantidade de tijolos e argamassa para paredes de alvenaria.",
+          "https://suaobracerta.com.br/calculadora-tijolos"
+        )}
+      />
       <Header />
 
       <main className="flex-1">

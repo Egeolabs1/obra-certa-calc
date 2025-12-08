@@ -24,9 +24,9 @@ const Footer = () => {
               A plataforma mais completa de calculadoras e ferramentas para construção civil. Planeje, calcule e economize na sua obra.
             </p>
             <div className="flex gap-4 pt-2">
-              <a href="#" className="hover:text-yellow-400 transition-colors"><Instagram className="h-5 w-5" /></a>
-              <a href="#" className="hover:text-yellow-400 transition-colors"><Facebook className="h-5 w-5" /></a>
-              <a href="#" className="hover:text-yellow-400 transition-colors"><Youtube className="h-5 w-5" /></a>
+              <a href="#" aria-label="Instagram" className="hover:text-yellow-400 transition-colors"><Instagram className="h-5 w-5" /></a>
+              <a href="#" aria-label="Facebook" className="hover:text-yellow-400 transition-colors"><Facebook className="h-5 w-5" /></a>
+              <a href="#" aria-label="YouTube" className="hover:text-yellow-400 transition-colors"><Youtube className="h-5 w-5" /></a>
             </div>
           </div>
 

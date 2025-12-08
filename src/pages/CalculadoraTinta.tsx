@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Switch } from "@/components/ui/switch";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { affiliateLinks } from "@/config/affiliateLinks";
+import { generateCalculatorSchema } from "@/utils/schemas";
 
 interface ResultadoCalculo {
   litrosNecessarios: number;
@@ -119,6 +120,11 @@ const CalculadoraTinta = () => {
         title="Calculadora de Tinta"
         description="Calcule a quantidade exata de tinta para paredes e tetos. Evite desperdícios na sua obra."
         url="https://suaobracerta.com.br/calculadora-tinta"
+        schema={generateCalculatorSchema(
+          "Calculadora de Tinta",
+          "Ferramenta para calcular quantidade de tinta para paredes e tetos.",
+          "https://suaobracerta.com.br/calculadora-tinta"
+        )}
       />
       <Header />
 

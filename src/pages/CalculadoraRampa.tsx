@@ -1,5 +1,6 @@
 import { useState } from "react";
 import SEO from "@/components/SEO";
+import { generateCalculatorSchema } from "@/utils/schemas";
 import { TrendingUp, Calculator, ArrowLeft, Accessibility } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
@@ -44,6 +45,11 @@ const CalculadoraRampa = () => {
                 title="Calculadora de Rampa Acessível"
                 description="Calcule a inclinação e comprimento de rampas conforme a NBR 9050 para acessibilidade e garagens."
                 url="https://suaobracerta.com.br/calculadora-rampa"
+                schema={generateCalculatorSchema(
+                    "Calculadora de Rampa",
+                    "Calcule a inclinação e comprimento de rampas acessíveis.",
+                    "https://suaobracerta.com.br/calculadora-rampa"
+                )}
             />
             <Header />
             <main className="flex-1">

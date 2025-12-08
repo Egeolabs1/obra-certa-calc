@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import SEO from "@/components/SEO";
+import { generateCalculatorSchema } from "@/utils/schemas";
 
 const CalculadoraTelhado = () => {
     const [area, setArea] = useState("");
@@ -39,6 +41,16 @@ const CalculadoraTelhado = () => {
 
     return (
         <div className="flex min-h-screen flex-col bg-background">
+            <SEO
+                title="Calculadora de Telhas"
+                description="Calcule a quantidade de telhas (Romana, Portuguesa, Americana) por metro quadrado."
+                url="https://suaobracerta.com.br/calculadora-telhado"
+                schema={generateCalculatorSchema(
+                    "Calculadora de Telhas",
+                    "Calcule a quantidade de telhas para cobertura de telhados.",
+                    "https://suaobracerta.com.br/calculadora-telhado"
+                )}
+            />
             <Header />
             <main className="flex-1">
                 <div className="container pt-6"><AdPlaceholder id="ad-telhado" className="max-w-3xl mx-auto" /></div>

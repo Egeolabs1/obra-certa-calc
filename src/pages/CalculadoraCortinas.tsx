@@ -9,6 +9,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { affiliateLinks } from "@/config/affiliateLinks";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import SEO from "@/components/SEO";
+import { generateCalculatorSchema } from "@/utils/schemas";
 
 const CalculadoraCortinas = () => {
     const [larguraJanela, setLarguraJanela] = useState("");
@@ -38,6 +40,16 @@ const CalculadoraCortinas = () => {
 
     return (
         <div className="flex min-h-screen flex-col bg-background">
+            <SEO
+                title="Calculadora de Cortinas"
+                description="Calcule a quantidade de tecido para cortinas com pregas (2x ou 3x volume)."
+                url="https://suaobracerta.com.br/calculadora-cortinas"
+                schema={generateCalculatorSchema(
+                    "Calculadora de Cortinas",
+                    "Calcule a metragem de tecido necessária para cortinas com base na largura da janela.",
+                    "https://suaobracerta.com.br/calculadora-cortinas"
+                )}
+            />
             <Header />
             <main className="flex-1">
                 <div className="container pt-6"><AdPlaceholder id="ad-cortina" className="max-w-3xl mx-auto" /></div>

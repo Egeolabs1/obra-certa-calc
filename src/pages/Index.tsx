@@ -1,4 +1,4 @@
-import { Paintbrush, LayoutGrid, Boxes, Container, Calculator, ArrowRight, Wind, Layers, Grid3X3, Home, Lightbulb, Droplets, Flower2, LayoutDashboard, Waves, Scroll, Blinds, Zap, Flame, ArrowUpFromLine, TrendingUp, AppWindow, Hammer, AlignHorizontalJustifyStart, Plug, ClipboardCheck, CalendarDays, HardHat, Cctv, Armchair, Landmark } from "lucide-react";
+import { Paintbrush, LayoutGrid, Boxes, Container, Calculator, ArrowRight, Wind, Layers, Grid3X3, Home, Lightbulb, Droplets, Flower2, LayoutDashboard, Waves, Scroll, Blinds, Zap, Flame, ArrowUpFromLine, TrendingUp, AppWindow, Hammer, AlignHorizontalJustifyStart, Plug, ClipboardCheck, CalendarDays, HardHat, Cctv, Armchair, Landmark, Component } from "lucide-react";
 import SEO from "@/components/SEO";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
@@ -58,37 +58,7 @@ const Index = () => {
           </div>
         </section>
 
-        {/* FASE 3: SERVIÇOS & TECNOLOGIA (Premium - High Value) */}
-        <section id="servicos-premium" className="py-12 bg-slate-900 border-b border-slate-800">
-          <div className="container">
-            <h2 className="mb-8 text-2xl font-bold text-white border-l-4 border-emerald-500 pl-4 flex items-center gap-2">
-              💎 Financeiro & Segurança <span className="text-xs font-normal text-slate-900 bg-emerald-400 px-2 py-1 rounded-full uppercase tracking-wider">Premium</span>
-            </h2>
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              <CalculatorCard
-                icon={Landmark}
-                title="Simulador de Financiamento"
-                description="Simule parcelas de Construcard ou Home Equity para reformar."
-                href="/calculadora-financiamento"
-                badge="Hot"
-              />
-              <CalculatorCard
-                icon={Cctv}
-                title="Projeto de Câmeras (CFTV)"
-                description="Quantas câmeras e qual HD você precisa para seu negócio?"
-                href="/calculadora-cftv"
-                badge="Novo"
-              />
-              <CalculatorCard
-                icon={Armchair}
-                title="Móveis Planejados"
-                description="Estimativa de custo para Cozinha e Quartos sob medida."
-                href="/calculadora-moveis-planejados"
-                badge="Novo"
-              />
-            </div>
-          </div>
-        </section>
+
 
         {/* FASE 0: GESTÃO & PLANEJAMENTO (New Phase 2) */}
         <section id="gestao" className="py-12 bg-indigo-50/50 dark:bg-indigo-950/20 border-b border-indigo-100 dark:border-indigo-900/30">
@@ -190,6 +160,13 @@ const Index = () => {
                 href="/calculadora-pisos"
               />
               <CalculatorCard
+                icon={Grid3X3}
+                title="Azulejos"
+                description="Quantidade de peças e m² para parede/chão."
+                href="/calculadora-azulejos"
+                badge="Novo"
+              />
+              <CalculatorCard
                 icon={AlignHorizontalJustifyStart}
                 title="Rodapé"
                 description="Quantidade de barras e cola por metro."
@@ -268,6 +245,13 @@ const Index = () => {
                 href="/calculadora-grama"
               />
               <CalculatorCard
+                icon={Component}
+                title="Cerca"
+                description="Mourões, arame farpado e tela."
+                href="/calculadora-cerca"
+                badge="Novo"
+              />
+              <CalculatorCard
                 icon={Hammer}
                 title="Deck de Madeira"
                 description="Réguas, barrotes e parafusos para deck."
@@ -307,6 +291,38 @@ const Index = () => {
                 title="Cortinas"
                 description="Tecido para cortinas sob medida."
                 href="/calculadora-cortinas"
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* FASE 3: SERVIÇOS & TECNOLOGIA (Premium - High Value) */}
+        <section id="servicos-premium" className="py-12 bg-slate-900 border-b border-slate-800">
+          <div className="container">
+            <h2 className="mb-8 text-2xl font-bold text-white border-l-4 border-emerald-500 pl-4 flex items-center gap-2">
+              💎 Financeiro & Segurança <span className="text-xs font-normal text-slate-900 bg-emerald-400 px-2 py-1 rounded-full uppercase tracking-wider">Premium</span>
+            </h2>
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              <CalculatorCard
+                icon={Landmark}
+                title="Simulador de Financiamento"
+                description="Simule parcelas de Construcard ou Home Equity para reformar."
+                href="/calculadora-financiamento"
+                badge="Hot"
+              />
+              <CalculatorCard
+                icon={Cctv}
+                title="Projeto de Câmeras (CFTV)"
+                description="Quantas câmeras e qual HD você precisa para seu negócio?"
+                href="/calculadora-cftv"
+                badge="Novo"
+              />
+              <CalculatorCard
+                icon={Armchair}
+                title="Móveis Planejados"
+                description="Estimativa de custo para Cozinha e Quartos sob medida."
+                href="/calculadora-moveis-planejados"
+                badge="Novo"
               />
             </div>
           </div>

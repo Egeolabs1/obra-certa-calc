@@ -1,5 +1,6 @@
 import { useState } from "react";
 import SEO from "@/components/SEO";
+import { generateCalculatorSchema } from "@/utils/schemas";
 import { AlignHorizontalJustifyStart, Calculator, ShoppingCart, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
@@ -45,6 +46,11 @@ const CalculadoraRodape = () => {
                 title="Calculadora de Rodapé"
                 description="Quantas barras de rodapé comprar? Calcule metros lineares e tubos de cola ou prego líquido."
                 url="https://suaobracerta.com.br/calculadora-rodape"
+                schema={generateCalculatorSchema(
+                    "Calculadora de Rodapé",
+                    "Calcule a quantidade de barras de rodapé e cola necessárias.",
+                    "https://suaobracerta.com.br/calculadora-rodape"
+                )}
             />
             <Header />
             <main className="flex-1">

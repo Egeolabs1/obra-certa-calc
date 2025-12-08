@@ -1,5 +1,6 @@
 import { useState } from "react";
 import SEO from "@/components/SEO";
+import { generateCalculatorSchema } from "@/utils/schemas";
 import { AppWindow, Calculator, ArrowLeft, Weight } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
@@ -42,6 +43,11 @@ const CalculadoraVidro = () => {
                 title="Calculadora de Peso de Vidro"
                 description="Estime o peso de vidros temperados ou laminados para escolher as roldanas e ferragens corretas."
                 url="https://suaobracerta.com.br/calculadora-vidro"
+                schema={generateCalculatorSchema(
+                    "Calculadora de Vidro",
+                    "Calcule o peso estimado de vidros temperados e laminados.",
+                    "https://suaobracerta.com.br/calculadora-vidro"
+                )}
             />
             <Header />
             <main className="flex-1">

@@ -9,6 +9,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { affiliateLinks } from "@/config/affiliateLinks";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import SEO from "@/components/SEO";
+import { generateCalculatorSchema } from "@/utils/schemas";
 
 interface ResultadoBTU {
     btuNecessario: number;
@@ -91,6 +93,16 @@ const CalculadoraArCondicionado = () => {
 
     return (
         <div className="flex min-h-screen flex-col bg-background">
+            <SEO
+                title="Calculadora de BTUs - Ar Condicionado"
+                description="Descubra a potência ideal (BTUs) do ar condicionado para seu quarto ou sala."
+                url="https://suaobracerta.com.br/calculadora-ar-condicionado"
+                schema={generateCalculatorSchema(
+                    "Calculadora de Ar Condicionado",
+                    "Calcule a capacidade necessária de BTUs para ar condicionado baseado no ambiente.",
+                    "https://suaobracerta.com.br/calculadora-ar-condicionado"
+                )}
+            />
             <Header />
 
             <main className="flex-1">

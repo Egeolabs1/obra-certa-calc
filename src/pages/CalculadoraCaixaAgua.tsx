@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { affiliateLinks } from "@/config/affiliateLinks";
+import SEO from "@/components/SEO";
+import { generateCalculatorSchema } from "@/utils/schemas";
 
 const CalculadoraCaixaAgua = () => {
     const [pessoas, setPessoas] = useState("4");
@@ -28,6 +30,16 @@ const CalculadoraCaixaAgua = () => {
 
     return (
         <div className="flex min-h-screen flex-col bg-background">
+            <SEO
+                title="Calculadora de Caixa D'água"
+                description="Calcule o tamanho ideal da caixa d'água para sua casa com base no número de moradores."
+                url="https://suaobracerta.com.br/calculadora-caixa-agua"
+                schema={generateCalculatorSchema(
+                    "Calculadora de Caixa D'água",
+                    "Calcule o volume necessário para a caixa d'água residencial.",
+                    "https://suaobracerta.com.br/calculadora-caixa-agua"
+                )}
+            />
             <Header />
             <main className="flex-1">
                 <div className="container pt-6"><AdPlaceholder id="ad-agua" className="max-w-3xl mx-auto" /></div>

@@ -10,6 +10,8 @@ import { Label } from "@/components/ui/label";
 import { affiliateLinks } from "@/config/affiliateLinks";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import SEO from "@/components/SEO";
+import { generateCalculatorSchema } from "@/utils/schemas";
 
 interface MateriaisDrywall {
     placas: number;
@@ -127,6 +129,16 @@ const CalculadoraDrywall = () => {
 
     return (
         <div className="flex min-h-screen flex-col bg-background">
+            <SEO
+                title="Calculadora de Drywall e Forros"
+                description="Calcule quantidade de chapas, montantes, guias e parafusos para Drywall."
+                url="https://suaobracerta.com.br/calculadora-drywall"
+                schema={generateCalculatorSchema(
+                    "Calculadora de Drywall",
+                    "Ferramenta para cálculo de materiais para paredes e forros de Drywall.",
+                    "https://suaobracerta.com.br/calculadora-drywall"
+                )}
+            />
             <Header />
             <main className="flex-1">
                 <div className="container pt-6">

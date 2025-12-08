@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import SEO from "@/components/SEO";
+import { generateCalculatorSchema } from "@/utils/schemas";
 
 const CalculadoraPapelParede = () => {
     const [alturaParede, setAlturaParede] = useState("");
@@ -58,6 +60,16 @@ const CalculadoraPapelParede = () => {
 
     return (
         <div className="flex min-h-screen flex-col bg-background">
+            <SEO
+                title="Calculadora de Papel de Parede"
+                description="Calcule quantos rolos de papel de parede você precisa, considerando rapport (desenho)."
+                url="https://suaobracerta.com.br/calculadora-papel-parede"
+                schema={generateCalculatorSchema(
+                    "Calculadora de Papel de Parede",
+                    "Calcule a quantidade de rolos de papel de parede considerando altura, largura e rapport.",
+                    "https://suaobracerta.com.br/calculadora-papel-parede"
+                )}
+            />
             <Header />
             <main className="flex-1">
                 <div className="container pt-6"><AdPlaceholder id="ad-papel" className="max-w-3xl mx-auto" /></div>

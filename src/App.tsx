@@ -39,6 +39,9 @@ import CalculadoraFios from "./pages/CalculadoraFios";
 import CalculadoraDeck from "./pages/CalculadoraDeck";
 import CalculadoraRodape from "./pages/CalculadoraRodape";
 
+import CalculadoraCerca from "./pages/CalculadoraCerca";
+import CalculadoraAzulejos from "./pages/CalculadoraAzulejos";
+
 import { OrcamentoProvider } from "./context/OrcamentoContext";
 import MeuOrcamento from "./pages/MeuOrcamento";
 import NotFound from "./pages/NotFound";
@@ -64,6 +67,7 @@ const App = () => (
               <Route path="/calculadora-tinta" element={<CalculadoraTinta />} />
               <Route path="/calculadora-pisos" element={<CalculadoraPisos />} />
               <Route path="/calculadora-drywall" element={<CalculadoraDrywall />} />
+              <Route path="/calculadora-azulejos" element={<CalculadoraAzulejos />} />
               <Route path="/calculadora-rejunte" element={<CalculadoraRejunte />} />
               <Route path="/calculadora-rodape" element={<CalculadoraRodape />} />
               <Route path="/calculadora-deck" element={<CalculadoraDeck />} />
@@ -94,6 +98,7 @@ const App = () => (
               <Route path="/calculadora-financiamento" element={<CalculadoraFinanciamento />} />
 
               {/* Jardim & Lazer */}
+              <Route path="/calculadora-cerca" element={<CalculadoraCerca />} />
               <Route path="/calculadora-grama" element={<CalculadoraGrama />} />
               <Route path="/calculadora-pavers" element={<CalculadoraPavers />} />
               <Route path="/calculadora-piscina" element={<CalculadoraPiscina />} />

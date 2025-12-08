@@ -24,7 +24,7 @@ const Header = () => {
             <HardHat className="h-6 w-6 text-primary-foreground" />
           </div>
           <span className="text-xl font-bold text-foreground">
-            Sua<span className="text-accent">Obra</span>Certa
+            Sua<span className="text-yellow-500">Obra</span>Certa
           </span>
         </Link>
 

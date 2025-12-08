@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { affiliateLinks } from "@/config/affiliateLinks";
+import SEO from "@/components/SEO";
+import { generateCalculatorSchema } from "@/utils/schemas";
 
 const CalculadoraGrama = () => {
     const [area, setArea] = useState("");
@@ -33,6 +35,16 @@ const CalculadoraGrama = () => {
 
     return (
         <div className="flex min-h-screen flex-col bg-background">
+            <SEO
+                title="Calculadora de Grama"
+                description="Calcule a quantidade de grama (rolos ou placas) para seu jardim."
+                url="https://suaobracerta.com.br/calculadora-grama"
+                schema={generateCalculatorSchema(
+                    "Calculadora de Grama",
+                    "Calcule quantos rolos ou placas de grama são necessários para uma área.",
+                    "https://suaobracerta.com.br/calculadora-grama"
+                )}
+            />
             <Header />
             <main className="flex-1">
                 <div className="container pt-6"><AdPlaceholder id="ad-grama" className="max-w-3xl mx-auto" /></div>

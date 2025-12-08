@@ -1,5 +1,6 @@
 import { useState } from "react";
 import SEO from "@/components/SEO";
+import { generateCalculatorSchema } from "@/utils/schemas";
 import { ArrowUpFromLine, Calculator, ShoppingCart, ArrowLeft, Ruler } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
@@ -43,6 +44,11 @@ const CalculadoraEscada = () => {
                 title="Calculadora de Escada (Blondel)"
                 description="Use a Lei de Blondel para calcular uma escada confortável e segura. Descubra a altura e pisada dos degraus."
                 url="https://suaobracerta.com.br/calculadora-escada"
+                schema={generateCalculatorSchema(
+                    "Calculadora de Escada",
+                    "Calcule o conforto e dimensões de escadas usando a Lei de Blondel.",
+                    "https://suaobracerta.com.br/calculadora-escada"
+                )}
             />
             <Header />
             <main className="flex-1">

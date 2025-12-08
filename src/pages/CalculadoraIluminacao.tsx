@@ -9,6 +9,8 @@ import { affiliateLinks } from "@/config/affiliateLinks";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import SEO from "@/components/SEO";
+import { generateCalculatorSchema } from "@/utils/schemas";
 
 const CalculadoraIluminacao = () => {
     const [comprimento, setComprimento] = useState("");
@@ -45,6 +47,16 @@ const CalculadoraIluminacao = () => {
 
     return (
         <div className="flex min-h-screen flex-col bg-background">
+            <SEO
+                title="Calculadora de Iluminação (Lúmens e Watts LED)"
+                description="Descubra a quantidade de lúmens e watts LED necessários para iluminar cada ambiente."
+                url="https://suaobracerta.com.br/calculadora-iluminacao"
+                schema={generateCalculatorSchema(
+                    "Calculadora de Iluminação",
+                    "Calcule a quantidade de luz (lúmens) necessária para cada ambiente.",
+                    "https://suaobracerta.com.br/calculadora-iluminacao"
+                )}
+            />
             <Header />
             <main className="flex-1">
                 <div className="container pt-6"><AdPlaceholder id="ad-luz" className="max-w-3xl mx-auto" /></div>
