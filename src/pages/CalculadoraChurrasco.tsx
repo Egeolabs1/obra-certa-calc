@@ -374,7 +374,8 @@ const CalculadoraChurrasco = () => {
                             </div>
                         </div>
                     </div>
-            </main >
+                </div>
+            </main>
             <Footer />
         </div >
     );
