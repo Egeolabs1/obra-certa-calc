@@ -10,8 +10,10 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import SEO from "@/components/SEO";
 import { generateCalculatorSchema } from "@/utils/schemas";
+import { useOrcamento } from "@/context/OrcamentoContext";
 
 const CalculadoraTelhado = () => {
+    const { addItem } = useOrcamento();
     const [area, setArea] = useState("");
     const [tipoTelha, setTipoTelha] = useState("romana"); // romana, portuguesa, americana
     const [inclinacao, setInclinacao] = useState("30"); // %
@@ -92,7 +94,30 @@ const CalculadoraTelhado = () => {
                             <div className="mt-8 text-center bg-gradient-result p-8 rounded-xl border-2 border-primary animate-scale-in">
                                 <p className="text-lg">Você precisa de:</p>
                                 <p className="text-5xl font-extrabold text-primary my-2">{resultado} Telhas</p>
-                                <Button className="mt-4 w-full" variant="success" size="lg"><ShoppingCart className="mr-2" /> COTAR TELHAS</Button>
+
+                                <div className="mt-6 space-y-3">
+                                    <Button
+                                        onClick={() => {
+                                            addItem({
+                                                id: crypto.randomUUID(),
+                                                name: `Telhas (${tipoTelha.charAt(0).toUpperCase() + tipoTelha.slice(1)})`,
+                                                description: `Área: ${area}m² | Inclinação: ${inclinacao}%`,
+                                                quantity: resultado,
+                                                unit: "Unidades",
+                                                category: "Cobertura - Telhado",
+                                                estimatedPrice: resultado * (tipoTelha === "americana" ? 2.5 : 1.8) // Estimativa R$2.50 ou R$1.80
+                                            });
+                                        }}
+                                        variant="outline"
+                                        size="xl"
+                                        className="w-full border-2 hover:bg-slate-50 text-slate-700"
+                                    >
+                                        <ShoppingCart className="h-5 w-5 mr-2" />
+                                        Adicionar ao Orçamento
+                                    </Button>
+
+                                    <Button className="w-full" variant="success" size="lg"><ShoppingCart className="mr-2" /> COTAR TELHAS ONLINE</Button>
+                                </div>
                             </div>
                         )}
                     </div>
