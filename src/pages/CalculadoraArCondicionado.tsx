@@ -266,14 +266,50 @@ const CalculadoraArCondicionado = () => {
 
                         <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up">
                             <h2 className="mb-4 text-lg font-semibold text-foreground">
-                                Como escolher os BTUs corretos?
+                                ❄️ Guia Completo: Escolhendo seu Ar Condicionado
                             </h2>
-                            <ul className="space-y-2 text-sm text-muted-foreground">
-                                <li>• <strong>Área:</strong> Quanto maior o quarto, mais BTUs precisa.</li>
-                                <li>• <strong>Sol:</strong> Se o sol bate à tarde, o ambiente esquenta muito mais, exigindo potência extra (+200 a +400 BTU/m²).</li>
-                                <li>• <strong>Pessoas e Eletrônicos:</strong> Cada corpo e aparelho emite calor, exigindo aprox. 600 BTUs extras cada.</li>
-                                <li>• <strong>Tecnologia Inverter:</strong> Recomendamos sempre modelos Inverter, pois economizam até 60% de energia.</li>
-                            </ul>
+                            <div className="space-y-6 text-sm text-muted-foreground">
+
+                                <div className="space-y-2">
+                                    <h3 className="font-medium text-foreground">1. O que são BTUs?</h3>
+                                    <p>
+                                        BTU (British Thermal Unit) é a unidade que mede a capacidade de refrigeração.
+                                        Basicamente, quanto maior o BTU, mais rápido e eficiente o aparelho consegue "tirar o calor" do ambiente.
+                                        Um aparelho com BTUs insuficientes nunca desligará o compressor, gastando muita energia sem gelar.
+                                    </p>
+                                </div>
+
+                                <div className="grid gap-4 sm:grid-cols-2">
+                                    <div className="bg-card p-4 rounded-lg border border-border">
+                                        <h3 className="font-medium text-foreground mb-2">⚡ Tecnologia Inverter</h3>
+                                        <p>
+                                            Sempre prefira modelos <strong>Inverter</strong>. Eles regulam a velocidade do compressor em vez de ficar ligando e desligando.
+                                            Isso gera uma economia de energia de até <strong>60%</strong> e é muito mais silencioso.
+                                        </p>
+                                    </div>
+                                    <div className="bg-card p-4 rounded-lg border border-border">
+                                        <h3 className="font-medium text-foreground mb-2">☀️ O Fator Sol</h3>
+                                        <p>
+                                            O sol é o maior vilão. Um quarto que recebe sol da tarde (poente) precisa de cerca de <strong>30% a mais de potência</strong> do que um quarto que só pega sol da manhã.
+                                            Nossa calculadora já ajusta isso automaticamente para você.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="space-y-2">
+                                    <h3 className="font-medium text-foreground">3. Dicas de Instalação e Uso</h3>
+                                    <ul className="list-disc list-inside space-y-1 ml-1">
+                                        <li>Mantenha portas e janelas fechadas enquanto ligado.</li>
+                                        <li>Limpe os filtros a cada 15 dias para manter a eficiência e a saúde do ar.</li>
+                                        <li>A temperatura ideal para saúde e economia fica entre <strong>23°C e 24°C</strong>. Abaixar para 17°C gasta muito mais energia e muitas vezes não gela mais rápido.</li>
+                                        <li>A evaporadora (parte interna) deve ficar centralizada na parede maior, se possível, para distribuir melhor o vento.</li>
+                                    </ul>
+                                </div>
+
+                                <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg text-xs">
+                                    * Cálculo baseado na norma ABNT NBR 5858 e práticas de mercado (600 a 800 BTU/m²).
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
