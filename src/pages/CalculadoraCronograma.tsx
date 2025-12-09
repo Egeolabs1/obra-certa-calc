@@ -26,6 +26,10 @@ interface Phase {
     color: string;
 }
 
+// ... imports remain the same
+
+// ... types remain the same
+
 const CalculadoraCronograma = () => {
     const [tipo, setTipo] = useState<ObraType>("construcao");
     const [area, setArea] = useState("");
@@ -41,87 +45,83 @@ const CalculadoraCronograma = () => {
 
         if (!areaNum || !start) return;
 
-        let phases: Phase[] = [];
+        const phases: Phase[] = [];
         let totalWeeks = 0;
 
-        // Base Logic (Simplified for MVP)
-        // Construção: ~1.2 m² per day per team -> ~20 weeks for 100m² ? 
-        // Let's use empirical rules: 100m² house = ~6 months (24 weeks). ~0.24 weeks per m².
-
-        let weeksPerSqm = 0.25;
-        if (tipo === "reforma_total") weeksPerSqm = 0.15;
-        if (tipo === "reforma_banheiro" || tipo === "reforma_cozinha") weeksPerSqm = 0.5; // High density work
-
-        // Adjust for fixed minimums
-        let estimatedWeeks = Math.ceil(areaNum * weeksPerSqm);
-        if (tipo === "construcao" && estimatedWeeks < 12) estimatedWeeks = 12; // Min 3 months
-        if (tipo === "reforma_total" && estimatedWeeks < 4) estimatedWeeks = 4;
+        // Common addPhase helper
+        let current = start;
+        const addPhase = (name: string, desc: string, icon: any, w: number, color: string) => {
+            const end = addDays(current, w * 7);
+            phases.push({
+                name,
+                description: desc,
+                icon,
+                durationWeeks: w,
+                startDate: current,
+                endDate: end,
+                color
+            });
+            current = end;
+        };
 
         if (tipo === "construcao") {
-            // Distribution: 
-            // 1. Projects/Preliminaries: 10%
-            // 2. Foundation/Structure: 25%
-            // 3. Walls/Roof: 20%
-            // 4. Electrical/Hydraulic: 15%
-            // 5. Finishing/Floors: 25%
-            // 6. Delivery: 5%
+            // Rule of thumb: ~0.25 weeks per sqm for full construction
+            let estimatedWeeks = Math.ceil(areaNum * 0.25);
+            if (estimatedWeeks < 12) estimatedWeeks = 12; // Min 3 months
 
-            const p1 = Math.max(2, Math.round(estimatedWeeks * 0.10));
-            const p2 = Math.max(3, Math.round(estimatedWeeks * 0.25));
-            const p3 = Math.max(3, Math.round(estimatedWeeks * 0.20));
-            const p4 = Math.max(2, Math.round(estimatedWeeks * 0.15));
-            const p5 = Math.max(3, Math.round(estimatedWeeks * 0.25));
-            const p6 = 1;
+            const p1 = Math.max(2, Math.round(estimatedWeeks * 0.10)); // Planning
+            const p2 = Math.max(3, Math.round(estimatedWeeks * 0.25)); // Foundation
+            const p3 = Math.max(3, Math.round(estimatedWeeks * 0.20)); // Walls/Roof
+            const p4 = Math.max(2, Math.round(estimatedWeeks * 0.15)); // Installations
+            const p5 = Math.max(3, Math.round(estimatedWeeks * 0.25)); // Finishing
+            const p6 = 1; // Delivery
 
             totalWeeks = p1 + p2 + p3 + p4 + p5 + p6;
 
-            let current = start;
-
-            const addPhase = (name: string, desc: string, icon: any, w: number, color: string) => {
-                const end = addDays(current, w * 7);
-                phases.push({
-                    name,
-                    description: desc,
-                    icon,
-                    durationWeeks: w,
-                    startDate: current,
-                    endDate: end,
-                    color
-                });
-                current = end;
-            };
-
-            addPhase("Planejamento e Projetos", "Projetos arquitetônico, estrutural, licenças na prefeitura e limpeza do terreno.", FileDown, p1, "bg-blue-500");
-            addPhase("Fundação e Estrutura", "Escavação, baldrames, concretagem de lajes e pilares.", HardHat, p2, "bg-orange-500");
-            addPhase("Alvenaria e Cobertura", "Levantamento de paredes, reboco e instalação do telhado.", Hammer, p3, "bg-yellow-500");
-            addPhase("Instalações", "Elétrica, hidráulica, esgoto e tubulações de ar.", Clock, p4, "bg-purple-500");
-            addPhase("Acabamentos", "Pisos, revestimentos, pintura, gesso e vidros.", Paintbrush, p5, "bg-teal-500");
-            addPhase("Limpeza e Entrega", "Limpeza fina, testes finais e mudança.", CheckCircle2, p6, "bg-green-500");
+            addPhase("Planejamento e Projetos", "Projetos, licenças e preparação do terreno.", FileDown, p1, "bg-blue-500");
+            addPhase("Fundação e Estrutura", "Escavação, baldrames, lajes e pilares.", HardHat, p2, "bg-orange-500");
+            addPhase("Alvenaria e Cobertura", "Paredes, reboco e telhado.", Hammer, p3, "bg-yellow-500");
+            addPhase("Instalações", "Elétrica, hidráulica e esgoto.", Clock, p4, "bg-purple-500");
+            addPhase("Acabamentos", "Pisos, pintura, louças e metais.", Paintbrush, p5, "bg-teal-500");
+            addPhase("Limpeza e Entrega", "Limpeza fina e vistoria.", CheckCircle2, p6, "bg-green-500");
 
         } else if (tipo === "reforma_total") {
-            // Simpler logic for Reform
+            // Rule of thumb: ~0.15 weeks per sqm for total reform
+            let estimatedWeeks = Math.ceil(areaNum * 0.15);
+            if (estimatedWeeks < 4) estimatedWeeks = 4;
+
             const p1 = Math.max(1, Math.round(estimatedWeeks * 0.15)); // Demo
             const p2 = Math.max(2, Math.round(estimatedWeeks * 0.25)); // Infra
-            const p3 = Math.max(2, Math.round(estimatedWeeks * 0.40)); // Finishing
-            const p4 = 1; // Cleanup
+            const p3 = Math.max(2, Math.round(estimatedWeeks * 0.50)); // Finishing
+            const p4 = 1; // Delivery
 
             totalWeeks = p1 + p2 + p3 + p4;
-            let current = start;
 
-            phases.push({ name: "Demolição e Retirada", description: "Quebra-quebra e remoção de entulho.", icon: Hammer, durationWeeks: p1, startDate: current, endDate: addDays(current, p1 * 7), color: "bg-red-500" });
-            current = addDays(current, p1 * 7);
+            addPhase("Demolição", "Retirada de pisos, quebra de paredes e entulho.", Hammer, p1, "bg-red-500");
+            addPhase("Infraestrutura", "Novos pontos de elétrica, hidráulica e regularização.", HardHat, p2, "bg-orange-500");
+            addPhase("Acabamentos", "Pisos, revestimentos, pintura e gesso.", Paintbrush, p3, "bg-teal-500");
+            addPhase("Entrega", "Limpeza e retoques finais.", CheckCircle2, p4, "bg-green-500");
 
-            phases.push({ name: "Infraestrutura", description: "Novos pontos de elétrica, hidráulica e regularização.", icon: HardHat, durationWeeks: p2, startDate: current, endDate: addDays(current, p2 * 7), color: "bg-orange-500" });
-            current = addDays(current, p2 * 7);
-
-            phases.push({ name: "Acabamentos", description: "Pisos, pintura, gesso e marcenaria.", icon: Paintbrush, durationWeeks: p3, startDate: current, endDate: addDays(current, p3 * 7), color: "bg-teal-500" });
-            current = addDays(current, p3 * 7);
-
-            phases.push({ name: "Entrega", description: "Limpeza final.", icon: CheckCircle2, durationWeeks: p4, startDate: current, endDate: addDays(current, p4 * 7), color: "bg-green-500" });
         } else {
-            // Small reforms
-            totalWeeks = 3;
-            phases.push({ name: "Reforma Rápida", description: "Execução direta da reforma.", icon: Hammer, durationWeeks: 3, startDate: start, endDate: addDays(start, 21), color: "bg-blue-500" });
+            // Reforms (Bathroom/Kitchen) - Higher density, explicit phases
+            // Base duration on complexity, not just area (though area helps)
+            // Small bath (<4m²): ~3 weeks. Large bath/Kitchen (>8m²): ~5-6 weeks.
+
+            let baseDuration = 3;
+            if (areaNum > 5) baseDuration = 4;
+            if (areaNum > 10) baseDuration = 6;
+
+            const p1 = 1; // Demo (usually 1 week is enough for a room)
+            const p2 = Math.ceil(baseDuration * 0.3); // Infra (pipes, waterproofing)
+            const p3 = Math.ceil(baseDuration * 0.5); // Tiling/Finishing
+            const p4 = 1; // Paint/Installations
+
+            totalWeeks = p1 + p2 + p3 + p4;
+
+            addPhase("Demolição e Retirada", "Remoção de louças, bancadas e revestimentos antigos.", Hammer, p1, "bg-red-500");
+            addPhase("Infra e Impermeabilização", "Adequação de encanamento, elétrica e impermeabilização (box).", HardHat, p2, "bg-orange-500");
+            addPhase("Revestimentos", "Assentamento de piso, azulejos e rejunte.", Paintbrush, p3, "bg-teal-500");
+            addPhase("Finalização", "Pintura teto, instalação de louças, metais e luminárias.", CheckCircle2, p4, "bg-green-500");
         }
 
         setCronograma(phases);
@@ -140,13 +140,15 @@ const CalculadoraCronograma = () => {
         <div className="flex min-h-screen flex-col bg-background print:bg-white">
             <SEO
                 title="Gerador de Cronograma de Obra Grátis"
-                description="Crie um cronograma físico-financeiro estimado para sua construção ou reforma. Organize as etapas da sua obra."
+                description="Planeje sua obra com nosso gerador de cronograma físico-financeiro. Ideal para construções e reformas."
                 url="https://suaobracerta.com.br/calculadora-cronograma"
-                keywords="cronograma obra, planejamento construção, etapas da obra, tempo de obra, gerenciamento obra"
+                keywords="cronograma obra, planejamento construção, etapas reforma, cronograma reforma banheiro"
                 schema={generateCalculatorSchema(
                     "Gerador de Cronograma",
-                    "Estime o tempo e as etapas da sua obra.",
-                    "https://suaobracerta.com.br/calculadora-cronograma"
+                    "Estime o tempo e as etapas da sua obra com precisão.",
+                    "https://suaobracerta.com.br/calculadora-cronograma",
+                    "https://suaobracerta.com.br/og-image.png",
+                    "UtilitiesApplication"
                 )}
             />
             <div className="print:hidden"><Header /></div>
@@ -159,10 +161,10 @@ const CalculadoraCronograma = () => {
                         <Link to="/" className="print:hidden mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"><ArrowLeft className="h-4 w-4" /> Voltar</Link>
 
                         <div className="mb-8 font-bold text-2xl flex items-center gap-3">
-                            <div className="bg-orange-600 rounded-xl p-3 text-white shadow-lg print:bg-transparent print:text-black print:p-0 print:shadow-none"><CalendarDays className="h-8 w-8" /></div>
+                            <div className="bg-orange-600 rounded-xl p-3 text-white shadow-lg print:bg-transparent print:text-orange-600 print:p-0 print:shadow-none"><CalendarDays className="h-8 w-8" /></div>
                             <div>
                                 <h1 className="leading-none text-3xl md:text-4xl text-foreground">Gerador de Cronograma</h1>
-                                <p className="text-sm font-normal text-muted-foreground mt-1 print:hidden">Planeje as etapas e o tempo da sua obra</p>
+                                <p className="text-sm font-normal text-muted-foreground mt-1 print:hidden">Planejamento profissional para sua obra</p>
                             </div>
                         </div>
 
@@ -171,11 +173,11 @@ const CalculadoraCronograma = () => {
                             <div className="grid gap-6 md:grid-cols-3">
                                 <div className="space-y-2">
                                     <Label>Tipo de Obra</Label>
-                                    <Select value={tipo} onValueChange={(v: any) => setTipo(v)}>
+                                    <Select value={tipo} onValueChange={(v) => setTipo(v as ObraType)}>
                                         <SelectTrigger><SelectValue /></SelectTrigger>
                                         <SelectContent>
-                                            <SelectItem value="construcao">Construção Completa (Do Zero)</SelectItem>
-                                            <SelectItem value="reforma_total">Reforma Total (Apto/Casa)</SelectItem>
+                                            <SelectItem value="construcao">Construção Completa</SelectItem>
+                                            <SelectItem value="reforma_total">Reforma Geral (Apto/Casa)</SelectItem>
                                             <SelectItem value="reforma_banheiro">Reforma Banheiro/Cozinha</SelectItem>
                                         </SelectContent>
                                     </Select>
@@ -189,7 +191,7 @@ const CalculadoraCronograma = () => {
                                     <Input type="date" value={dataInicio} onChange={e => setDataInicio(e.target.value)} />
                                 </div>
                             </div>
-                            <Button onClick={calcularCronograma} size="lg" className="w-full mt-6 font-bold bg-orange-600 hover:bg-orange-700 text-white">
+                            <Button onClick={calcularCronograma} size="lg" className="w-full mt-6 font-bold bg-orange-600 hover:bg-orange-700 text-white shadow-lg shadow-orange-900/20">
                                 <CalendarIcon className="mr-2 h-5 w-5" /> GERAR CRONOGRAMA
                             </Button>
                         </div>
@@ -199,35 +201,41 @@ const CalculadoraCronograma = () => {
                             <div ref={resultRef} className="animate-fade-up">
                                 <AlertBox duration={totalDuration} />
 
-                                <div className="relative border-l-4 border-muted ml-4 md:ml-8 space-y-8 py-4">
-                                    {cronograma.map((phase, idx) => (
-                                        <div key={idx} className="relative pl-8 md:pl-12">
-                                            {/* Dot */}
-                                            <div className={`absolute -left-[14px] top-6 h-6 w-6 rounded-full border-4 border-background ${phase.color}`} />
+                                {/* Timeline Visualization */}
+                                <div className="relative ml-4 md:ml-6 space-y-0 py-4 print:ml-0">
+                                    {/* Continuous Vertical Line */}
+                                    <div className="absolute left-[19px] top-6 bottom-6 w-0.5 bg-border print:border-l-2 print:border-gray-300 print:left-[19px]" />
 
-                                            <Card className="hover:shadow-md transition-shadow">
+                                    {cronograma.map((phase, idx) => (
+                                        <div key={idx} className="relative pl-12 md:pl-16 pb-8 print:pb-4 page-break-inside-avoid">
+                                            {/* Dot */}
+                                            <div className={`absolute left-[9px] top-6 h-6 w-6 rounded-full border-4 border-background ${phase.color} z-10 print:border-2 print:border-gray-600`} />
+
+                                            <Card className="hover:shadow-lg transition-all border-l-4 border-l-transparent hover:border-l-orange-500 print:shadow-none print:border print:break-inside-avoid">
                                                 <CardHeader className="pb-3">
                                                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
-                                                        <div className="flex items-center gap-2">
-                                                            <div className={`p-2 rounded-lg bg-opacity-10 ${phase.color.replace('bg-', 'bg-opacity-10 text-')}`}>
-                                                                <phase.icon className={`h-5 w-5 ${phase.color.replace('bg-', 'text-')}`} />
+                                                        <div className="flex items-center gap-3">
+                                                            <div className={`p-2.5 rounded-lg ${phase.color.replace('bg-', 'bg-opacity-10 text-')} print:bg-transparent print:text-black print:p-0`}>
+                                                                <phase.icon className={`h-5 w-5 ${phase.color.replace('bg-', 'text-')} print:text-black`} />
                                                             </div>
-                                                            <CardTitle className="text-lg">{phase.name}</CardTitle>
+                                                            <div>
+                                                                <CardTitle className="text-lg font-bold">{phase.name}</CardTitle>
+                                                                <CardDescription className="line-clamp-2 md:line-clamp-none print:text-gray-600">{phase.description}</CardDescription>
+                                                            </div>
                                                         </div>
-                                                        <div className="text-sm font-medium bg-muted px-3 py-1 rounded-full whitespace-nowrap">
+                                                        <div className="text-sm font-bold bg-orange-50 text-orange-700 px-3 py-1 rounded-full whitespace-nowrap border border-orange-100 print:border-gray-300 print:bg-white print:text-black">
                                                             {phase.durationWeeks} Semanas
                                                         </div>
                                                     </div>
-                                                    <CardDescription>{phase.description}</CardDescription>
                                                 </CardHeader>
                                                 <CardContent>
-                                                    <div className="flex items-center gap-4 text-sm text-muted-foreground bg-muted/30 p-3 rounded-lg">
-                                                        <div className="flex items-center gap-1">
-                                                            <span className="font-semibold text-foreground">Início:</span> {format(phase.startDate, 'dd/MM/yyyy')}
+                                                    <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground bg-muted/30 p-3 rounded-lg print:bg-gray-50">
+                                                        <div className="flex items-center gap-2 bg-background px-3 py-1.5 rounded-md shadow-sm border print:border-gray-300">
+                                                            <span className="font-semibold text-foreground">Início:</span> {format(phase.startDate, 'dd MMM yyyy', { locale: ptBR })}
                                                         </div>
-                                                        <div className="w-px h-4 bg-border" />
-                                                        <div className="flex items-center gap-1">
-                                                            <span className="font-semibold text-foreground">Fim:</span> {format(phase.endDate, 'dd/MM/yyyy')}
+                                                        <ArrowLeft className="h-4 w-4 rotate-180 text-muted-foreground/50 hidden md:block" />
+                                                        <div className="flex items-center gap-2 bg-background px-3 py-1.5 rounded-md shadow-sm border print:border-gray-300">
+                                                            <span className="font-semibold text-foreground">Fim:</span> {format(phase.endDate, 'dd MMM yyyy', { locale: ptBR })}
                                                         </div>
                                                     </div>
                                                 </CardContent>
@@ -237,12 +245,50 @@ const CalculadoraCronograma = () => {
                                 </div>
 
                                 <div className="mt-8 flex justify-center print:hidden">
-                                    <Button onClick={handlePrint} variant="outline" className="gap-2 border-orange-200 text-orange-700 hover:bg-orange-50">
-                                        <FileDown className="h-4 w-4" /> Imprimir Cronograma
+                                    <Button onClick={handlePrint} size="lg" variant="outline" className="gap-2 border-orange-200 text-orange-700 hover:bg-orange-50 font-bold">
+                                        <FileDown className="h-5 w-5" /> Imprimir / Salvar PDF
                                     </Button>
+                                </div>
+
+                                <div className="hidden print:block mt-8 text-center text-xs text-muted-foreground w-full border-t pt-4">
+                                    <p>Cronograma gerado automaticamente por <strong>suaobracerta.com.br</strong></p>
+                                    <p>Acesse o site para mais calculadoras de obra gratuitas.</p>
                                 </div>
                             </div>
                         )}
+                        {/* Explicação Metodologia */}
+                        <div className="mt-12 rounded-xl border border-border bg-muted/30 p-6 md:p-8 animate-fade-up print:hidden" style={{ animationDelay: "200ms" }}>
+                            <h2 className="mb-4 text-lg font-semibold text-foreground">
+                                📊 Como este cronograma é calculado?
+                            </h2>
+                            <div className="space-y-4 text-sm text-muted-foreground">
+                                <p>
+                                    Este gerador utiliza índices de produtividade padrão da construção civil para estimar a duração de cada etapa.
+                                </p>
+                                <div className="grid gap-4 md:grid-cols-2">
+                                    <div className="space-y-2">
+                                        <h3 className="font-medium text-foreground">Fatores Considerados:</h3>
+                                        <ul className="list-disc list-inside space-y-1">
+                                            <li>Área total da construção (m²)</li>
+                                            <li>Complexidade média (Residencial padrão)</li>
+                                            <li>Equipe padrão (2 pedreiros + 2 ajudantes)</li>
+                                        </ul>
+                                    </div>
+                                    <div className="space-y-2">
+                                        <h3 className="font-medium text-foreground">Etapas Incluídas:</h3>
+                                        <ul className="list-disc list-inside space-y-1">
+                                            <li>Planejamento e Fundação</li>
+                                            <li>Alvenaria e Estrutura</li>
+                                            <li>Instalações (Elétrica/Hidráulica)</li>
+                                            <li>Acabamentos e Pintura</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <p className="text-xs italic border-t pt-4 mt-2">
+                                    Nota: O tempo real pode variar dependendo das condições climáticas, disponibilidade de materiais e tamanho da equipe contratada. Use este cronograma como uma referência inicial.
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </main>
@@ -251,15 +297,17 @@ const CalculadoraCronograma = () => {
     );
 };
 
-// Helper simple components
+// ... AlertBox remains mostly the same, just refined styling
 const AlertBox = ({ duration }: { duration: number }) => (
-    <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-8 flex items-start gap-3">
-        <Clock className="h-5 w-5 text-blue-600 mt-0.5" />
+    <div className="bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-900 rounded-xl p-5 mb-8 flex items-start gap-4 shadow-sm print:border-gray-300 print:bg-white">
+        <div className="bg-blue-100 dark:bg-blue-900/50 p-2 rounded-full">
+            <Clock className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+        </div>
         <div>
-            <h3 className="font-bold text-blue-800">Tempo Total Estimado: {duration} Semanas (~{Math.round(duration / 4.3)} Meses)</h3>
-            <p className="text-sm text-blue-600">
-                Esta é uma estimativa baseada em médias de mercado. O tempo real pode variar conforme a disponibilidade de mão de obra,
-                chuvas e fluxo financeiro.
+            <h3 className="font-bold text-lg text-blue-900 dark:text-blue-100">Estimativa Total: {duration} Semanas (~{Math.round(duration / 4.3)} Meses)</h3>
+            <p className="text-sm text-blue-700 dark:text-blue-300 leading-relaxed mt-1">
+                Este cronograma é uma previsão baseada em índices médios de produtividade. <br className="hidden md:inline" />
+                Fatores como chuvas, atraso de entrega de material e equipe reduzida podem alterar o prazo final.
             </p>
         </div>
     </div>

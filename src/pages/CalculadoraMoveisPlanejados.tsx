@@ -159,6 +159,27 @@ const CalculadoraMoveisPlanejados = () => {
                                 </div>
                             </div>
                         )}
+
+                        <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up" style={{ animationDelay: "200ms" }}>
+                            <h2 className="mb-4 text-lg font-semibold text-foreground">
+                                🪚 Composição do Preço
+                            </h2>
+                            <div className="space-y-4 text-sm text-muted-foreground">
+                                <p>
+                                    O valor do móvel sob medida varia muito dependendo do material e das ferragens utilizadas.
+                                </p>
+                                <div className="grid gap-3 sm:grid-cols-2">
+                                    <div className="p-3 rounded-lg bg-card border border-border">
+                                        <p className="font-medium text-foreground mb-1">MDF Branco vs Madeirado</p>
+                                        <p>O MDF branco é o mais econômico. Cores madeiradas, foscas ou brilhosas podem encarecer o projeto em até 40%.</p>
+                                    </div>
+                                    <div className="p-3 rounded-lg bg-card border border-border">
+                                        <p className="font-medium text-foreground mb-1">Móveis Modulados</p>
+                                        <p>Se o orçamento estiver apertado, considere cozinhas <strong>moduladas</strong> (prontas de fábrica), que custam uma fração do preço da marcenaria sob medida.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </main>

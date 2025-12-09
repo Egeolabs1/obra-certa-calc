@@ -129,6 +129,27 @@ const CalculadoraPapelParede = () => {
                                 <Button variant="outline" className="w-full mt-4"><ShoppingCart className="mr-2" /> ENCONTRAR PAPEL DE PAREDE</Button>
                             </div>
                         )}
+
+                        <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up" style={{ animationDelay: "200ms" }}>
+                            <h2 className="mb-4 text-lg font-semibold text-foreground">
+                                📜 Como calculamos os rolos?
+                            </h2>
+                            <div className="space-y-4 text-sm text-muted-foreground">
+                                <p>
+                                    Consideramos o casamento do desenho (Rapport) para garantir que as listras ou estampas se alinhem perfeitamente.
+                                </p>
+                                <div className="grid gap-3 sm:grid-cols-2">
+                                    <div className="p-3 rounded-lg bg-card border border-border">
+                                        <p className="font-medium text-foreground mb-1">Cálculo da Faixa</p>
+                                        <p>Cada faixa consome a <strong>Altura da Parede + Rapport + 10cm de sobra</strong> (para recortes no teto e rodapé).</p>
+                                    </div>
+                                    <div className="p-3 rounded-lg bg-card border border-border">
+                                        <p className="font-medium text-foreground mb-1">Rolos Necessários</p>
+                                        <p>Dividimos o comprimento do rolo pelo tamanho da faixa real para saber quantas faixas cabem em cada rolo.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </main>

@@ -25,40 +25,57 @@ interface ChecklistItem {
 
 const INITIAL_DATA: ChecklistItem[] = [
     // Elétrica
-    { id: "el_1", category: "Elétrica", label: "Testar todas as tomadas com um equipamento", status: "pending", note: "" },
+    { id: "el_1", category: "Elétrica", label: "Testar todas as tomadas com equipamento (voltagem correta?)", status: "pending", note: "" },
     { id: "el_2", category: "Elétrica", label: "Acender e apagar todas as luzes", status: "pending", note: "" },
-    { id: "el_3", category: "Elétrica", label: "Verificar quadro de disjuntores (identificação)", status: "pending", note: "" },
-    { id: "el_4", category: "Elétrica", label: "Testar campainha/interfone", status: "pending", note: "" },
+    { id: "el_3", category: "Elétrica", label: "Verificar quadro de disjuntores (identificado e limpo?)", status: "pending", note: "" },
+    { id: "el_4", category: "Elétrica", label: "Testar campainha e interfone", status: "pending", note: "" },
+    { id: "el_5", category: "Elétrica", label: "Pontos de TV e Internet (passa-fio desobstruído?)", status: "pending", note: "" },
 
     // Hidráulica
-    { id: "hi_1", category: "Hidráulica", label: "Abrir todas as torneiras (checar fluxo/cor)", status: "pending", note: "" },
-    { id: "hi_2", category: "Hidráulica", label: "Acionar descargas (vazão e retorno)", status: "pending", note: "" },
-    { id: "hi_3", category: "Hidráulica", label: "Verificar vazamentos sob pias/sifões", status: "pending", note: "" },
-    { id: "hi_4", category: "Hidráulica", label: "Testar chuveiros (quente/frio)", status: "pending", note: "" },
-    { id: "hi_5", category: "Hidráulica", label: "Verificar ralo do box (escoamento)", status: "pending", note: "" },
+    { id: "hi_1", category: "Hidráulica", label: "Abrir todas as torneiras (fluxo normal e cor da água)", status: "pending", note: "" },
+    { id: "hi_2", category: "Hidráulica", label: "Acionar descargas (vazão, retorno e barulho)", status: "pending", note: "" },
+    { id: "hi_3", category: "Hidráulica", label: "Verificar vazamentos sob pias (sifão seco?)", status: "pending", note: "" },
+    { id: "hi_4", category: "Hidráulica", label: "Testar chuveiros (água quente e fria)", status: "pending", note: "" },
+    { id: "hi_5", category: "Hidráulica", label: "Verificar escoamento do ralo do box e sacada", status: "pending", note: "" },
+    { id: "hi_6", category: "Hidráulica", label: "Registros gerais abrem e fecham suavemente?", status: "pending", note: "" },
 
     // Pisos e Revestimentos
-    { id: "pi_1", category: "Pisos e Paredes", label: "Verificar peças quebradas ou trincadas", status: "pending", note: "" },
-    { id: "pi_2", category: "Pisos e Paredes", label: "Batidas de 'oco' nos pisos", status: "pending", note: "" },
-    { id: "pi_3", category: "Pisos e Paredes", label: "Qualidade do rejunte (falhas)", status: "pending", note: "" },
-    { id: "pi_4", category: "Pisos e Paredes", label: "Pintura (manchas, bolhas, descascados)", status: "pending", note: "" },
+    { id: "pi_1", category: "Pisos e Paredes", label: "Peças quebradas, trincadas ou lascadas", status: "pending", note: "" },
+    { id: "pi_2", category: "Pisos e Paredes", label: "Batidas de 'oco' nos pisos e azulejos", status: "pending", note: "" },
+    { id: "pi_3", category: "Pisos e Paredes", label: "Rejunte uniforme e sem falhas/buracos", status: "pending", note: "" },
+    { id: "pi_4", category: "Pisos e Paredes", label: "Nivelamento do piso (poças de água?)", status: "pending", note: "" },
+    { id: "pi_5", category: "Pisos e Paredes", label: "Soleiras e baguetes (riscos ou manchas)", status: "pending", note: "" },
+
+    // Pintura
+    { id: "pt_1", category: "Pintura", label: "Manchas, bolhas ou descascados nas paredes", status: "pending", note: "" },
+    { id: "pt_2", category: "Pintura", label: "Acabamento no teto e sancas", status: "pending", note: "" },
+    { id: "pt_3", category: "Pintura", label: "Recortes em volta de tomadas e portais", status: "pending", note: "" },
+    { id: "pt_4", category: "Pintura", label: "Portas pintadas uniformemente (topo e base)", status: "pending", note: "" },
 
     // Portas e Janelas
     { id: "po_1", category: "Portas e Janelas", label: "Abrir e fechar todas as portas (chaves funcionam?)", status: "pending", note: "" },
-    { id: "po_2", category: "Portas e Janelas", label: "Verificar alinhamento e raspagem no chão", status: "pending", note: "" },
-    { id: "po_3", category: "Portas e Janelas", label: "Janelas correm suavemente?", status: "pending", note: "" },
-    { id: "po_4", category: "Portas e Janelas", label: "Vidros riscados ou trincados", status: "pending", note: "" },
+    { id: "po_2", category: "Portas e Janelas", label: "Portas raspando no chão ou batente?", status: "pending", note: "" },
+    { id: "po_3", category: "Portas e Janelas", label: "Janelas correm suavemente nos trilhos?", status: "pending", note: "" },
+    { id: "po_4", category: "Portas e Janelas", label: "Vidros riscados, trincados ou manchados", status: "pending", note: "" },
+    { id: "po_5", category: "Portas e Janelas", label: "Borrachas de vedação e escovas", status: "pending", note: "" },
 
-    // Áreas Externas (se houver)
-    { id: "ex_1", category: "Outros", label: "Vaga de Garagem (demarcação)", status: "pending", note: "" },
-    { id: "ex_2", category: "Outros", label: "Controle Portão Eletrônico", status: "pending", note: "" },
+    // Louças e Metais
+    { id: "lm_1", category: "Louças e Metais", label: "Torneiras e registros riscados ou oxidados", status: "pending", note: "" },
+    { id: "lm_2", category: "Louças e Metais", label: "Cubas e vasos sanitários (trincas)", status: "pending", note: "" },
+    { id: "lm_3", category: "Louças e Metais", label: "Assentos sanitários fixados corretamente", status: "pending", note: "" },
+
+    // Áreas Externas
+    { id: "ex_1", category: "Outros", label: "Vaga de Garagem (localização e pintura)", status: "pending", note: "" },
+    { id: "ex_2", category: "Outros", label: "Controle Portão Eletrônico e Tags", status: "pending", note: "" },
+    { id: "ex_3", category: "Outros", label: "Área de serviço e tanque", status: "pending", note: "" },
 ];
 
-const CATEGORIES = ["Elétrica", "Hidráulica", "Pisos e Paredes", "Portas e Janelas", "Outros"];
+const CATEGORIES = ["Elétrica", "Hidráulica", "Pisos e Paredes", "Pintura", "Portas e Janelas", "Louças e Metais", "Outros"];
 
 const ChecklistVistoria = () => {
     const [items, setItems] = useState<ChecklistItem[]>(INITIAL_DATA);
     const [progress, setProgress] = useState(0);
+    const [showOnlyIssues, setShowOnlyIssues] = useState(false);
 
     // Load from LocalStorage
     useEffect(() => {
@@ -157,11 +174,48 @@ const ChecklistVistoria = () => {
                             <Progress value={progress} className="h-3" />
                         </div>
 
+                        {/* Stats & Tools */}
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 print:mb-4">
+                            <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-xl border text-center">
+                                <div className="text-2xl font-bold text-slate-800 dark:text-slate-200">{items.length}</div>
+                                <div className="text-xs text-muted-foreground uppercase tracking-wider font-semibold">Total</div>
+                            </div>
+                            <div className="bg-red-50 dark:bg-red-950/30 p-4 rounded-xl border border-red-100 dark:border-red-900/50 text-center">
+                                <div className="text-2xl font-bold text-red-600 font-mono">{items.filter(i => i.status === 'issue').length}</div>
+                                <div className="text-xs text-red-600/70 uppercase tracking-wider font-bold">Problemas</div>
+                            </div>
+                            <div className="bg-green-50 dark:bg-green-950/30 p-4 rounded-xl border border-green-100 dark:border-green-900/50 text-center">
+                                <div className="text-2xl font-bold text-green-600 font-mono">{items.filter(i => i.status === 'ok').length}</div>
+                                <div className="text-xs text-green-600/70 uppercase tracking-wider font-bold">Aprovados</div>
+                            </div>
+                            <div className="flex items-center justify-center p-4 bg-muted/30 rounded-xl border print:hidden">
+                                <div className="flex items-center space-x-2">
+                                    <label htmlFor="show-issues" className="text-sm font-medium leading-none cursor-pointer">
+                                        Ap. Problemas
+                                    </label>
+                                    <Button
+                                        size="sm"
+                                        variant={showOnlyIssues ? "destructive" : "outline"}
+                                        onClick={() => setShowOnlyIssues(!showOnlyIssues)}
+                                        className="h-8"
+                                    >
+                                        {showOnlyIssues ? "Ativado" : "Desativado"}
+                                    </Button>
+                                    {/* Using a simple button as a toggle for simplicity/speed without extra components */}
+                                </div>
+                            </div>
+                        </div>
+
                         {/* List */}
                         <div className="space-y-6">
                             <Accordion type="multiple" defaultValue={CATEGORIES} className="space-y-4">
                                 {CATEGORIES.map(category => {
-                                    const categoryItems = items.filter(i => i.category === category);
+                                    const categoryItems = items.filter(i => {
+                                        const matchesCategory = i.category === category;
+                                        const matchesFilter = showOnlyIssues ? i.status === 'issue' : true;
+                                        return matchesCategory && matchesFilter;
+                                    });
+
                                     if (categoryItems.length === 0) return null;
 
                                     return (

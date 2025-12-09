@@ -139,6 +139,36 @@ const CalculadoraFios = () => {
                                 </div>
                             </div>
                         )}
+
+                        <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up" style={{ animationDelay: "200ms" }}>
+                            <h2 className="mb-4 text-lg font-semibold text-foreground">
+                                ⚡ Tabela de Referência (Simplificada)
+                            </h2>
+                            <p className="text-sm text-muted-foreground mb-4">
+                                Baseado na capacidade de condução de corrente para cabos de cobre isolados em PVC (Eletroduto embutido).
+                            </p>
+                            <div className="rounded-lg border border-border overflow-hidden">
+                                <table className="w-full text-sm text-left">
+                                    <thead className="bg-muted text-muted-foreground font-medium">
+                                        <tr>
+                                            <th className="p-3">Bitola (mm²)</th>
+                                            <th className="p-3">Capacidade Aprox.</th>
+                                            <th className="p-3">Uso Comum</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-border">
+                                        <tr className="bg-card"><td className="p-3">1.5mm²</td><td className="p-3">15.5A</td><td className="p-3">Iluminação</td></tr>
+                                        <tr className="bg-card"><td className="p-3">2.5mm²</td><td className="p-3">21A</td><td className="p-3">Tomadas de uso geral</td></tr>
+                                        <tr className="bg-card"><td className="p-3">4.0mm²</td><td className="p-3">28A</td><td className="p-3">Chuveiros (até 5500W/220V)</td></tr>
+                                        <tr className="bg-card"><td className="p-3">6.0mm²</td><td className="p-3">36A</td><td className="p-3">Chuveiros Potentes</td></tr>
+                                        <tr className="bg-card"><td className="p-3">10.0mm²</td><td className="p-3">50A</td><td className="p-3">Entrada de Energia</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div className="mt-4 p-3 bg-red-50 dark:bg-red-900/20 text-red-800 dark:text-red-200 rounded-lg text-xs">
+                                🛑 <strong>Importante:</strong> Esta tabela é apenas para referência rápida. Fatores como temperatura, agrupamento de cabos e distância influenciam o dimensionamento correto. Consulte sempre um eletricista.
+                            </div>
+                        </div>
                     </div>
                 </div>
             </main>

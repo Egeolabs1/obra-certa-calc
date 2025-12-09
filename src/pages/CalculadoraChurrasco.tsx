@@ -345,8 +345,35 @@ const CalculadoraChurrasco = () => {
                                 </div>
                             )
                         }
-                    </div >
-                </div >
+
+                        <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up" style={{ animationDelay: "200ms" }}>
+                            <h2 className="mb-4 text-lg font-semibold text-foreground">
+                                🥩 Entenda o Cálculo do Churrasco
+                            </h2>
+                            <div className="space-y-4 text-sm text-muted-foreground">
+                                <p>
+                                    Nosso algoritmo considera o perfil dos convidados e a duração do evento para evitar que falte comida ou bebida.
+                                </p>
+                                <div className="grid gap-3 sm:grid-cols-2">
+                                    <div className="p-3 rounded-lg bg-card border border-border">
+                                        <p className="font-medium text-foreground mb-1">Consumo Base (Carne)</p>
+                                        <ul className="list-disc list-inside space-y-1">
+                                            <li>Homens: 450g</li>
+                                            <li>Mulheres: 300g</li>
+                                            <li>Crianças: 200g</li>
+                                        </ul>
+                                    </div>
+                                    <div className="p-3 rounded-lg bg-card border border-border">
+                                        <p className="font-medium text-foreground mb-1">Fatores de Ajuste</p>
+                                        <ul className="list-disc list-inside space-y-1">
+                                            <li><strong>Duração Longa (6h+):</strong> +30% em carnes e +40% em cerveja.</li>
+                                            <li><strong>Turma Comilona:</strong> +25% em carnes.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
             </main >
             <Footer />
         </div >

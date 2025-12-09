@@ -244,6 +244,27 @@ const CalculadoraEnergia = () => {
 
                             </div>
                         )}
+
+                        <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up" style={{ animationDelay: "200ms" }}>
+                            <h2 className="mb-4 text-lg font-semibold text-foreground">
+                                ☀️ Como calculamos seu sistema solar?
+                            </h2>
+                            <div className="space-y-4 text-sm text-muted-foreground">
+                                <p>
+                                    Esta simulação considera sistemas <strong>On-Grid</strong> (conectados à rede).
+                                </p>
+                                <div className="grid gap-3 sm:grid-cols-2">
+                                    <div className="p-3 rounded-lg bg-card border border-border">
+                                        <p className="font-medium text-foreground mb-1">Irradiação Solar (HSP)</p>
+                                        <p>Utilizamos a média de Horas de Sol Pleno (HSP) da sua região (Ex: Nordeste 5.4h, Sul 4.3h) para estimar a geração.</p>
+                                    </div>
+                                    <div className="p-3 rounded-lg bg-card border border-border">
+                                        <p className="font-medium text-foreground mb-1">Equipamentos</p>
+                                        <p>Consideramos painéis modernos de <strong>550W</strong> e inversor compatível. A área estimada inclui o espaçamento necessário entre placas.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </main>

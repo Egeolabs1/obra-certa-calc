@@ -242,6 +242,21 @@ const CalculadoraDrywall = () => {
                                 </Button>
                             </div>
                         )}
+
+                        <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up" style={{ animationDelay: "200ms" }}>
+                            <h2 className="mb-4 text-lg font-semibold text-foreground">
+                                🏗️ Detalhes dos Materiais
+                            </h2>
+                            <div className="space-y-3 text-sm text-muted-foreground">
+                                <p><strong>Placas (Chapas):</strong> Consideramos o tamanho padrão de 1.20 x 2.40m (2.88m²). Para paredes, calculamos chapeamento duplo (ambos os lados).</p>
+                                <p><strong>Montantes:</strong> Perfis verticais instalados a cada 60cm de distância (padrão).</p>
+                                <p><strong>Guias:</strong> Perfis horizontais fixados no teto e no chão para sustentar os montantes.</p>
+                                <p><strong>Parafusos:</strong> Inclui parafusos GN25 (para fixar a placa no metal) e Metal-Metal (para fixar a estrutura).</p>
+                                <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 text-blue-800 dark:text-blue-200 rounded-lg text-xs">
+                                    💡 <strong>Dica:</strong> Para áreas úmidas (banheiros, cozinhas), lembre-se de comprar a <strong>Chapa Verde (RU)</strong> que é resistente à umidade.
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </main>

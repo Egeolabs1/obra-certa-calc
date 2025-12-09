@@ -179,6 +179,27 @@ const CalculadoraFinanciamento = () => {
                                 </div>
                             </div>
                         )}
+
+                        <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up" style={{ animationDelay: "200ms" }}>
+                            <h2 className="mb-4 text-lg font-semibold text-foreground">
+                                🏦 Sobre a Simulação de Crédito
+                            </h2>
+                            <div className="space-y-4 text-sm text-muted-foreground">
+                                <p>
+                                    Esta calculadora utiliza a <strong>Tabela Price</strong>, que é o sistema de amortização mais comum para empréstimos pessoais e financiamentos de curto prazo.
+                                </p>
+                                <div className="grid gap-3 sm:grid-cols-2">
+                                    <div className="p-3 rounded-lg bg-card border border-border">
+                                        <p className="font-medium text-foreground mb-1">Taxas de Juros</p>
+                                        <p>Utilizamos uma taxa média de mercado de <strong>1.5% ao mês</strong>. Bancos podem oferecer taxas de 1.2% a 4.0% dependendo do seu perfil.</p>
+                                    </div>
+                                    <div className="p-3 rounded-lg bg-card border border-border">
+                                        <p className="font-medium text-foreground mb-1">Custo Efetivo Total (CET)</p>
+                                        <p>Lembre-se que além dos juros, os bancos cobram IOF, Seguros e tarifas administrativas que podem encarecer a parcela.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </main>

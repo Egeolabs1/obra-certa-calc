@@ -24,10 +24,11 @@ const SEO = ({
     return (
         <Helmet>
             {/* Standard Metadata */}
-            <title>{`${title} | ${siteTitle}`}</title>
+            <title>{title ? `${title} | ${siteTitle}` : siteTitle}</title>
             <meta name="description" content={description} />
             {keywords && <meta name="keywords" content={keywords} />}
             <link rel="canonical" href={url} />
+            <meta name="robots" content="index, follow" />
 
             {/* Open Graph / Facebook */}
             <meta property="og:type" content={type} />

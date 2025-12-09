@@ -106,6 +106,27 @@ const CalculadoraIluminacao = () => {
                                 </Button>
                             </div>
                         )}
+
+                        <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up" style={{ animationDelay: "200ms" }}>
+                            <h2 className="mb-4 text-lg font-semibold text-foreground">
+                                💡 Entenda os Lúmens e Lux
+                            </h2>
+                            <div className="space-y-4 text-sm text-muted-foreground">
+                                <p>
+                                    A quantidade de luz necessária depende da função do ambiente. Um escritório precisa de muito mais luz que um quarto.
+                                </p>
+                                <div className="grid gap-3 sm:grid-cols-2">
+                                    <div className="p-3 rounded-lg bg-card border border-border">
+                                        <p className="font-medium text-foreground mb-1">Lux (Lúmens/m²)</p>
+                                        <p>Baseado na NBR 5413: Salas (150-200), Cozinhas (300-500), Escritórios (500). Quartos exigem menos luz (150).</p>
+                                    </div>
+                                    <div className="p-3 rounded-lg bg-card border border-border">
+                                        <p className="font-medium text-foreground mb-1">Watts vs Lúmens</p>
+                                        <p>Watts é o consumo de energia. Lúmens é a quantidade de luz. Uma lâmpada LED de 9W gera aprox. <strong>800 Lúmens</strong>.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </main>

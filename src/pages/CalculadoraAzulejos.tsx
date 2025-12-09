@@ -220,6 +220,27 @@ const CalculadoraAzulejos = () => {
                                 </Button>
                             </div>
                         )}
+
+                        <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up" style={{ animationDelay: "200ms" }}>
+                            <h2 className="mb-4 text-lg font-semibold text-foreground">
+                                🧱 Como calcular pisos e revestimentos?
+                            </h2>
+                            <div className="space-y-4 text-sm text-muted-foreground">
+                                <p>
+                                    O cálculo da área é simples (Largura x Altura), mas o segredo está na margem de segurança.
+                                </p>
+                                <div className="grid gap-3 sm:grid-cols-2">
+                                    <div className="p-3 rounded-lg bg-card border border-border">
+                                        <p className="font-medium text-foreground mb-1">Por que adicionar Margem?</p>
+                                        <p>Peças quebram no transporte ou no corte. Para instalação reta, recomenda-se <strong>10%</strong>. Para diagonal, <strong>15%</strong>.</p>
+                                    </div>
+                                    <div className="p-3 rounded-lg bg-card border border-border">
+                                        <p className="font-medium text-foreground mb-1">Caixas Fechadas</p>
+                                        <p>O resultado em peças é exato, mas as lojas vendem por m² ou caixa. Sempre arredonde para a caixa cheia mais próxima.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </main>

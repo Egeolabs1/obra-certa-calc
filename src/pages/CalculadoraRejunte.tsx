@@ -115,6 +115,31 @@ const CalculadoraRejunte = () => {
                             </div>
                         )}
                     </div>
+
+                    {/* Informações extras */}
+                    <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up" style={{ animationDelay: "200ms" }}>
+                        <h2 className="mb-4 text-lg font-semibold text-foreground">
+                            🔢 Entenda o Cálculo de Rejunte
+                        </h2>
+                        <div className="space-y-4 text-sm text-muted-foreground">
+                            <p>
+                                Utilizamos a fórmula padrão da indústria para estimar o consumo de rejunte cimentício:
+                            </p>
+                            <div className="bg-card border border-border p-4 rounded-lg font-mono text-xs md:text-sm text-foreground overflow-x-auto">
+                                Kg/m² = ((A + L) x E x J x 1,60) / (A x L)
+                            </div>
+                            <ul className="list-disc list-inside space-y-1 ml-1 text-xs md:text-sm">
+                                <li><strong>A:</strong> Altura da peça (mm)</li>
+                                <li><strong>L:</strong> Largura da peça (mm)</li>
+                                <li><strong>E:</strong> Espessura da peça (mm)</li>
+                                <li><strong>J:</strong> Largura da junta (mm)</li>
+                                <li><strong>1,60:</strong> Coeficiente de densidade médio do rejunte</li>
+                            </ul>
+                            <p className="text-xs mt-2">
+                                * O resultado final pode variar dependendo da profundidade real da junta e desperdício na aplicação.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </main>
             <Footer />

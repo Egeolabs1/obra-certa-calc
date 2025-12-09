@@ -96,6 +96,31 @@ const CalculadoraTelhado = () => {
                             </div>
                         )}
                     </div>
+
+                    {/* Informações extras */}
+                    <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up" style={{ animationDelay: "200ms" }}>
+                        <h2 className="mb-4 text-lg font-semibold text-foreground">
+                            🏠 Entenda o Cálculo de Telhas
+                        </h2>
+                        <div className="space-y-4 text-sm text-muted-foreground">
+                            <div className="space-y-2">
+                                <p><strong className="text-foreground">1. Área Real vs. Área Projetada:</strong></p>
+                                <p>
+                                    A área do telhado é maior que a área da casa devido à inclinação.
+                                    Nossa calculadora converte a área plana para a área inclinada usando o fator de correção da inclinação informada (hipotenusa).
+                                </p>
+                            </div>
+
+                            <div className="space-y-2">
+                                <p><strong className="text-foreground">2. Consumo por Tipo:</strong></p>
+                                <ul className="list-disc list-inside space-y-1 ml-1">
+                                    <li><strong>Romana:</strong> ~16 telhas/m²</li>
+                                    <li><strong>Portuguesa:</strong> ~17 telhas/m² (encaixe diferente)</li>
+                                    <li><strong>Americana:</strong> ~12.5 telhas/m² (maior rendimento)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </main>
             <Footer />

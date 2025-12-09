@@ -86,6 +86,35 @@ const CalculadoraPavers = () => {
                             </div>
                         )}
                     </div>
+
+                    {/* Informações extras */}
+                    <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up" style={{ animationDelay: "200ms" }}>
+                        <h2 className="mb-4 text-lg font-semibold text-foreground">
+                            📋 Sobre o Cálculo de Pavers
+                        </h2>
+                        <div className="space-y-4 text-sm text-muted-foreground">
+                            <p>
+                                O cálculo de bloquetes é feito considerando a área total e o consumo médio por metro quadrado de cada modelo.
+                            </p>
+                            <div className="grid gap-3 sm:grid-cols-3">
+                                <div className="p-3 rounded-lg bg-card border border-border">
+                                    <p className="font-medium text-foreground mb-1">Retangular</p>
+                                    <p>Modelo Holandês (10x20cm). Consumo aproximado de <strong>50 peças/m²</strong>.</p>
+                                </div>
+                                <div className="p-3 rounded-lg bg-card border border-border">
+                                    <p className="font-medium text-foreground mb-1">Ossinho</p>
+                                    <p>Modelo 16 faces. Consumo médio de <strong>39 peças/m²</strong>.</p>
+                                </div>
+                                <div className="p-3 rounded-lg bg-card border border-border">
+                                    <p className="font-medium text-foreground mb-1">Sextavado</p>
+                                    <p>Modelo de 25cm. Consumo aproximado de <strong>18 peças/m²</strong>.</p>
+                                </div>
+                            </div>
+                            <p className="mt-2 text-xs">
+                                * O cálculo já inclui uma margem de segurança de 5% para recortes e quebras.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </main>
             <Footer />

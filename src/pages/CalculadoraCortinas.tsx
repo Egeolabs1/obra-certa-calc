@@ -106,6 +106,30 @@ const CalculadoraCortinas = () => {
                                 <Button asChild className="w-full" variant="secondary" size="lg"><a href={affiliateLinks.furniture.curtains} target="_blank" rel="noopener noreferrer"><ShoppingCart className="mr-2" /> VER TECIDOS E CORTINAS</a></Button>
                             </div>
                         )}
+
+                        <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up" style={{ animationDelay: "200ms" }}>
+                            <h2 className="mb-4 text-lg font-semibold text-foreground">
+                                🪟 Entenda o cálculo de Tecido
+                            </h2>
+                            <div className="space-y-4 text-sm text-muted-foreground">
+                                <p>
+                                    Para que a cortina tenha aquele caimento bonito com ondas, precisamos de muito mais tecido do que a largura da janela.
+                                </p>
+                                <div className="grid gap-3 sm:grid-cols-2">
+                                    <div className="p-3 rounded-lg bg-card border border-border">
+                                        <p className="font-medium text-foreground mb-1">Fator de Franzimento</p>
+                                        <ul className="list-disc list-inside space-y-1">
+                                            <li><strong>2x (Padrão):</strong> Para cada 1m de janela, usamos 2m de tecido. Bom para tecidos encorpados (Linho, Shantung).</li>
+                                            <li><strong>3x (Volumosa):</strong> Ideal para tecidos leves como Voil, para dar volume.</li>
+                                        </ul>
+                                    </div>
+                                    <div className="p-3 rounded-lg bg-card border border-border">
+                                        <p className="font-medium text-foreground mb-1">Acabamentos (Barras)</p>
+                                        <p>Adicionamos automaticamente <strong>40cm na altura</strong> (20cm para cabeçote + 20cm para barra) e <strong>40cm na largura</strong> (bainhas laterais).</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </main>

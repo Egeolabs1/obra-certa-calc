@@ -85,6 +85,27 @@ const CalculadoraCaixaAgua = () => {
                                 </Button>
                             </div>
                         )}
+
+                        <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up" style={{ animationDelay: "200ms" }}>
+                            <h2 className="mb-4 text-lg font-semibold text-foreground">
+                                💧 Entenda o consumo de água
+                            </h2>
+                            <div className="space-y-4 text-sm text-muted-foreground">
+                                <p>
+                                    O cálculo é baseado na média de consumo diário recomendada pela ABNT e concessionárias de água.
+                                </p>
+                                <div className="grid gap-3 sm:grid-cols-2">
+                                    <div className="p-3 rounded-lg bg-card border border-border">
+                                        <p className="font-medium text-foreground mb-1">Consumo por Pessoa</p>
+                                        <p>Estimamos <strong>150 litros/dia</strong> por morador em casas e <strong>200 litros/dia</strong> em apartamentos.</p>
+                                    </div>
+                                    <div className="p-3 rounded-lg bg-card border border-border">
+                                        <p className="font-medium text-foreground mb-1">Reserva de Segurança</p>
+                                        <p>Recomendamos ter água armazenada suficiente para pelo menos <strong>2 dias</strong> de consumo, prevenindo falta de abastecimento.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </main>

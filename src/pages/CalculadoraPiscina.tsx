@@ -298,6 +298,30 @@ const CalculadoraPiscina = () => {
                                 </div>
                             </div>
                         )}
+
+                        <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up" style={{ animationDelay: "200ms" }}>
+                            <h2 className="mb-4 text-lg font-semibold text-foreground">
+                                📐 Geometria da Piscina
+                            </h2>
+                            <div className="space-y-4 text-sm text-muted-foreground">
+                                <p>
+                                    Calculamos o volume e a área de revestimento com base na forma geométrica escolhida.
+                                </p>
+                                <div className="grid gap-3 sm:grid-cols-2">
+                                    <div className="p-3 rounded-lg bg-card border border-border">
+                                        <p className="font-medium text-foreground mb-1">Volume (Litros)</p>
+                                        <ul className="list-disc list-inside space-y-1">
+                                            <li><strong>Retangular:</strong> Comprimento x Largura x Profundidade.</li>
+                                            <li><strong>Redonda:</strong> Área do Círculo x Profundidade.</li>
+                                        </ul>
+                                    </div>
+                                    <div className="p-3 rounded-lg bg-card border border-border">
+                                        <p className="font-medium text-foreground mb-1">Impermeabilização</p>
+                                        <p>Consideramos a área total (chão + paredes) e uma média de consumo de argamassa polimérica de <strong>4kg/m²</strong>.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </main>

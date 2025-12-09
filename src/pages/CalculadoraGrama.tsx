@@ -84,6 +84,27 @@ const CalculadoraGrama = () => {
                                 </div>
                             </div>
                         )}
+
+                        <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up" style={{ animationDelay: "200ms" }}>
+                            <h2 className="mb-4 text-lg font-semibold text-foreground">
+                                🌿 Tipos de Grama e Formatos
+                            </h2>
+                            <div className="space-y-4 text-sm text-muted-foreground">
+                                <p>
+                                    Calculamos a quantidade com uma margem de segurança de <strong>5%</strong> para recortes.
+                                </p>
+                                <div className="grid gap-3 sm:grid-cols-2">
+                                    <div className="p-3 rounded-lg bg-card border border-border">
+                                        <p className="font-medium text-foreground mb-1">Grama em Rolo</p>
+                                        <p>Geralmente comercializada em rolos de <strong>40cm x 125cm</strong> (0.50m²). Ideal para áreas grandes e planas.</p>
+                                    </div>
+                                    <div className="p-3 rounded-lg bg-card border border-border">
+                                        <p className="font-medium text-foreground mb-1">Grama em Placa</p>
+                                        <p>Geralmente vendida em placas de <strong>50cm x 50cm</strong> (0.25m²). Mais comum para Esmeralda e São Carlos.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </main>

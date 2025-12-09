@@ -103,6 +103,26 @@ const CalculadoraDeck = () => {
                                 </div>
                             </div>
                         )}
+
+                        <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up" style={{ animationDelay: "200ms" }}>
+                            <h2 className="mb-4 text-lg font-semibold text-foreground">
+                                🔨 Como calcular o material para Deck?
+                            </h2>
+                            <div className="space-y-4 text-sm text-muted-foreground">
+                                <div className="space-y-2">
+                                    <p><strong className="text-foreground">Réguas de Madeira:</strong></p>
+                                    <p>Calculamos a metragem linear total dividindo a área pela largura da régua, adicionando 10% de margem de segurança (perdas e recortes).</p>
+                                </div>
+                                <div className="space-y-2">
+                                    <p><strong className="text-foreground">Barrotes (Estrutura):</strong></p>
+                                    <p>Consideramos vigas de estrutura espaçadas a cada 40-50cm. A estimativa média é de 3.5 metros lineares de barrote por m² de deck.</p>
+                                </div>
+                                <div className="space-y-2">
+                                    <p><strong className="text-foreground">Parafusos:</strong></p>
+                                    <p>Estimamos 2 parafusos por cruzamento entre régua e barrote. Resulta em aproximadamente 40 a 50 parafusos por m².</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </main>

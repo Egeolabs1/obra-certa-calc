@@ -204,6 +204,27 @@ const CalculadoraCFTV = () => {
                                 </Card>
                             </div>
                         )}
+
+                        <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up" style={{ animationDelay: "200ms" }}>
+                            <h2 className="mb-4 text-lg font-semibold text-foreground">
+                                📹 Entenda o seu Projeto de CFTV
+                            </h2>
+                            <div className="space-y-4 text-sm text-muted-foreground">
+                                <p>
+                                    O dimensionamento correto do DVR e do HD é crucial para garantir que você tenha as imagens quando precisar.
+                                </p>
+                                <div className="grid gap-3 sm:grid-cols-2">
+                                    <div className="p-3 rounded-lg bg-card border border-border">
+                                        <p className="font-medium text-foreground mb-1">Canais do DVR</p>
+                                        <p>DVRs vêm em padrões de 4, 8, 16 ou 32 canais. Sempre sugerimos um modelo com folga para futuras expansões.</p>
+                                    </div>
+                                    <div className="p-3 rounded-lg bg-card border border-border">
+                                        <p className="font-medium text-foreground mb-1">Armazenamento (HD)</p>
+                                        <p>Consideramos uma média de <strong>20GB por câmera/dia</strong> em resolução HD. Para Full HD, esse valor pode dobrar.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </main>

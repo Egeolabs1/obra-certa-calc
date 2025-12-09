@@ -103,6 +103,27 @@ const CalculadoraVidro = () => {
                                 </div>
                             </div>
                         )}
+
+                        <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up" style={{ animationDelay: "200ms" }}>
+                            <h2 className="mb-4 text-lg font-semibold text-foreground">
+                                ⚖️ Entenda o cálculo de Peso
+                            </h2>
+                            <div className="space-y-4 text-sm text-muted-foreground">
+                                <p>
+                                    O cálculo de peso é fundamental para comprar o kit de roldanas correto, evitando que a porta emperre ou quebre o trilho.
+                                </p>
+                                <div className="grid gap-3 sm:grid-cols-2">
+                                    <div className="p-3 rounded-lg bg-card border border-border">
+                                        <p className="font-medium text-foreground mb-1">Fórmula da Densidade</p>
+                                        <p>Consideramos a densidade média do vidro: <strong>2.5kg/m²</strong> para cada 1mm de espessura.</p>
+                                    </div>
+                                    <div className="p-3 rounded-lg bg-card border border-border">
+                                        <p className="font-medium text-foreground mb-1">Exemplo</p>
+                                        <p>Um vidro de 10mm pesa <strong>25kg por m²</strong>. Uma porta de 2m² pesará 50kg.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </main>

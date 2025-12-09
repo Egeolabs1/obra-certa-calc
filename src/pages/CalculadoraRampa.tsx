@@ -96,6 +96,27 @@ const CalculadoraRampa = () => {
                                 </p>
                             </div>
                         )}
+
+                        <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up" style={{ animationDelay: "200ms" }}>
+                            <h2 className="mb-4 text-lg font-semibold text-foreground">
+                                📐 Normas de Inclinação
+                            </h2>
+                            <div className="space-y-4 text-sm text-muted-foreground">
+                                <p>
+                                    Uma rampa muito íngreme é perigosa e inutilizável para cadeirantes.
+                                </p>
+                                <div className="grid gap-3 sm:grid-cols-2">
+                                    <div className="p-3 rounded-lg bg-card border border-border">
+                                        <p className="font-medium text-foreground mb-1">NBR 9050 (Acessibilidade)</p>
+                                        <p>A inclinação máxima permitida é <strong>8.33% (1:12)</strong>. Ou seja, para cada 1m de altura, precisa de 12m de comprimento.</p>
+                                    </div>
+                                    <div className="p-3 rounded-lg bg-card border border-border">
+                                        <p className="font-medium text-foreground mb-1">Rampas de Garagem</p>
+                                        <p>Carros conseguem subir rampas mais íngremes, geralmente entre <strong>20% e 25%</strong>. Acima disso, o carro pode raspar embaixo.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </main>

@@ -99,6 +99,27 @@ const CalculadoraRodape = () => {
                                 </div>
                             </div>
                         )}
+
+                        <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up" style={{ animationDelay: "200ms" }}>
+                            <h2 className="mb-4 text-lg font-semibold text-foreground">
+                                📏 Cálculo de Rodapé e Cola
+                            </h2>
+                            <div className="space-y-4 text-sm text-muted-foreground">
+                                <p>
+                                    O cálculo leva em conta o perímetro total da sala, descontando as portas e adicionando a quebra de corte.
+                                </p>
+                                <div className="grid gap-3 sm:grid-cols-2">
+                                    <div className="p-3 rounded-lg bg-card border border-border">
+                                        <p className="font-medium text-foreground mb-1">Descontos</p>
+                                        <p>Descontamos aprox. <strong>90cm</strong> para cada porta. Adicionamos <strong>10%</strong> de margem de segurança para os cortes (meia-esquadria).</p>
+                                    </div>
+                                    <div className="p-3 rounded-lg bg-card border border-border">
+                                        <p className="font-medium text-foreground mb-1">Cola / Fixação</p>
+                                        <p>Para rodapés de poliestireno ou MDF, 1 tubo de 400g de cola (prego líquido) rende entre <strong>10 a 12 metros lineares</strong>.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </main>

@@ -211,6 +211,26 @@ const CalculadoraCerca = () => {
                                 </Button>
                             </div>
                         )}
+
+                        <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up" style={{ animationDelay: "200ms" }}>
+                            <h2 className="mb-4 text-lg font-semibold text-foreground">
+                                🚧 Como calcular material para cerca?
+                            </h2>
+                            <div className="space-y-4 text-sm text-muted-foreground">
+                                <div className="space-y-2">
+                                    <p><strong className="text-foreground">Mourões (Postes):</strong></p>
+                                    <p>Calculamos a quantidade dividindo o perímetro pela distância entre eles (geralmente 2.5m). Adicionamos 5% extra para reforços (cantos/estycadores).</p>
+                                </div>
+                                <div className="space-y-2">
+                                    <p><strong className="text-foreground">Arame:</strong></p>
+                                    <p>O consumo depende da quantidade de fios. Usamos rolos padrão de 500m (farpado) ou 1000m (liso) para o cálculo.</p>
+                                </div>
+                                <div className="space-y-2">
+                                    <p><strong className="text-foreground">Tela:</strong></p>
+                                    <p>Calculada por metro linear. Recomendamos rolos de 25m para facilitar o manuseio.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </main>
