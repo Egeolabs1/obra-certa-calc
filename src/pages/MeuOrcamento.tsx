@@ -70,9 +70,9 @@ const MeuOrcamento = () => {
 
                     <div className="hidden print:flex flex-row items-center justify-between mb-4 border-b pb-2">
                         <div className="flex items-center gap-2">
-                            {/* Use text-black for print to ensure high contrast and visibility */}
-                            <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-900 bg-slate-900 print:bg-black print:border-black">
-                                <HardHat className="h-5 w-5 text-white" />
+                            {/* Use transparent bg and black text for print to ensure visibility even without 'Background Graphics' enabled */}
+                            <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-900 bg-slate-900 print:bg-transparent print:border-black">
+                                <HardHat className="h-5 w-5 text-white print:text-black" />
                             </div>
                             <span className="text-lg font-bold text-slate-900 print:text-black">
                                 SuaObraCerta
