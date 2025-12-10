@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { Flame, Calculator, ShoppingCart, ArrowLeft, Beer, Share2, Printer } from "lucide-react";
+import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 import SEO from "@/components/SEO";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
@@ -48,6 +49,9 @@ const CalculadoraChurrasco = () => {
         sal: number,
         financeiro: {
             total: number,
+            totalCarnes: number,
+            totalBebidas: number,
+            totalExtras: number,
             porPessoa: number,
             detalhe: string
         }
@@ -141,8 +145,17 @@ const CalculadoraChurrasco = () => {
             sal,
             financeiro: {
                 total: Math.ceil(custoTotal),
+                totalCarnes: Math.ceil(custoPicanha + custoLinguica + custoFrango),
+                totalBebidas: Math.ceil(custoCerveja + custoRefri),
+                totalExtras: Math.ceil(custoCarvao + custoPao + custoGelo + custoSal + custoQueijo), // Including cheese in extras/meats typically? Plan says 'Extras'. Actually Queijo is often considered 'Carne'/Food. Let's put Queijo in Carnes or a separate Food category? The UI groups Queijo with Carnes. Let's add it to totalCarnes for simplicity or keep separate.
+                // Re-reading logic: Queijo is in 'carnes' list in UI. Let's add to totalCarnes.
+                // Wait, previous 'detalhe' string didn't have Queijo explicitly.
+                // Let's look at line 145 original: `Carnes: R$${Math.ceil(custoPicanha + custoLinguica + custoFrango)}` -> Queijo was MISSING in the summary textual detail?
+                // Line 123 includes custoQueijo in total.
+                // Let's add custoQueijo to totalCarnes for the chart.
+                // And let's fix the detalhe string too if it was missing.
                 porPessoa: Math.ceil(porPessoa),
-                detalhe: `Carnes: R$${Math.ceil(custoPicanha + custoLinguica + custoFrango)} | Bebidas: R$${Math.ceil(custoCerveja + custoRefri)} | Extras: R$${Math.ceil(custoCarvao + custoPao + custoGelo + custoSal)}`
+                detalhe: `Carnes: R$${Math.ceil(custoPicanha + custoLinguica + custoFrango + custoQueijo)} | Bebidas: R$${Math.ceil(custoCerveja + custoRefri)} | Extras: R$${Math.ceil(custoCarvao + custoPao + custoGelo + custoSal)}`
             }
         });
     };
@@ -302,6 +315,43 @@ const CalculadoraChurrasco = () => {
                             resultado && (
                                 <div ref={resultRef} className="mt-8 animate-scale-in">
                                     <PrintHeader />
+
+                                    {/* Visual Chart - Print Hidden */}
+                                    <div className="bg-card border border-border rounded-xl p-6 shadow-card mb-6 print:hidden">
+                                        <h3 className="font-bold text-sm mb-4 uppercase text-muted-foreground text-center">Distribuição de custos</h3>
+                                        <div className="h-[250px] w-full">
+                                            <ResponsiveContainer width="100%" height="100%">
+                                                <PieChart>
+                                                    <Pie
+                                                        data={[
+                                                            { name: 'Carnes', value: resultado.financeiro.totalCarnes, color: '#ef4444' },
+                                                            { name: 'Bebidas', value: resultado.financeiro.totalBebidas, color: '#eab308' },
+                                                            { name: 'Extras', value: resultado.financeiro.totalExtras, color: '#f97316' },
+                                                        ]}
+                                                        cx="50%"
+                                                        cy="50%"
+                                                        innerRadius={60}
+                                                        outerRadius={80}
+                                                        paddingAngle={5}
+                                                        dataKey="value"
+                                                    >
+                                                        {[
+                                                            { name: 'Carnes', value: resultado.financeiro.totalCarnes, color: '#ef4444' },
+                                                            { name: 'Bebidas', value: resultado.financeiro.totalBebidas, color: '#eab308' },
+                                                            { name: 'Extras', value: resultado.financeiro.totalExtras, color: '#f97316' },
+                                                        ].map((entry, index) => (
+                                                            <Cell key={`cell-${index}`} fill={entry.color} />
+                                                        ))}
+                                                    </Pie>
+                                                    <Tooltip
+                                                        formatter={(value: number) => `R$ ${value}`}
+                                                        contentStyle={{ backgroundColor: 'white', borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+                                                    />
+                                                    <Legend verticalAlign="bottom" height={36} />
+                                                </PieChart>
+                                            </ResponsiveContainer>
+                                        </div>
+                                    </div>
                                     {/* Print Summary of Inputs */}
                                     <div className="hidden print:block mb-4 p-4 border rounded-lg bg-gray-50 border-gray-200">
                                         <h3 className="font-bold text-sm mb-2 uppercase text-gray-500">Detalhes do Evento</h3>
