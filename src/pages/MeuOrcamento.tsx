@@ -5,7 +5,7 @@ import SEO from "@/components/SEO";
 import { generateCalculatorSchema } from "@/utils/schemas";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Trash2, FileDown, ShoppingCart, Share2 } from "lucide-react";
+import { ArrowLeft, Trash2, FileDown, ShoppingCart, Share2, HardHat } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 
@@ -66,6 +66,18 @@ const MeuOrcamento = () => {
                                 <FileDown className="h-4 w-4 mr-2" /> Salvar PDF
                             </Button>
                         </div>
+                    </div>
+
+                    <div className="hidden print:flex flex-col items-center justify-center mb-8 border-b pb-6">
+                        <div className="flex items-center gap-2 mb-2">
+                            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary print:bg-slate-900 border print:border-slate-900">
+                                <HardHat className="h-5 w-5 text-primary-foreground print:text-white" />
+                            </div>
+                            <span className="text-xl font-bold text-slate-900">
+                                SuaObraCerta
+                            </span>
+                        </div>
+                        <p className="text-sm text-slate-500 font-medium">suaobracerta.com.br</p>
                     </div>
 
                     <div className="flex items-center gap-4 mb-8">
