@@ -10,8 +10,10 @@ import { Label } from "@/components/ui/label";
 import { affiliateLinks } from "@/config/affiliateLinks";
 import SEO from "@/components/SEO";
 import { generateCalculatorSchema } from "@/utils/schemas";
+import { useOrcamento } from "@/context/OrcamentoContext";
 
 const CalculadoraDeck = () => {
+    const { addItem } = useOrcamento();
     const [area, setArea] = useState("");
     const [larguraRegua, setLarguraRegua] = useState("10"); // cm
     const [resultado, setResultado] = useState<{ metrosLineares: number; barrotes: number; parafusos: number } | null>(null);
@@ -100,6 +102,46 @@ const CalculadoraDeck = () => {
                                 </div>
                                 <div className="mt-6">
                                     <Button asChild className="w-full" variant="secondary" size="lg"><a href={affiliateLinks.flooring.deckVarnish} target="_blank" rel="noopener noreferrer"><ShoppingCart className="mr-2" /> ENCONTRAR VERNIZ POLISTEN</a></Button>
+
+                                    <Button
+                                        onClick={() => {
+                                            // Réguas
+                                            addItem({
+                                                id: crypto.randomUUID(),
+                                                name: `Réguas de Deck`,
+                                                description: `Para ${area}m² | Largura ${larguraRegua}cm`,
+                                                quantity: resultado.metrosLineares,
+                                                unit: "Metros Lineares",
+                                                category: "Área Externa - Deck",
+                                                estimatedPrice: resultado.metrosLineares * 35 // R$35/m
+                                            });
+                                            // Barrotes
+                                            addItem({
+                                                id: crypto.randomUUID(),
+                                                name: `Barrotes (Estrutura Deck)`,
+                                                description: `Vigas para estrutura do deck`,
+                                                quantity: resultado.barrotes,
+                                                unit: "Metros",
+                                                category: "Área Externa - Deck",
+                                                estimatedPrice: resultado.barrotes * 20 // R$20/m
+                                            });
+                                            // Parafusos
+                                            addItem({
+                                                id: crypto.randomUUID(),
+                                                name: `Parafusos Inox Deck`,
+                                                description: `Para fixação das réguas`,
+                                                quantity: resultado.parafusos,
+                                                unit: "Unidades",
+                                                category: "Área Externa - Deck",
+                                                estimatedPrice: resultado.parafusos * 0.8 // R$0.80/un
+                                            });
+                                        }}
+                                        variant="outline"
+                                        size="xl"
+                                        className="w-full mt-3 border-2 hover:bg-amber-50 text-amber-900 border-amber-100"
+                                    >
+                                        <ShoppingCart className="mr-2 h-5 w-5" /> Adicionar Materiais ao Orçamento
+                                    </Button>
                                 </div>
                             </div>
                         )}

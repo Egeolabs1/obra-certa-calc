@@ -1,6 +1,7 @@
 import { useState } from "react";
 import SEO from "@/components/SEO";
 import { generateCalculatorSchema } from "@/utils/schemas";
+import { useOrcamento } from "@/context/OrcamentoContext";
 import { ArrowUpFromLine, Calculator, ShoppingCart, ArrowLeft, Ruler } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
@@ -12,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 const CalculadoraEscada = () => {
+    const { addItem } = useOrcamento();
     const [alturaTotal, setAlturaTotal] = useState("");
     const [resultado, setResultado] = useState<{ degraus: number; espelho: number; piso: number; formula: string } | null>(null);
 
@@ -99,6 +101,24 @@ const CalculadoraEscada = () => {
 
                                 <div className="mt-6">
                                     <Button asChild variant="outline" className="w-full"><a href={affiliateLinks.structural.stairs} target="_blank" rel="noopener noreferrer"><ShoppingCart className="mr-2" /> VER PROTETORES DE DEGRAU</a></Button>
+
+                                    <Button
+                                        onClick={() => {
+                                            addItem({
+                                                id: crypto.randomUUID(),
+                                                name: `Projeto Escada (${resultado.degraus} Degraus)`,
+                                                description: `Blondel: ${resultado.degraus} degraus de ${resultado.espelho}cm x ${resultado.piso}cm`,
+                                                quantity: 1,
+                                                unit: "Projeto",
+                                                category: "Projetos",
+                                                estimatedPrice: 0 // Apenas projeto
+                                            });
+                                        }}
+                                        variant="default"
+                                        className="w-full mt-2 bg-blue-600 hover:bg-blue-700 text-white"
+                                    >
+                                        <ArrowUpFromLine className="mr-2 h-4 w-4" /> Salvar no Orçamento
+                                    </Button>
                                 </div>
                             </div>
                         )}

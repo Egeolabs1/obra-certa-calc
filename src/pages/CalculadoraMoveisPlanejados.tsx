@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { Armchair, ArrowLeft, Ruler, Calculator, ExternalLink, Lightbulb, Wallet, CheckCircle2 } from "lucide-react";
+import { Armchair, ArrowLeft, Ruler, Calculator, ExternalLink, Lightbulb, Wallet, CheckCircle2, ShoppingCart } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -12,8 +12,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import SEO from "@/components/SEO";
 import { generateCalculatorSchema } from "@/utils/schemas";
 import { affiliateLinks } from "@/config/affiliateLinks";
+import { useOrcamento } from "@/context/OrcamentoContext";
 
 const CalculadoraMoveisPlanejados = () => {
+    const { addItem } = useOrcamento();
     const [metros, setMetros] = useState("");
     const [acabamento, setAcabamento] = useState("branco");
     const [resultado, setResultado] = useState<{
@@ -128,6 +130,25 @@ const CalculadoraMoveisPlanejados = () => {
                                         <p className="text-sm text-muted-foreground">Valor médio de mercado (Mão de obra + Material)</p>
                                     </CardContent>
                                 </Card>
+
+                                <Button
+                                    onClick={() => {
+                                        addItem({
+                                            id: crypto.randomUUID(),
+                                            name: `Móveis Planejados (${acabamento})`,
+                                            description: `Para ${metros} metros lineares | Estimativa de Mercado`,
+                                            quantity: 1,
+                                            unit: "Projeto",
+                                            category: "Mobiliário - Planejados",
+                                            estimatedPrice: resultado.custoEstimado
+                                        });
+                                    }}
+                                    variant="outline"
+                                    size="xl"
+                                    className="w-full border-2 hover:bg-amber-50 text-amber-900 border-amber-200"
+                                >
+                                    <ShoppingCart className="mr-2 h-5 w-5" /> Adicionar Estimativa ao Orçamento
+                                </Button>
 
                                 {/* Monetization Block: Modular Kitchens */}
                                 <div className="grid md:grid-cols-2 gap-6">

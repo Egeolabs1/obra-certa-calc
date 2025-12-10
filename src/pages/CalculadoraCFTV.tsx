@@ -12,8 +12,10 @@ import { Badge } from "@/components/ui/badge";
 import SEO from "@/components/SEO";
 import { generateCalculatorSchema } from "@/utils/schemas";
 import { affiliateLinks } from "@/config/affiliateLinks";
+import { useOrcamento } from "@/context/OrcamentoContext";
 
 const CalculadoraCFTV = () => {
+    const { addItem } = useOrcamento();
     const [comodos, setComodos] = useState("");
     const [externas, setExternas] = useState("");
     const [dias, setDias] = useState("15");
@@ -197,6 +199,38 @@ const CalculadoraCFTV = () => {
                                                     </div>
                                                     <span className="text-xs font-normal opacity-90">Específico para Segurança (WD Purple)</span>
                                                 </a>
+                                            </Button>
+                                        </div>
+                                        <div className="mt-4">
+                                            <Button
+                                                onClick={() => {
+                                                    // Add Kit
+                                                    addItem({
+                                                        id: crypto.randomUUID(),
+                                                        name: `Kit CFTV ${resultado.dvrCanais} Canais`,
+                                                        description: `DVR + Câmeras para ${resultado.totalCameras} pontos`,
+                                                        quantity: 1,
+                                                        unit: "Kit",
+                                                        category: "Segurança",
+                                                        estimatedPrice: resultado.dvrCanais * 250 // Estimativa
+                                                    });
+                                                    // Add HD
+                                                    addItem({
+                                                        id: crypto.randomUUID(),
+                                                        name: `HD ${resultado.hdRecomendado} WD Purple`,
+                                                        description: `Para gravação de ${dias} dias`,
+                                                        quantity: 1,
+                                                        unit: "Unidade",
+                                                        category: "Segurança",
+                                                        estimatedPrice: 350 // Estimativa base
+                                                    });
+                                                }}
+                                                variant="outline"
+                                                size="xl"
+                                                className="w-full border-2 hover:bg-slate-100 text-slate-800"
+                                            >
+                                                <ShoppingCart className="h-5 w-5 mr-2" />
+                                                Adicionar Kit Completo ao Orçamento
                                             </Button>
                                         </div>
                                         <p className="text-center text-xs text-muted-foreground mt-3">*Links seguros da Amazon Brasil</p>

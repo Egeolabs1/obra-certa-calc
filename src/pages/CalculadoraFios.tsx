@@ -11,8 +11,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { affiliateLinks } from "@/config/affiliateLinks";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useOrcamento } from "@/context/OrcamentoContext";
 
 const CalculadoraFios = () => {
+    const { addItem } = useOrcamento();
     const [potencia, setPotencia] = useState("");
     const [tensao, setTensao] = useState("220");
     const [distancia, setDistancia] = useState("");
@@ -136,6 +138,36 @@ const CalculadoraFios = () => {
 
                                 <div className="mt-6">
                                     <Button asChild variant="secondary" className="w-full" size="lg"><a href={affiliateLinks.electrical.wires} target="_blank" rel="noopener noreferrer"><ShoppingCart className="mr-2" /> COMPRAR FIOS SIL/CORFIO</a></Button>
+
+                                    <Button
+                                        onClick={() => {
+                                            // Fio
+                                            addItem({
+                                                id: crypto.randomUUID(),
+                                                name: `Fio ${resultado.fio.split('(')[0].trim()}`,
+                                                description: `Para ${potencia}W / ${tensao}V | ${resultado.fio}`,
+                                                quantity: parseFloat(distancia) || 1,
+                                                unit: "Metros",
+                                                category: "Elétrica - Cabos",
+                                                estimatedPrice: (parseFloat(distancia) || 1) * 5 // Estimativa genérica R$5/m
+                                            });
+                                            // Disjuntor
+                                            addItem({
+                                                id: crypto.randomUUID(),
+                                                name: `Disjuntor ${resultado.disjuntor}`,
+                                                description: `Proteção para circuito de ${resultado.amperagem}A`,
+                                                quantity: 1,
+                                                unit: "Unidade",
+                                                category: "Elétrica - Proteção",
+                                                estimatedPrice: 25 // R$25
+                                            });
+                                        }}
+                                        variant="outline"
+                                        size="xl"
+                                        className="w-full mt-3 border-2 hover:bg-yellow-50 text-yellow-700 border-yellow-200"
+                                    >
+                                        <ShoppingCart className="mr-2 h-5 w-5" /> Adicionar Material Elétrico
+                                    </Button>
                                 </div>
                             </div>
                         )}

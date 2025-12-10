@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import SEO from "@/components/SEO";
 import { generateCalculatorSchema } from "@/utils/schemas";
+import { useOrcamento } from "@/context/OrcamentoContext";
 
 interface TracoConcreto {
   nome: string;
@@ -87,6 +88,7 @@ interface ResultadoCalculo {
 }
 
 const CalculadoraConcreto = () => {
+  const { addItem } = useOrcamento();
   const [tipoCalculo, setTipoCalculo] = useState("volume");
   const [comprimento, setComprimento] = useState("");
   const [largura, setLargura] = useState("");
@@ -474,6 +476,46 @@ const CalculadoraConcreto = () => {
                   <p className="mt-2 text-center text-xs text-muted-foreground">
                     *Link de afiliado. Você não paga nada a mais por isso.
                   </p>
+
+                  <Button
+                    onClick={() => {
+                      // Cimento
+                      addItem({
+                        id: crypto.randomUUID(),
+                        name: `Cimento (Sacos 50kg)`,
+                        description: `Para ${resultado.volumeTotal}m³ de concreto ${resultado.traco.nome}`,
+                        quantity: resultado.materiais.sacosCimento,
+                        unit: "Sacos",
+                        category: "Estrutural - Concreto",
+                        estimatedPrice: resultado.materiais.sacosCimento * 35 // R$35/saco
+                      });
+                      // Areia
+                      addItem({
+                        id: crypto.randomUUID(),
+                        name: `Areia Média`,
+                        description: `${resultado.materiais.areiaM3}m³ / ${resultado.materiais.areiaKg}kg`,
+                        quantity: resultado.materiais.areiaM3,
+                        unit: "m³",
+                        category: "Estrutural - Agregados",
+                        estimatedPrice: resultado.materiais.areiaM3 * 120 // R$120/m3
+                      });
+                      // Brita
+                      addItem({
+                        id: crypto.randomUUID(),
+                        name: `Brita 1`,
+                        description: `${resultado.materiais.britaM3}m³ / ${resultado.materiais.britaKg}kg`,
+                        quantity: resultado.materiais.britaM3,
+                        unit: "m³",
+                        category: "Estrutural - Agregados",
+                        estimatedPrice: resultado.materiais.britaM3 * 110 // R$110/m3
+                      });
+                    }}
+                    variant="outline"
+                    size="xl"
+                    className="w-full mt-3 border-2 hover:bg-primary/5 text-primary"
+                  >
+                    <ShoppingCart className="mr-2 h-5 w-5" /> Adicionar Materiais ao Orçamento
+                  </Button>
                 </div>
               </div>
             )}

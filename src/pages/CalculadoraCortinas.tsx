@@ -11,8 +11,10 @@ import { affiliateLinks } from "@/config/affiliateLinks";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import SEO from "@/components/SEO";
 import { generateCalculatorSchema } from "@/utils/schemas";
+import { useOrcamento } from "@/context/OrcamentoContext";
 
 const CalculadoraCortinas = () => {
+    const { addItem } = useOrcamento();
     const [larguraJanela, setLarguraJanela] = useState("");
     const [alturaJanela, setAlturaJanela] = useState("");
     const [pregas, setPregas] = useState("2"); // 2x ou 3x
@@ -104,6 +106,25 @@ const CalculadoraCortinas = () => {
                                 </div>
                                 <p className="text-sm text-muted-foreground mb-4">Já incluindo margens laterais e barra.</p>
                                 <Button asChild className="w-full" variant="secondary" size="lg"><a href={affiliateLinks.furniture.curtains} target="_blank" rel="noopener noreferrer"><ShoppingCart className="mr-2" /> VER TECIDOS E CORTINAS</a></Button>
+
+                                <Button
+                                    onClick={() => {
+                                        addItem({
+                                            id: crypto.randomUUID(),
+                                            name: `Tecido para Cortina`,
+                                            description: `Janela: ${larguraJanela}x${alturaJanela}m | Tecido: ${resultado.tecidoL}x${resultado.tecidoA}m (Prega ${pregas}x)`,
+                                            quantity: resultado.tecidoL, // Quantidade em metros de largura do tecido
+                                            unit: "Metros (Largura)",
+                                            category: "Decoração - Cortinas",
+                                            estimatedPrice: resultado.tecidoL * 45 // Estimativa R$45/m
+                                        });
+                                    }}
+                                    variant="outline"
+                                    size="xl"
+                                    className="w-full mt-3 border-2 hover:bg-pink-50 text-pink-700 border-pink-100"
+                                >
+                                    <ShoppingCart className="mr-2 h-5 w-5" /> Adicionar Tecido ao Orçamento
+                                </Button>
                             </div>
                         )}
 

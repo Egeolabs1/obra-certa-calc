@@ -11,8 +11,10 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import SEO from "@/components/SEO";
 import { generateCalculatorSchema } from "@/utils/schemas";
+import { useOrcamento } from "@/context/OrcamentoContext";
 
 const CalculadoraIluminacao = () => {
+    const { addItem } = useOrcamento();
     const [comprimento, setComprimento] = useState("");
     const [largura, setLargura] = useState("");
     const [tipoAmbiente, setTipoAmbiente] = useState("sala");
@@ -103,6 +105,25 @@ const CalculadoraIluminacao = () => {
                                 <p className="text-muted-foreground mb-4">Aprox. <strong>{resultado.wattsLed}W</strong> em lâmpadas LED</p>
                                 <Button asChild variant="success" size="lg" className="w-full">
                                     <a href={affiliateLinks.electrical.lighting} target="_blank" rel="noopener noreferrer"><ShoppingCart className="mr-2" /> COMPRAR LÂMPADAS LED</a>
+                                </Button>
+
+                                <Button
+                                    onClick={() => {
+                                        addItem({
+                                            id: crypto.randomUUID(),
+                                            name: `Lâmpadas LED (${Math.round(resultado.wattsLed / 5)} un aprox)`, // Estimando lampadas de 5-9W
+                                            description: `Para ${tipoAmbiente} (${comprimento}x${largura}m) | Total ${resultado.lumens} Lúmens`,
+                                            quantity: Math.ceil(resultado.wattsLed / 9), // Estimando lâmpadas de 9W
+                                            unit: "Unidades",
+                                            category: "Elétrica - Iluminação",
+                                            estimatedPrice: Math.ceil(resultado.wattsLed / 9) * 15 // R$15/lampada
+                                        });
+                                    }}
+                                    variant="outline"
+                                    size="xl"
+                                    className="w-full mt-3 border-2 hover:bg-yellow-50 text-yellow-800 border-yellow-200"
+                                >
+                                    <ShoppingCart className="mr-2 h-5 w-5" /> Adicionar Lâmpadas ao Orçamento
                                 </Button>
                             </div>
                         )}

@@ -10,8 +10,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { affiliateLinks } from "@/config/affiliateLinks";
 import { generateCalculatorSchema } from "@/utils/schemas";
+import { useOrcamento } from "@/context/OrcamentoContext";
 
 const CalculadoraChurrasco = () => {
+    const { addItem } = useOrcamento();
     const [homens, setHomens] = useState("5");
     const [mulheres, setMulheres] = useState("5");
     const [criancas, setCriancas] = useState("2");
@@ -341,6 +343,41 @@ const CalculadoraChurrasco = () => {
                                             <Share2 className="mr-2 h-5 w-5" /> ENVIAR NO GRUPO
                                         </Button>
                                         <Button asChild variant="outline" className="w-full"><a href={affiliateLinks.bbq.general} className="flex gap-2 justify-center items-center" target="_blank" rel="noopener noreferrer"><Beer className="h-4 w-4" /> COMPRAR BEBIDAS AGORA</a></Button>
+
+                                        <Button
+                                            onClick={() => {
+                                                const itemsToAdd = [
+                                                    { name: 'Picanha/Contra', qtd: resultado.picanha, unit: 'kg', cat: 'Eventos - Churrasco', price: parseFloat(precoCarne) },
+                                                    { name: 'Linguiça', qtd: resultado.linguica, unit: 'kg', cat: 'Eventos - Churrasco', price: parseFloat(precoLinguica) },
+                                                    { name: 'Frango', qtd: resultado.frango, unit: 'kg', cat: 'Eventos - Churrasco', price: parseFloat(precoFrango) },
+                                                    { name: 'Queijo Coalho', qtd: resultado.queijo, unit: 'kg', cat: 'Eventos - Churrasco', price: 55 },
+                                                    { name: 'Cerveja (Latas)', qtd: resultado.latasCerveja, unit: 'Latas', cat: 'Eventos - Churrasco', price: parseFloat(precoCerveja) },
+                                                    { name: 'Refrigerante (2L)', qtd: resultado.garrafasRefri, unit: 'Garrafas', cat: 'Eventos - Churrasco', price: parseFloat(precoRefri) },
+                                                    { name: 'Carvão', qtd: resultado.carvao, unit: 'kg', cat: 'Eventos - Churrasco', price: 12 },
+                                                    { name: 'Gelo', qtd: resultado.gelo, unit: 'kg', cat: 'Eventos - Churrasco', price: 3 }, // 15/5
+                                                    { name: 'Pão de Alho', qtd: resultado.paoAlho, unit: 'Unidades', cat: 'Eventos - Churrasco', price: 4 } // 20/5
+                                                ];
+
+                                                itemsToAdd.forEach(item => {
+                                                    if (item.qtd > 0) {
+                                                        addItem({
+                                                            id: crypto.randomUUID(),
+                                                            name: item.name,
+                                                            description: `Para ${homens}H ${mulheres}M ${criancas}C`,
+                                                            quantity: item.qtd,
+                                                            unit: item.unit,
+                                                            category: item.cat,
+                                                            estimatedPrice: item.qtd * item.price
+                                                        });
+                                                    }
+                                                });
+                                                alert("Itens adicionados ao orçamento!");
+                                            }}
+                                            variant="secondary"
+                                            className="w-full border-2 border-orange-200 text-orange-800 hover:bg-orange-50"
+                                        >
+                                            <ShoppingCart className="mr-2 h-4 w-4" /> Adicionar Tudo ao Orçamento
+                                        </Button>
                                     </div>
                                 </div>
                             )

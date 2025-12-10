@@ -11,8 +11,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { affiliateLinks } from "@/config/affiliateLinks";
 import SEO from "@/components/SEO";
 import { generateCalculatorSchema } from "@/utils/schemas";
+import { useOrcamento } from "@/context/OrcamentoContext";
 
 const CalculadoraAzulejos = () => {
+    const { addItem } = useOrcamento();
     // Wall Dimensions
     const [largura, setLargura] = useState("");
     const [altura, setAltura] = useState(""); // Or Comprimento
@@ -217,6 +219,24 @@ const CalculadoraAzulejos = () => {
                                     <a href={affiliateLinks.flooring.general} target="_blank" rel="noopener noreferrer">
                                         <ShoppingCart className="mr-2 h-6 w-6" /> COTAR PREÇOS DE PISOS
                                     </a>
+                                </Button>
+                                <Button
+                                    onClick={() => {
+                                        addItem({
+                                            id: crypto.randomUUID(),
+                                            name: `Piso/Azulejo ${tamAzulejo}`,
+                                            description: `Área: ${resultado.areaComPerda.toFixed(2)}m² (c/ perda) | Dimensão: ${tamAzulejo}`,
+                                            quantity: resultado.qtdPecas,
+                                            unit: "Peças",
+                                            category: "Acabamento - Piso/Revestimento",
+                                            estimatedPrice: resultado.qtdPecas * 15 // Estimativa genérica por peça
+                                        });
+                                    }}
+                                    variant="outline"
+                                    size="xl"
+                                    className="w-full bg-white hover:bg-gray-100 text-slate-800 border-2 border-slate-200 mt-3"
+                                >
+                                    <ShoppingCart className="mr-2 h-5 w-5" /> Adicionar ao Orçamento
                                 </Button>
                             </div>
                         )}

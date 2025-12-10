@@ -1,6 +1,7 @@
 import { useState } from "react";
 import SEO from "@/components/SEO";
 import { generateCalculatorSchema } from "@/utils/schemas";
+import { useOrcamento } from "@/context/OrcamentoContext";
 import { AlignHorizontalJustifyStart, Calculator, ShoppingCart, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
@@ -12,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 const CalculadoraRodape = () => {
+    const { addItem } = useOrcamento();
     const [perimetro, setPerimetro] = useState("");
     const [portas, setPortas] = useState(""); // para descontar e adicionar acabamento
     const [tamanhoBarra, setTamanhoBarra] = useState("2.40");
@@ -96,6 +98,38 @@ const CalculadoraRodape = () => {
                                 </div>
                                 <div className="col-span-2">
                                     <Button asChild variant="outline" className="w-full"><a href={affiliateLinks.flooring.baseboards} target="_blank" rel="noopener noreferrer"><ShoppingCart className="mr-2" /> VER RODAPÉS SANTA LUZIA</a></Button>
+                                </div>
+                                <div className="col-span-2">
+                                    <Button
+                                        onClick={() => {
+                                            addItem({
+                                                id: crypto.randomUUID(),
+                                                name: `Rodapé (${tamanhoBarra}m)`,
+                                                description: `Perímetro: ${perimetro}m | Portas: ${portas || 0}`,
+                                                quantity: resultado.barras,
+                                                unit: "Barras",
+                                                category: "Acabamento - Piso",
+                                                estimatedPrice: resultado.barras * 45 // Estimativa R$45/barra
+                                            });
+                                            if (resultado.cola > 0) {
+                                                addItem({
+                                                    id: crypto.randomUUID(),
+                                                    name: `Cola Rodapé (400g)`,
+                                                    description: `Para ${resultado.barras} barras`,
+                                                    quantity: resultado.cola,
+                                                    unit: "Tubos",
+                                                    category: "Acabamento - Piso",
+                                                    estimatedPrice: resultado.cola * 35 // Estimativa R$35/tubo
+                                                });
+                                            }
+                                        }}
+                                        variant="default"
+                                        size="xl"
+                                        className="w-full mt-2 bg-blue-600 hover:bg-blue-700 text-white"
+                                    >
+                                        <ShoppingCart className="h-5 w-5 mr-2" />
+                                        Adicionar ao Orçamento
+                                    </Button>
                                 </div>
                             </div>
                         )}

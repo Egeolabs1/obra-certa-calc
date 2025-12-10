@@ -10,8 +10,10 @@ import { Label } from "@/components/ui/label";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import SEO from "@/components/SEO";
 import { generateCalculatorSchema } from "@/utils/schemas";
+import { useOrcamento } from "@/context/OrcamentoContext";
 
 const CalculadoraPapelParede = () => {
+    const { addItem } = useOrcamento();
     const [alturaParede, setAlturaParede] = useState("");
     const [larguraParede, setLarguraParede] = useState("");
     const [rapport, setRapport] = useState("0");
@@ -127,6 +129,25 @@ const CalculadoraPapelParede = () => {
                                 <p className="text-xl">Você precisa de:</p>
                                 <p className="text-5xl font-extrabold text-primary my-3">{resultado} Rolos</p>
                                 <Button variant="outline" className="w-full mt-4"><ShoppingCart className="mr-2" /> ENCONTRAR PAPEL DE PAREDE</Button>
+
+                                <Button
+                                    onClick={() => {
+                                        addItem({
+                                            id: crypto.randomUUID(),
+                                            name: `Papel de Parede`,
+                                            description: `Parede ${larguraParede}x${alturaParede}m | Rapport ${rapport}cm`,
+                                            quantity: resultado,
+                                            unit: "Rolos",
+                                            category: "Decoração - Papel de Parede",
+                                            estimatedPrice: resultado * 150 // Estimativa R$150/rolo
+                                        });
+                                    }}
+                                    variant="outline"
+                                    size="xl"
+                                    className="w-full mt-3 border-2 hover:bg-purple-50 text-purple-800 border-purple-200"
+                                >
+                                    <ShoppingCart className="mr-2 h-5 w-5" /> Adicionar Papel ao Orçamento
+                                </Button>
                             </div>
                         )}
 

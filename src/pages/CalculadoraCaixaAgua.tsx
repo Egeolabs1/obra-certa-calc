@@ -10,8 +10,10 @@ import { Label } from "@/components/ui/label";
 import { affiliateLinks } from "@/config/affiliateLinks";
 import SEO from "@/components/SEO";
 import { generateCalculatorSchema } from "@/utils/schemas";
+import { useOrcamento } from "@/context/OrcamentoContext";
 
 const CalculadoraCaixaAgua = () => {
+    const { addItem } = useOrcamento();
     const [pessoas, setPessoas] = useState("4");
     const [dias, setDias] = useState("2");
     const [resultado, setResultado] = useState<number | null>(null);
@@ -82,6 +84,25 @@ const CalculadoraCaixaAgua = () => {
 
                                 <Button asChild variant="success" size="lg" className="w-full">
                                     <a href={affiliateLinks.water.tank} target="_blank" rel="noopener noreferrer"><ShoppingCart className="mr-2" /> VER PREÇOS DE CAIXAS</a>
+                                </Button>
+
+                                <Button
+                                    onClick={() => {
+                                        addItem({
+                                            id: crypto.randomUUID(),
+                                            name: `Caixa D'água ${resultado}L`,
+                                            description: `Para ${pessoas} pessoas | Reserva de ${dias} dias`,
+                                            quantity: 1,
+                                            unit: "Unidade",
+                                            category: "Hidráulica",
+                                            estimatedPrice: resultado * 0.5 // Estimativa ~R$500 para 1000L
+                                        });
+                                    }}
+                                    variant="outline"
+                                    size="xl"
+                                    className="w-full mt-3 bg-white hover:bg-gray-100 text-slate-800 border-2 border-slate-200"
+                                >
+                                    <ShoppingCart className="mr-2 h-5 w-5" /> Adicionar ao Orçamento
                                 </Button>
                             </div>
                         )}

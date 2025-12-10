@@ -10,8 +10,10 @@ import { Label } from "@/components/ui/label";
 import { affiliateLinks } from "@/config/affiliateLinks";
 import SEO from "@/components/SEO";
 import { generateCalculatorSchema } from "@/utils/schemas";
+import { useOrcamento } from "@/context/OrcamentoContext";
 
 const CalculadoraGrama = () => {
+    const { addItem } = useOrcamento();
     const [area, setArea] = useState("");
     const [resultado, setResultado] = useState<{ rolos: number; placas: number } | null>(null);
 
@@ -80,6 +82,25 @@ const CalculadoraGrama = () => {
                                 <div className="col-span-1 sm:col-span-2 mt-4">
                                     <Button asChild variant="success" size="lg" className="w-full">
                                         <a href={affiliateLinks.garden.mowers} target="_blank" rel="noopener noreferrer"><ShoppingCart className="mr-2" /> VER CORTADORES DE GRAMA</a>
+                                    </Button>
+
+                                    <Button
+                                        onClick={() => {
+                                            addItem({
+                                                id: crypto.randomUUID(),
+                                                name: `Grama Esmeralda (Placas)`,
+                                                description: `Para cobrir ${area}m² (com 5-10% margem)`,
+                                                quantity: resultado.placas,
+                                                unit: "Placas (0.25m²)",
+                                                category: "Jardinagem & Paisagismo",
+                                                estimatedPrice: resultado.placas * 3.50 // Estimativa R$3.50/placa
+                                            });
+                                        }}
+                                        variant="outline"
+                                        size="xl"
+                                        className="w-full mt-3 border-2 hover:bg-green-50 text-green-800 border-green-200"
+                                    >
+                                        <ShoppingCart className="mr-2 h-5 w-5" /> Adicionar Grama ao Orçamento
                                     </Button>
                                 </div>
                             </div>

@@ -9,8 +9,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import SEO from "@/components/SEO";
 import { generateCalculatorSchema } from "@/utils/schemas";
+import { useOrcamento } from "@/context/OrcamentoContext";
 
 const CalculadoraRejunte = () => {
+    const { addItem } = useOrcamento();
     const [area, setArea] = useState("");
     const [alturaPeca, setAlturaPeca] = useState(""); // mm (mas usuario poe cm)
     const [larguraPeca, setLarguraPeca] = useState(""); // mm (mas usuario poe cm)
@@ -110,6 +112,27 @@ const CalculadoraRejunte = () => {
                                 <div className="mt-6 flex justify-center">
                                     <Button variant="success" size="lg" className="w-full max-w-sm">
                                         <ShoppingCart className="mr-2 h-4 w-4" /> Ver Ofertas de Rejunte
+                                    </Button>
+
+                                    <Button
+                                        onClick={() => {
+                                            if (kgRejunte) {
+                                                addItem({
+                                                    id: crypto.randomUUID(),
+                                                    name: `Rejunte Cimentício`,
+                                                    description: `Para ${area}m² | Peça ${larguraPeca}x${alturaPeca}cm | Junta ${junta}mm`,
+                                                    quantity: kgRejunte,
+                                                    unit: "kg",
+                                                    category: "Acabamento - Revestimento",
+                                                    estimatedPrice: kgRejunte * 5 // R$5/kg
+                                                });
+                                            }
+                                        }}
+                                        variant="outline"
+                                        size="lg"
+                                        className="w-full max-w-sm mt-2 border-2 hover:bg-orange-50 text-orange-800 border-orange-200"
+                                    >
+                                        <ShoppingCart className="mr-2 h-4 w-4" /> Adicionar ao Orçamento
                                     </Button>
                                 </div>
                             </div>

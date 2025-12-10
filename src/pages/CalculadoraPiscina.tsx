@@ -11,8 +11,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import SEO from "@/components/SEO";
 import { generateCalculatorSchema } from "@/utils/schemas";
 import { affiliateLinks } from "@/config/affiliateLinks";
+import { useOrcamento } from "@/context/OrcamentoContext";
 
 const CalculadoraPiscina = () => {
+    const { addItem } = useOrcamento();
     const [formato, setFormato] = useState("retangular");
     const [comprimento, setComprimento] = useState("");
     const [largura, setLargura] = useState("");
@@ -296,6 +298,56 @@ const CalculadoraPiscina = () => {
                                         <a href={affiliateLinks.pool.heating} target="_blank" rel="noopener noreferrer">Ver Sistema Solar</a>
                                     </Button>
                                 </div>
+
+                                <Button
+                                    onClick={() => {
+                                        // Revestimento
+                                        addItem({
+                                            id: crypto.randomUUID(),
+                                            name: `Pastilha para Piscina`,
+                                            description: `Área total ${resultado.areaRevestimento}m²`,
+                                            quantity: parseFloat((resultado.areaRevestimento * 1.10).toFixed(1)),
+                                            unit: "m²",
+                                            category: "Lazer - Piscina",
+                                            estimatedPrice: resultado.areaRevestimento * 80 // R$80/m2
+                                        });
+                                        // Impermeabilizante
+                                        addItem({
+                                            id: crypto.randomUUID(),
+                                            name: `Argamassa Polimérica`,
+                                            description: `Impermeabilização Piscina`,
+                                            quantity: resultado.impermeabilizante,
+                                            unit: "kg",
+                                            category: "Lazer - Piscina",
+                                            estimatedPrice: resultado.impermeabilizante * 15 // R$15/kg
+                                        });
+                                        // Filtro
+                                        addItem({
+                                            id: crypto.randomUUID(),
+                                            name: `Conjunto Filtro + Bomba`,
+                                            description: `Para volume de ${resultado.volumeLitros}L`,
+                                            quantity: 1,
+                                            unit: "Unidade",
+                                            category: "Lazer - Piscina",
+                                            estimatedPrice: 1500
+                                        });
+                                        // Aquecimento
+                                        addItem({
+                                            id: crypto.randomUUID(),
+                                            name: `Kit Aquecimento Solar Piscina`,
+                                            description: `${resultado.placasSolar}m² de coletores`,
+                                            quantity: 1,
+                                            unit: "Kit",
+                                            category: "Lazer - Piscina",
+                                            estimatedPrice: resultado.placasSolar * 600
+                                        });
+                                    }}
+                                    variant="outline"
+                                    size="xl"
+                                    className="w-full border-2 hover:bg-blue-50 text-blue-800 border-blue-200"
+                                >
+                                    <ShoppingCart className="mr-2 h-5 w-5" /> Adicionar Todos os Materiais ao Orçamento
+                                </Button>
                             </div>
                         )}
 

@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import SEO from "@/components/SEO";
 import { generateCalculatorSchema } from "@/utils/schemas";
+import { useOrcamento } from "@/context/OrcamentoContext";
 
 interface MateriaisDrywall {
     placas: number;
@@ -24,6 +25,7 @@ interface MateriaisDrywall {
 }
 
 const CalculadoraDrywall = () => {
+    const { addItem } = useOrcamento();
     const [altura, setAltura] = useState("");
     const [comprimento, setComprimento] = useState("");
     const [tipo, setTipo] = useState("simples"); // simples (1 chapa cada lado) ou dupla (2 chapas cada lado - raramente usado em calculadoras simples, melhor focar em Parede (2 faces) ou Forro (1 face))
@@ -239,6 +241,56 @@ const CalculadoraDrywall = () => {
 
                                 <Button asChild variant="success" size="xl" className="w-full">
                                     <a href={affiliateLinks.structural.drywall} target="_blank" rel="noopener noreferrer"><ShoppingCart className="mr-2 h-5 w-5" /> ORÇAR MATERIAIS ONLINE</a>
+                                </Button>
+
+                                <Button
+                                    onClick={() => {
+                                        // Placas
+                                        addItem({
+                                            id: crypto.randomUUID(),
+                                            name: `Chapas Drywall (1.20x2.40)`,
+                                            description: `Para ${estrutura === 'parede' ? 'Parede' : 'Forro'} de ${altura}m x ${comprimento}m`,
+                                            quantity: resultado.placas,
+                                            unit: "Chapas",
+                                            category: "Construção Seca - Drywall",
+                                            estimatedPrice: resultado.placas * 45 // R$45/chapa
+                                        });
+                                        // Montantes
+                                        addItem({
+                                            id: crypto.randomUUID(),
+                                            name: `Montantes/Perfis (3m)`,
+                                            description: `Estrutura vertical/fixação`,
+                                            quantity: resultado.montantes,
+                                            unit: "Peças",
+                                            category: "Construção Seca - Drywall",
+                                            estimatedPrice: resultado.montantes * 25 // R$25/peca
+                                        });
+                                        // Guias
+                                        addItem({
+                                            id: crypto.randomUUID(),
+                                            name: `Guias/Tabicas (3m)`,
+                                            description: `Estrutura horizontal/perímetro`,
+                                            quantity: resultado.guias,
+                                            unit: "Peças",
+                                            category: "Construção Seca - Drywall",
+                                            estimatedPrice: resultado.guias * 20 // R$20/peca
+                                        });
+                                        // Acessórios (agrupados ou item por item?) Vamos os principais.
+                                        addItem({
+                                            id: crypto.randomUUID(),
+                                            name: `Massa para Juntas`,
+                                            description: `Tratamento de juntas`,
+                                            quantity: resultado.massa,
+                                            unit: "kg",
+                                            category: "Construção Seca - Drywall",
+                                            estimatedPrice: resultado.massa * 5 // R$5/kg
+                                        });
+                                    }}
+                                    variant="outline"
+                                    size="xl"
+                                    className="w-full mt-3 border-2 hover:bg-gray-100 text-gray-800 border-gray-200"
+                                >
+                                    <ShoppingCart className="mr-2 h-5 w-5" /> Adicionar Materiais ao Orçamento
                                 </Button>
                             </div>
                         )}

@@ -16,6 +16,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import SEO from "@/components/SEO";
 import { generateCalculatorSchema } from "@/utils/schemas";
 import { toast } from "sonner";
+import { useOrcamento } from "@/context/OrcamentoContext";
 
 // --- Data & Types ---
 
@@ -94,6 +95,7 @@ const CATEGORIES: ServiceCategory[] = [
 ];
 
 const CalculadoraMaoDeObra = () => {
+    const { addItem } = useOrcamento();
     // Multipliers
     const [finishLevel, setFinishLevel] = useState("1.0"); // 1.0 = Standard, 1.4 = High 
     const [region, setRegion] = useState("1.0"); // 1.0 = Capital, 0.85 = Interior, 1.1 = Coastal
@@ -321,8 +323,29 @@ const CalculadoraMaoDeObra = () => {
                         {/* List Results Table */}
                         {budgetList.length > 0 && (
                             <div ref={resultRef} className="animate-fade-up bg-card rounded-xl border shadow-sm overflow-hidden">
-                                <div className="p-6 border-b bg-muted/30">
+                                <div className="p-6 border-b bg-muted/30 flex justify-between items-center">
                                     <h2 className="font-bold text-xl flex items-center gap-2"><Hammer className="h-5 w-5" /> Lista de Serviços</h2>
+                                    <Button
+                                        onClick={() => {
+                                            budgetList.forEach(item => {
+                                                addItem({
+                                                    id: crypto.randomUUID(),
+                                                    name: item.label,
+                                                    description: `Mão de Obra: ${item.quantity} ${item.unit} (${item.priceMin}-${item.priceMax}/${item.unit})`,
+                                                    quantity: item.quantity,
+                                                    unit: item.unit,
+                                                    category: "Mão de Obra",
+                                                    estimatedPrice: (item.totalMin + item.totalMax) / 2
+                                                });
+                                            });
+                                            toast.success("Todos os itens foram adicionados ao seu Orçamento Geral!");
+                                        }}
+                                        variant="default"
+                                        size="sm"
+                                        className="bg-blue-600 hover:bg-blue-700 text-white shadow-sm"
+                                    >
+                                        <Wallet className="mr-2 h-4 w-4" /> Enviar para Orçamento Geral
+                                    </Button>
                                 </div>
                                 <div className="overflow-x-auto">
                                     <Table>

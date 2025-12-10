@@ -1,7 +1,7 @@
 import { useState } from "react";
 import SEO from "@/components/SEO";
 import { generateCalculatorSchema } from "@/utils/schemas";
-import { AppWindow, Calculator, ArrowLeft, Weight } from "lucide-react";
+import { AppWindow, Calculator, ArrowLeft, Weight, ShoppingCart } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -10,8 +10,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useOrcamento } from "@/context/OrcamentoContext";
 
 const CalculadoraVidro = () => {
+    const { addItem } = useOrcamento();
     const [largura, setLargura] = useState("");
     const [altura, setAltura] = useState("");
     const [espessura, setEspessura] = useState("8");
@@ -101,6 +103,25 @@ const CalculadoraVidro = () => {
                                 <div className="mt-6 p-4 bg-muted/30 rounded-lg text-sm text-muted-foreground">
                                     ⚠️ <strong>Importante:</strong> Use este peso para dimensionar as "Roldanas" ou o "Kit Trilho" da porta de correr. Roldanas fracas quebram com vidros pesados.
                                 </div>
+
+                                <Button
+                                    onClick={() => {
+                                        addItem({
+                                            id: crypto.randomUUID(),
+                                            name: `Vidro Temperado ${espessura}mm`,
+                                            description: `Peça de ${altura}m x ${largura}m | Peso estim. ${resultado.peso}kg`,
+                                            quantity: resultado.area,
+                                            unit: "m²",
+                                            category: "Vidraçaria",
+                                            estimatedPrice: resultado.area * 450 // R$450/m2
+                                        });
+                                    }}
+                                    variant="outline"
+                                    size="xl"
+                                    className="w-full mt-3 border-2 hover:bg-cyan-50 text-cyan-800 border-cyan-200"
+                                >
+                                    <ShoppingCart className="mr-2 h-5 w-5" /> Adicionar Vidro ao Orçamento
+                                </Button>
                             </div>
                         )}
 

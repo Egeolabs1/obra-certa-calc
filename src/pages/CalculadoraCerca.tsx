@@ -11,8 +11,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { affiliateLinks } from "@/config/affiliateLinks";
 import SEO from "@/components/SEO";
 import { generateCalculatorSchema } from "@/utils/schemas";
+import { useOrcamento } from "@/context/OrcamentoContext";
 
 const CalculadoraCerca = () => {
+    const { addItem } = useOrcamento();
     const [perimetro, setPerimetro] = useState("");
     const [distanciaMourao, setDistanciaMourao] = useState("2.5");
     const [tipoCerca, setTipoCerca] = useState("arame_farpado");
@@ -208,6 +210,60 @@ const CalculadoraCerca = () => {
                                     <a href={affiliateLinks.services.findProfessional} target="_blank" rel="noopener noreferrer">
                                         <ShoppingCart className="mr-2 h-6 w-6" /> VER PREÇOS DE ARAME
                                     </a>
+                                </Button>
+
+                                <Button
+                                    onClick={() => {
+                                        // Mourões
+                                        addItem({
+                                            id: crypto.randomUUID(),
+                                            name: `Mourões de Cerca`,
+                                            description: `Para ${perimetro}m de cerca | Distância: ${distanciaMourao}m`,
+                                            quantity: resultado.mourões,
+                                            unit: "Unidades",
+                                            category: "Externo - Cerca",
+                                            estimatedPrice: resultado.mourões * 35 // Estimativa
+                                        });
+
+                                        // Arame ou Tela
+                                        if (tipoCerca === "tela") {
+                                            addItem({
+                                                id: crypto.randomUUID(),
+                                                name: `Tela Alambrado`,
+                                                description: `${resultado.metrosTela}m lineares`,
+                                                quantity: resultado.metrosTela || 0,
+                                                unit: "Metros",
+                                                category: "Externo - Cerca",
+                                                estimatedPrice: (resultado.metrosTela || 0) * 15 // Estimativa R$15/m
+                                            });
+                                        } else {
+                                            addItem({
+                                                id: crypto.randomUUID(),
+                                                name: `Arame ${tipoCerca === "arame_farpado" ? "Farpado" : "Liso"}`,
+                                                description: `${resultado.rolosArame} rolos (${tipoCerca === "arame_liso" ? "1000m" : "500m"})`,
+                                                quantity: resultado.rolosArame,
+                                                unit: "Rolos",
+                                                category: "Externo - Cerca",
+                                                estimatedPrice: resultado.rolosArame * 450 // Estimativa R$450/rolo
+                                            });
+                                            if (resultado.grampos > 0) {
+                                                addItem({
+                                                    id: crypto.randomUUID(),
+                                                    name: `Grampos para Cerca`,
+                                                    description: `${resultado.grampos}kg`,
+                                                    quantity: resultado.grampos,
+                                                    unit: "kg",
+                                                    category: "Externo - Cerca",
+                                                    estimatedPrice: resultado.grampos * 25 // Estimativa R$25/kg
+                                                });
+                                            }
+                                        }
+                                    }}
+                                    variant="outline"
+                                    size="xl"
+                                    className="w-full mt-4 border-2 hover:bg-amber-50 text-amber-900"
+                                >
+                                    <ShoppingCart className="mr-2 h-5 w-5" /> Adicionar Tudo ao Orçamento
                                 </Button>
                             </div>
                         )}

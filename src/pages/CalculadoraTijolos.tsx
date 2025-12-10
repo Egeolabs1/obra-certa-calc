@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import SEO from "@/components/SEO";
 import { generateCalculatorSchema } from "@/utils/schemas";
+import { useOrcamento } from "@/context/OrcamentoContext";
 
 interface TipoTijolo {
   nome: string;
@@ -74,6 +75,7 @@ interface ResultadoCalculo {
 }
 
 const CalculadoraTijolos = () => {
+  const { addItem } = useOrcamento();
   const [alturaParede, setAlturaParede] = useState("");
   const [comprimentoParede, setComprimentoParede] = useState("");
   const [tipoTijolo, setTipoTijolo] = useState("6furos");
@@ -464,6 +466,46 @@ const CalculadoraTijolos = () => {
                     *Link de afiliado. Você não paga nada a mais por isso.
                   </p>
                 </div>
+
+                <Button
+                  onClick={() => {
+                    // Tijolos
+                    addItem({
+                      id: crypto.randomUUID(),
+                      name: `Tijolo ${resultado.tipoTijolo.nome.split('(')[0].trim()}`,
+                      description: `Parede ${resultado.areaLiquida}m² | Margem ${perdas}%`,
+                      quantity: resultado.qtdTijolosComPerda,
+                      unit: "Unidades",
+                      category: "Estrutural - Alvenaria",
+                      estimatedPrice: resultado.qtdTijolosComPerda * 0.80 // R$0.80/tijolo est.
+                    });
+                    // Cimento
+                    addItem({
+                      id: crypto.randomUUID(),
+                      name: `Cimento CP II (50kg)`,
+                      description: `Para assentamento de ${resultado.areaLiquida}m²`,
+                      quantity: resultado.argamassa.sacosCimento,
+                      unit: "Sacos",
+                      category: "Estrutural - Agregados",
+                      estimatedPrice: resultado.argamassa.sacosCimento * 35 // R$35/saco
+                    });
+                    // Areia
+                    addItem({
+                      id: crypto.randomUUID(),
+                      name: `Areia Média (20kg)`,
+                      description: `Para traço 1:4`,
+                      quantity: resultado.argamassa.sacosAreia,
+                      unit: "Sacos",
+                      category: "Estrutural - Agregados",
+                      estimatedPrice: resultado.argamassa.sacosAreia * 5 // R$5/saco
+                    });
+                  }}
+                  variant="outline"
+                  size="xl"
+                  className="w-full border-2 hover:bg-orange-50 text-orange-800 border-orange-200"
+                >
+                  <ShoppingCart className="mr-2 h-5 w-5" /> Adicionar Tudo ao Orçamento
+                </Button>
               </div>
             )}
 

@@ -10,8 +10,10 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import SEO from "@/components/SEO";
 import { generateCalculatorSchema } from "@/utils/schemas";
+import { useOrcamento } from "@/context/OrcamentoContext";
 
 const CalculadoraPavers = () => {
+    const { addItem } = useOrcamento();
     const [area, setArea] = useState("");
     const [tipo, setTipo] = useState("retangular");
     const [resultado, setResultado] = useState<number | null>(null);
@@ -83,6 +85,25 @@ const CalculadoraPavers = () => {
                                 <p className="text-5xl font-extrabold text-primary my-2">{resultado} Peças</p>
                                 <p className="text-sm text-muted-foreground">(Já incluindo 5% de margem)</p>
                                 <Button className="mt-6 w-full" variant="secondary" size="lg"><ShoppingCart className="mr-2" /> VER MÁQUINAS DE LAVAR PISO</Button>
+
+                                <Button
+                                    onClick={() => {
+                                        addItem({
+                                            id: crypto.randomUUID(),
+                                            name: `Pavers ${tipo.charAt(0).toUpperCase() + tipo.slice(1)}`,
+                                            description: `Para ${area}m²`,
+                                            quantity: resultado,
+                                            unit: "Peças",
+                                            category: "Área Externa - Piso",
+                                            estimatedPrice: resultado * 1.20 // R$1.20/peça
+                                        });
+                                    }}
+                                    variant="outline"
+                                    size="xl"
+                                    className="w-full mt-3 border-2 hover:bg-gray-50 text-gray-800 border-gray-200"
+                                >
+                                    <ShoppingCart className="mr-2 h-5 w-5" /> Adicionar Pavers ao Orçamento
+                                </Button>
                             </div>
                         )}
                     </div>

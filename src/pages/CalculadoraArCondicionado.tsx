@@ -11,6 +11,7 @@ import { affiliateLinks } from "@/config/affiliateLinks";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import SEO from "@/components/SEO";
 import { generateCalculatorSchema } from "@/utils/schemas";
+import { useOrcamento } from "@/context/OrcamentoContext";
 
 interface ResultadoBTU {
     btuNecessario: number;
@@ -19,6 +20,7 @@ interface ResultadoBTU {
 }
 
 const CalculadoraArCondicionado = () => {
+    const { addItem } = useOrcamento();
     const [area, setArea] = useState("");
     const [pessoas, setPessoas] = useState("2");
     const [eletronicos, setEletronicos] = useState("1");
@@ -257,6 +259,26 @@ const CalculadoraArCondicionado = () => {
                                             <ExternalLink className="h-4 w-4" />
                                         </a>
                                     </Button>
+
+                                    <Button
+                                        onClick={() => {
+                                            addItem({
+                                                id: crypto.randomUUID(),
+                                                name: `Ar Condicionado ${resultado.btuRecomendado.toLocaleString('pt-BR')} BTUs`,
+                                                description: `Para área de ${area}m² | Sol: ${exposicaoSol === 'tarde' ? 'Tarde' : 'Manhã'}`,
+                                                quantity: 1,
+                                                unit: "Unidade",
+                                                category: "Climatização",
+                                                estimatedPrice: resultado.btuRecomendado / 5 // Estimativa tosca, mas serve como placeholder (ex: 12000/5 = 2400)
+                                            });
+                                        }}
+                                        variant="outline"
+                                        size="xl"
+                                        className="w-full border-2 hover:bg-slate-50 text-slate-700"
+                                    >
+                                        <ShoppingCart className="h-5 w-5 mr-2" />
+                                        Adicionar ao Orçamento
+                                    </Button>
                                     <p className="mt-2 text-center text-xs text-muted-foreground">
                                         *Melhores preços na Amazon/Mercado Livre.
                                     </p>
@@ -313,10 +335,10 @@ const CalculadoraArCondicionado = () => {
                         </div>
                     </div>
                 </div>
-            </main>
+            </main >
 
             <Footer />
-        </div>
+        </div >
     );
 };
 

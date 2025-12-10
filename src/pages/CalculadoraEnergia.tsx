@@ -11,8 +11,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import SEO from "@/components/SEO";
 import { generateCalculatorSchema } from "@/utils/schemas";
 import { affiliateLinks } from "@/config/affiliateLinks";
+import { useOrcamento } from "@/context/OrcamentoContext";
 
 const CalculadoraEnergia = () => {
+    const { addItem } = useOrcamento();
     const [regiao, setRegiao] = useState("");
     const [valorConta, setValorConta] = useState("");
 
@@ -213,6 +215,25 @@ const CalculadoraEnergia = () => {
                                                 <a href={affiliateLinks.solar.offGridKit} target="_blank" rel="noopener noreferrer">
                                                     <ShoppingCart className="mr-2 h-5 w-5" /> Ver Kits na Amazon
                                                 </a>
+                                            </Button>
+
+                                            <Button
+                                                onClick={() => {
+                                                    addItem({
+                                                        id: crypto.randomUUID(),
+                                                        name: `Kit Solar ${resultado.tamanhoSistema} kWp`,
+                                                        description: `${resultado.qtdPaineis} Painéis | Geração média ${resultado.producaoMensal} kWh/mês`,
+                                                        quantity: 1,
+                                                        unit: "Kit Completo",
+                                                        category: "Elétrica - Energia Solar",
+                                                        estimatedPrice: resultado.investimento
+                                                    });
+                                                }}
+                                                variant="outline"
+                                                size="lg"
+                                                className="w-full border-green-200 hover:bg-green-50 text-green-800"
+                                            >
+                                                <ShoppingCart className="mr-2 h-5 w-5" /> Adicionar Kit ao Orçamento
                                             </Button>
 
                                             {/* Ad Placeholder wrapper tailored for 'Lead Gen' feel */}
