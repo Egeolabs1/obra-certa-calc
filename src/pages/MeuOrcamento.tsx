@@ -68,23 +68,24 @@ const MeuOrcamento = () => {
                         </div>
                     </div>
 
-                    <div className="hidden print:flex flex-col items-center justify-center mb-8 border-b pb-6">
-                        <div className="flex items-center gap-2 mb-2">
-                            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary print:bg-slate-900 border print:border-slate-900">
-                                <HardHat className="h-5 w-5 text-primary-foreground print:text-white" />
+                    <div className="hidden print:flex flex-row items-center justify-between mb-4 border-b pb-2">
+                        <div className="flex items-center gap-2">
+                            {/* Use text-black for print to ensure high contrast and visibility */}
+                            <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-900 bg-slate-900 print:bg-black print:border-black">
+                                <HardHat className="h-5 w-5 text-white" />
                             </div>
-                            <span className="text-xl font-bold text-slate-900">
+                            <span className="text-lg font-bold text-slate-900 print:text-black">
                                 SuaObraCerta
                             </span>
                         </div>
-                        <p className="text-sm text-slate-500 font-medium">suaobracerta.com.br</p>
+                        <p className="text-xs text-slate-500 font-medium print:text-gray-600">suaobracerta.com.br</p>
                     </div>
 
-                    <div className="flex items-center gap-4 mb-8">
+                    <div className="flex items-center gap-4 mb-8 print:mb-4">
                         <div className="bg-primary/10 p-4 rounded-full text-primary print:hidden"><ShoppingCart className="h-8 w-8" /></div>
                         <div>
-                            <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-100">Meu Orçamento</h1>
-                            <p className="text-muted-foreground">Lista de materiais e serviços estimados</p>
+                            <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-100 print:text-xl">Meu Orçamento</h1>
+                            <p className="text-muted-foreground print:text-sm">Lista de materiais e serviços estimados</p>
                         </div>
                     </div>
 
@@ -98,30 +99,30 @@ const MeuOrcamento = () => {
                             </Button>
                         </div>
                     ) : (
-                        <div className="space-y-8 animate-fade-up">
+                        <div className="space-y-8 animate-fade-up print:space-y-4">
                             {Object.entries(groupedItems).map(([category, categoryItems]) => (
-                                <Card key={category} className="overflow-hidden border-none shadow-sm print:shadow-none print:border">
-                                    <CardHeader className="bg-slate-100 dark:bg-slate-800 py-3 px-6">
-                                        <CardTitle className="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                                <Card key={category} className="overflow-hidden border-none shadow-sm print:shadow-none print:border print:border-slate-300 print:rounded-none">
+                                    <CardHeader className="bg-slate-100 dark:bg-slate-800 py-3 px-6 print:py-1 print:px-4 print:bg-slate-50">
+                                        <CardTitle className="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 print:text-black print:text-xs">
                                             {category}
                                         </CardTitle>
                                     </CardHeader>
                                     <CardContent className="p-0">
                                         {categoryItems.map((item, idx) => (
-                                            <div key={item.id} className="group flex items-start sm:items-center justify-between p-4 sm:px-6 hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors border-b last:border-0 border-slate-100 dark:border-slate-800">
+                                            <div key={item.id} className="group flex items-start sm:items-center justify-between p-4 sm:px-6 hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors border-b last:border-0 border-slate-100 dark:border-slate-800 print:p-2 print:border-slate-200">
                                                 <div className="flex-1 mr-4">
-                                                    <h3 className="font-semibold text-slate-800 dark:text-slate-200">{item.name}</h3>
-                                                    <p className="text-sm text-slate-500">{item.description}</p>
+                                                    <h3 className="font-semibold text-slate-800 dark:text-slate-200 print:text-sm print:text-black">{item.name}</h3>
+                                                    <p className="text-sm text-slate-500 print:text-xs">{item.description}</p>
                                                 </div>
-                                                <div className="flex items-center gap-6 sm:gap-12 text-right">
+                                                <div className="flex items-center gap-6 sm:gap-12 text-right print:gap-4">
                                                     <div className="min-w-[80px]">
-                                                        <span className="text-2xl font-bold tabular-nums">{item.quantity}</span>
-                                                        <span className="text-xs text-muted-foreground font-medium ml-1 uppercase">{item.unit}</span>
+                                                        <span className="text-2xl font-bold tabular-nums print:text-lg">{item.quantity}</span>
+                                                        <span className="text-xs text-muted-foreground font-medium ml-1 uppercase print:text-[10px]">{item.unit}</span>
                                                     </div>
                                                     {item.estimatedPrice && item.estimatedPrice > 0 && (
-                                                        <div className="min-w-[100px] hidden sm:block">
-                                                            <p className="text-xs text-muted-foreground">Valor Estimado</p>
-                                                            <p className="font-medium text-emerald-600">R$ {item.estimatedPrice.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
+                                                        <div className="min-w-[100px] hidden sm:block print:block">
+                                                            <p className="text-xs text-muted-foreground print:text-[10px]">Valor Estimado</p>
+                                                            <p className="font-medium text-emerald-600 print:text-sm">R$ {item.estimatedPrice.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
                                                         </div>
                                                     )}
                                                     <Button
@@ -139,13 +140,13 @@ const MeuOrcamento = () => {
                                 </Card>
                             ))}
 
-                            <div className="flex justify-end mt-8">
-                                <div className="bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 p-6 rounded-xl shadow-xl min-w-[300px]">
-                                    <p className="text-slate-400 dark:text-slate-500 text-sm font-medium mb-1">Total Geral Estimado</p>
-                                    <p className="text-4xl font-bold">
+                            <div className="flex justify-end mt-8 print:mt-4">
+                                <div className="bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 p-6 rounded-xl shadow-xl min-w-[300px] print:bg-transparent print:text-black print:shadow-none print:border print:border-slate-300 print:p-4">
+                                    <p className="text-slate-400 dark:text-slate-500 text-sm font-medium mb-1 print:text-slate-600 print:text-xs">Total Geral Estimado</p>
+                                    <p className="text-4xl font-bold print:text-2xl">
                                         R$ {totalEstimatedValue.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
                                     </p>
-                                    <p className="text-xs opacity-50 mt-2">* Valores aproximados de mercado</p>
+                                    <p className="text-xs opacity-50 mt-2 print:text-[10px]">* Valores aproximados de mercado</p>
                                 </div>
                             </div>
                         </div>
