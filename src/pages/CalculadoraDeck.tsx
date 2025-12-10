@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Hammer, Calculator, ShoppingCart, ArrowLeft } from "lucide-react";
+import { Hammer, Calculator, ShoppingCart, ArrowLeft, Printer } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
+import PrintHeader from "@/components/PrintHeader";
 import Footer from "@/components/Footer";
 import AdPlaceholder from "@/components/AdPlaceholder";
 import { Button } from "@/components/ui/button";
@@ -45,6 +46,10 @@ const CalculadoraDeck = () => {
             barrotes: metrosBarrotes,
             parafusos
         });
+    }
+
+    const handlePrint = () => {
+        window.print();
     };
 
     return (
@@ -59,19 +64,22 @@ const CalculadoraDeck = () => {
                     "https://suaobracerta.com.br/calculadora-deck"
                 )}
             />
-            <Header />
+            <div className="print:hidden">
+                <Header />
+            </div>
+            <PrintHeader title="Calculadora de Deck de Madeira" />
             <main className="flex-1">
-                <div className="container pt-6"><AdPlaceholder id="ad-deck" className="max-w-3xl mx-auto" /></div>
+                <div className="container pt-6"><AdPlaceholder id="ad-deck-top" className="max-w-3xl mx-auto print:hidden" /></div>
                 <div className="container py-8 md:py-12">
                     <div className="mx-auto max-w-2xl">
-                        <Link to="/" className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"><ArrowLeft className="h-4 w-4" /> Voltar</Link>
+                        <Link to="/" className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground print:hidden"><ArrowLeft className="h-4 w-4" /> Voltar</Link>
 
-                        <div className="mb-8 font-bold text-2xl flex items-center gap-3">
+                        <div className="mb-8 font-bold text-2xl flex items-center gap-3 print:hidden">
                             <div className="bg-amber-700 rounded-xl p-3 text-white"><Hammer /></div>
                             <h1>Calculadora de Deck de Madeira</h1>
                         </div>
 
-                        <div className="bg-card border border-border rounded-xl p-6 shadow-card space-y-5">
+                        <div className="bg-card border border-border rounded-xl p-6 shadow-card mb-8 print:hidden space-y-5">
                             <div className="space-y-2">
                                 <Label>Área do Deck (m²)</Label>
                                 <Input type="number" value={area} onChange={e => setArea(e.target.value)} placeholder="Ex: 12" />
@@ -81,6 +89,21 @@ const CalculadoraDeck = () => {
                                 <Input type="number" value={larguraRegua} onChange={e => setLarguraRegua(e.target.value)} placeholder="Ex: 10 (Padrão)" />
                             </div>
                             <Button onClick={calcular} size="xl" className="w-full bg-amber-700 hover:bg-amber-800">CALCULAR MADEIRA</Button>
+                        </div>
+
+                        {/* Print Summary */}
+                        <div className="hidden print:block mb-6 p-4 border rounded-lg bg-gray-50">
+                            <h3 className="font-bold text-sm mb-2 uppercase text-gray-500">Parâmetros do Cálculo</h3>
+                            <div className="grid grid-cols-2 gap-4 text-sm">
+                                <div>
+                                    <span className="block text-gray-500">Área:</span>
+                                    <span className="font-medium">{area} m²</span>
+                                </div>
+                                <div>
+                                    <span className="block text-gray-500">Largura da Régua:</span>
+                                    <span className="font-medium">{larguraRegua} cm</span>
+                                </div>
+                            </div>
                         </div>
 
                         {resultado && (
@@ -101,7 +124,9 @@ const CalculadoraDeck = () => {
                                     </div>
                                 </div>
                                 <div className="mt-6">
-                                    <Button asChild className="w-full" variant="secondary" size="lg"><a href={affiliateLinks.flooring.deckVarnish} target="_blank" rel="noopener noreferrer"><ShoppingCart className="mr-2" /> ENCONTRAR VERNIZ POLISTEN</a></Button>
+                                    <Button asChild variant="success" size="lg" className="w-full print:hidden">
+                                        <a href={affiliateLinks.flooring.deckVarnish} target="_blank" rel="noopener noreferrer"><ShoppingCart className="mr-2" /> VER VERNIZ PARA DECK</a>
+                                    </Button>
 
                                     <Button
                                         onClick={() => {
@@ -140,13 +165,22 @@ const CalculadoraDeck = () => {
                                         size="xl"
                                         className="w-full mt-3 border-2 hover:bg-amber-50 text-amber-900 border-amber-100"
                                     >
-                                        <ShoppingCart className="mr-2 h-5 w-5" /> Adicionar Materiais ao Orçamento
+                                        <ShoppingCart className="mr-2 h-5 w-5" /> Adicionar ao Orçamento
+                                    </Button>
+
+                                    <Button
+                                        onClick={handlePrint}
+                                        variant="outline"
+                                        size="xl"
+                                        className="w-full mt-3 bg-white hover:bg-gray-100 text-slate-800 border-2 border-slate-200 print:hidden"
+                                    >
+                                        <Printer className="mr-2 h-5 w-5" /> Salvar em PDF
                                     </Button>
                                 </div>
                             </div>
                         )}
 
-                        <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up" style={{ animationDelay: "200ms" }}>
+                        <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up print:hidden">
                             <h2 className="mb-4 text-lg font-semibold text-foreground">
                                 🔨 Como calcular o material para Deck?
                             </h2>
@@ -168,7 +202,9 @@ const CalculadoraDeck = () => {
                     </div>
                 </div>
             </main>
-            <Footer />
+            <div className="print:hidden">
+                <Footer />
+            </div>
         </div>
     );
 };

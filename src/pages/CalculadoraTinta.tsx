@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Paintbrush, Calculator, ShoppingCart, ExternalLink, ArrowLeft, Info } from "lucide-react";
+import { Paintbrush, Calculator, ShoppingCart, ExternalLink, ArrowLeft, Info, Printer } from "lucide-react";
 import SEO from "@/components/SEO";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
+import PrintHeader from "@/components/PrintHeader";
 import Footer from "@/components/Footer";
 import AdPlaceholder from "@/components/AdPlaceholder";
 import { Button } from "@/components/ui/button";
@@ -13,6 +14,7 @@ import { Switch } from "@/components/ui/switch";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { affiliateLinks } from "@/config/affiliateLinks";
 import { generateCalculatorSchema } from "@/utils/schemas";
+import { useOrcamento } from "@/context/OrcamentoContext";
 
 interface ResultadoCalculo {
   litrosNecessarios: number;
@@ -21,8 +23,6 @@ interface ResultadoCalculo {
   areaTotal: number;
   sugestaoEmbalagem: string;
 }
-
-import { useOrcamento } from "@/context/OrcamentoContext";
 
 const CalculadoraTinta = () => {
   const { addItem } = useOrcamento();
@@ -114,6 +114,10 @@ const CalculadoraTinta = () => {
     });
   };
 
+  const handlePrint = () => {
+    window.print();
+  };
+
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <SEO
@@ -126,27 +130,30 @@ const CalculadoraTinta = () => {
           "https://suaobracerta.com.br/calculadora-tinta"
         )}
       />
-      <Header />
+      <div className="print:hidden">
+        <Header />
+      </div>
 
       <main className="flex-1">
+        <PrintHeader title="Calculadora de Tinta" />
         {/* Ad Placeholder - Topo */}
-        <div className="container pt-6">
+        <div className="container pt-6 print:hidden">
           <AdPlaceholder id="ad-topo-calc" className="max-w-3xl mx-auto" />
         </div>
 
-        <div className="container py-8 md:py-12">
-          <div className="mx-auto max-w-2xl">
+        <div className="container py-8 md:py-12 print:py-0">
+          <div className="mx-auto max-w-2xl print:max-w-full">
             {/* Breadcrumb */}
             <Link
               to="/"
-              className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+              className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors print:hidden"
             >
               <ArrowLeft className="h-4 w-4" />
               Voltar para Início
             </Link>
 
             {/* Title */}
-            <div className="mb-8 animate-fade-up">
+            <div className="mb-8 animate-fade-up print:hidden">
               <div className="mb-4 flex items-center gap-3">
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary">
                   <Paintbrush className="h-6 w-6 text-primary-foreground" />
@@ -161,7 +168,7 @@ const CalculadoraTinta = () => {
             </div>
 
             {/* Form Card */}
-            <div className="rounded-xl border border-border bg-card p-6 shadow-card animate-fade-up" style={{ animationDelay: "100ms" }}>
+            <div className="rounded-xl border border-border bg-card p-6 shadow-card animate-fade-up print:hidden">
               <div className="grid gap-5">
 
                 {/* Switch Pintar Teto */}
@@ -338,45 +345,65 @@ const CalculadoraTinta = () => {
 
             {/* Resultado */}
             {resultado && (
-              <div className="mt-6 rounded-xl border-2 border-primary bg-gradient-result p-6 animate-scale-in">
-                <div className="text-center">
-                  <div className="mb-4 grid grid-cols-2 gap-4 text-left sm:grid-cols-3">
-                    <div className="rounded bg-card/50 p-2">
+              <div className="mt-6 rounded-xl border-2 border-primary bg-gradient-result p-6 animate-scale-in print:bg-white print:border print:border-gray-200 print:shadow-none">
+
+                {/* Print Summary */}
+                <div className="hidden print:block mb-4 p-4 border rounded-lg bg-gray-50 border-gray-200 text-left">
+                  <h3 className="font-bold text-sm mb-2 uppercase text-gray-500">Parâmetros do Projeto</h3>
+                  <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                      <span className="block text-gray-500">Ambiente:</span>
+                      <span className="font-medium">{altura}m (A) x {largura}m (L) x {comprimento}m (C)</span>
+                    </div>
+                    <div>
+                      <span className="block text-gray-500">Paredes + Teto?</span>
+                      <span className="font-medium">{pintarTeto ? "Sim" : "Apenas Paredes"}</span>
+                    </div>
+                    <div>
+                      <span className="block text-gray-500">Qualidade Tinta:</span>
+                      <span className="font-medium">{rendimento} m²/L ({demaos} demãos)</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="text-center print:text-left">
+                  <div className="mb-4 grid grid-cols-2 gap-4 text-left sm:grid-cols-3 print:grid-cols-3">
+                    <div className="rounded bg-card/50 p-2 print:border print:border-gray-100">
                       <p className="text-xs text-muted-foreground">Área Paredes</p>
                       <p className="font-semibold">{resultado.areaParedes} m²</p>
                     </div>
-                    <div className="rounded bg-card/50 p-2">
+                    <div className="rounded bg-card/50 p-2 print:border print:border-gray-100">
                       <p className="text-xs text-muted-foreground">Área Teto</p>
                       <p className="font-semibold">{resultado.areaTeto} m²</p>
                     </div>
-                    <div className="col-span-2 sm:col-span-1 rounded bg-card/50 p-2">
+                    <div className="col-span-2 sm:col-span-1 rounded bg-card/50 p-2 print:border print:border-gray-100">
                       <p className="text-xs text-muted-foreground">Área Total</p>
                       <p className="font-semibold text-primary">{resultado.areaTotal} m²</p>
                     </div>
                   </div>
 
-                  <p className="text-lg font-medium text-foreground mb-1">
+                  <p className="text-lg font-medium text-foreground mb-1 print:text-gray-600">
                     Você precisa de aproximadamente
                   </p>
-                  <p className="text-5xl font-extrabold text-primary mb-2">
+                  <p className="text-5xl font-extrabold text-primary mb-2 print:text-black">
                     {resultado.litrosNecessarios} Litros
                   </p>
                   <p className="text-sm text-muted-foreground">de tinta ({demaos} demãos)</p>
                 </div>
 
-                <div className="mt-4 rounded-lg bg-card/80 p-4 text-center">
+                <div className="mt-4 rounded-lg bg-card/80 p-4 text-center print:border print:border-gray-200">
                   <p className="text-sm text-foreground font-medium">
                     💡 {resultado.sugestaoEmbalagem}
                   </p>
                 </div>
 
                 {/* Ad Placeholder - Meio do Resultado */}
-                <div className="mt-6">
+                <div className="mt-6 print:hidden">
                   <AdPlaceholder id="ad-meio-resultado" />
                 </div>
 
                 {/* Botão Afiliado & Orçamento */}
-                <div className="mt-6 space-y-3">
+                <div className="mt-6 space-y-3 print:hidden">
                   <Button
                     onClick={() => {
                       addItem({
@@ -408,6 +435,15 @@ const CalculadoraTinta = () => {
                       VER PREÇO DAS TINTAS NA AMAZON
                     </a>
                   </Button>
+                  <Button
+                    onClick={handlePrint}
+                    variant="outline"
+                    size="xl"
+                    className="w-full border-2 hover:bg-slate-50 text-slate-700 mt-2"
+                  >
+                    <Printer className="h-5 w-5 mr-2" />
+                    Salvar em PDF
+                  </Button>
                   <p className="mt-2 text-center text-xs text-muted-foreground">
                     *Link de afiliado. Você não paga nada a mais por isso.
                   </p>
@@ -416,7 +452,7 @@ const CalculadoraTinta = () => {
             )}
 
             {/* Informações extras */}
-            <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up" style={{ animationDelay: "200ms" }}>
+            <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up print:hidden">
               <h2 className="mb-4 text-lg font-semibold text-foreground">
                 📋 Como é feito o cálculo?
               </h2>
@@ -439,9 +475,10 @@ const CalculadoraTinta = () => {
         </div>
       </main>
 
-      <Footer />
+      <div className="print:hidden">
+        <Footer />
+      </div>
     </div>
   );
 };
-
 export default CalculadoraTinta;

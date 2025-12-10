@@ -1,8 +1,9 @@
-import { useState } from "react";
-import { Flame, Calculator, ShoppingCart, ArrowLeft, Beer, Share2 } from "lucide-react";
+import { useState, useRef } from "react";
+import { Flame, Calculator, ShoppingCart, ArrowLeft, Beer, Share2, Printer } from "lucide-react";
 import SEO from "@/components/SEO";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
+import PrintHeader from "@/components/PrintHeader";
 import Footer from "@/components/Footer";
 import AdPlaceholder from "@/components/AdPlaceholder";
 import { Button } from "@/components/ui/button";
@@ -13,6 +14,7 @@ import { generateCalculatorSchema } from "@/utils/schemas";
 import { useOrcamento } from "@/context/OrcamentoContext";
 
 const CalculadoraChurrasco = () => {
+    const resultRef = useRef<HTMLDivElement>(null);
     const { addItem } = useOrcamento();
     const [homens, setHomens] = useState("5");
     const [mulheres, setMulheres] = useState("5");
@@ -145,6 +147,10 @@ const CalculadoraChurrasco = () => {
         });
     };
 
+    const handlePrint = () => {
+        window.print();
+    };
+
     const compartilharWhatsApp = () => {
         if (!resultado) return;
 
@@ -181,14 +187,16 @@ const CalculadoraChurrasco = () => {
                     "https://suaobracerta.com.br/calculadora-churrasco"
                 )}
             />
-            <Header />
+            <div className="print:hidden">
+                <Header />
+            </div>
             <main className="flex-1">
-                <div className="container pt-6"><AdPlaceholder id="ad-churras" className="max-w-3xl mx-auto" /></div>
+                <div className="container pt-6"><AdPlaceholder id="ad-churrasco-top" className="max-w-3xl mx-auto print:hidden" /></div>
                 <div className="container py-8 md:py-12">
                     <div className="mx-auto max-w-2xl">
-                        <Link to="/" className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"><ArrowLeft className="h-4 w-4" /> Voltar</Link>
+                        <Link to="/" className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground print:hidden"><ArrowLeft className="h-4 w-4" /> Voltar</Link>
 
-                        <div className="mb-8 font-bold text-2xl flex items-center gap-3">
+                        <div className="mb-8 font-bold text-2xl flex items-center gap-3 print:hidden">
                             <div className="bg-gradient-to-br from-red-600 to-orange-600 rounded-xl p-3 text-white shadow-lg"><Flame /></div>
                             <div>
                                 <h1 className="leading-none">Calculadora de Churrasco</h1>
@@ -196,7 +204,7 @@ const CalculadoraChurrasco = () => {
                             </div>
                         </div>
 
-                        <div className="bg-card border border-border rounded-xl p-6 shadow-card space-y-6">
+                        <div className="bg-card border border-border rounded-xl p-6 shadow-card mb-8 space-y-6 print:hidden">
                             {/* Pessoas */}
                             <div>
                                 <h3 className="text-sm font-semibold text-muted-foreground mb-3 uppercase tracking-wider">Quem vai?</h3>
@@ -292,9 +300,30 @@ const CalculadoraChurrasco = () => {
 
                         {
                             resultado && (
-                                <div className="mt-8 animate-scale-in">
+                                <div ref={resultRef} className="mt-8 animate-scale-in">
+                                    <PrintHeader />
+                                    {/* Print Summary of Inputs */}
+                                    <div className="hidden print:block mb-4 p-4 border rounded-lg bg-gray-50 border-gray-200">
+                                        <h3 className="font-bold text-sm mb-2 uppercase text-gray-500">Detalhes do Evento</h3>
+                                        <div className="grid grid-cols-2 gap-4 text-sm">
+                                            <div>
+                                                <span className="block text-gray-500">Convidados:</span>
+                                                <span className="font-medium">
+                                                    {homens} Homens, {mulheres} Mulheres, {criancas} Crianças
+                                                    {parseInt(vegetarianos) > 0 ? `, ${vegetarianos} Veg` : ''}
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <span className="block text-gray-500">Perfil:</span>
+                                                <span className="font-medium">
+                                                    {duracaoLonga ? "Longa Duração (6h+)" : "Duração Padrão (4h)"} • {comiloes ? "Comilões" : "Consumo Normal"}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     {/* Nota Fiscal UI */}
-                                    <div className="bg-[#fff9c4] dark:bg-card text-card-foreground p-6 rounded-sm shadow-xl border-t-8 border-green-600 relative font-mono text-sm">
+                                    <div className="bg-[#fff9c4] dark:bg-card text-card-foreground p-6 rounded-sm shadow-xl border-t-8 border-green-600 relative font-mono text-sm print:shadow-none print:border-green-600">
 
                                         <div className="text-center mb-6">
                                             <h2 className="text-3xl font-black text-green-700 dark:text-green-500">R$ {resultado.financeiro.porPessoa},00</h2>
@@ -338,7 +367,7 @@ const CalculadoraChurrasco = () => {
                                         </div>
                                     </div>
 
-                                    <div className="mt-6 space-y-3">
+                                    <div className="mt-6 space-y-3 print:hidden">
                                         <Button onClick={compartilharWhatsApp} size="lg" className="w-full bg-green-500 hover:bg-green-600 text-white font-bold text-lg shadow-md hover:shadow-xl transition-all">
                                             <Share2 className="mr-2 h-5 w-5" /> ENVIAR NO GRUPO
                                         </Button>
@@ -378,12 +407,20 @@ const CalculadoraChurrasco = () => {
                                         >
                                             <ShoppingCart className="mr-2 h-4 w-4" /> Adicionar Tudo ao Orçamento
                                         </Button>
+                                        <Button
+                                            onClick={handlePrint}
+                                            variant="outline"
+                                            size="xl"
+                                            className="w-full mt-4 border-2 hover:bg-red-50 text-red-900 print:hidden"
+                                        >
+                                            <Printer className="mr-2 h-5 w-5" /> Salvar Lista em PDF
+                                        </Button>
                                     </div>
                                 </div>
                             )
                         }
 
-                        <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up" style={{ animationDelay: "200ms" }}>
+                        <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up print:hidden">
                             <h2 className="mb-4 text-lg font-semibold text-foreground">
                                 🥩 Entenda o Cálculo do Churrasco
                             </h2>
@@ -413,7 +450,9 @@ const CalculadoraChurrasco = () => {
                     </div>
                 </div>
             </main>
-            <Footer />
+            <div className="print:hidden">
+                <Footer />
+            </div>
         </div >
     );
 };

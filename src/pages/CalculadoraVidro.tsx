@@ -1,9 +1,10 @@
 import { useState } from "react";
 import SEO from "@/components/SEO";
 import { generateCalculatorSchema } from "@/utils/schemas";
-import { AppWindow, Calculator, ArrowLeft, Weight, ShoppingCart } from "lucide-react";
+import { AppWindow, Calculator, ArrowLeft, Weight, ShoppingCart, Printer } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
+import PrintHeader from "@/components/PrintHeader";
 import Footer from "@/components/Footer";
 import AdPlaceholder from "@/components/AdPlaceholder";
 import { Button } from "@/components/ui/button";
@@ -39,6 +40,10 @@ const CalculadoraVidro = () => {
         });
     };
 
+    const handlePrint = () => {
+        window.print();
+    };
+
     return (
         <div className="flex min-h-screen flex-col bg-background">
             <SEO
@@ -51,81 +56,111 @@ const CalculadoraVidro = () => {
                     "https://suaobracerta.com.br/calculadora-vidro"
                 )}
             />
-            <Header />
+            <div className="print:hidden">
+                <Header />
+            </div>
             <main className="flex-1">
-                <div className="container pt-6"><AdPlaceholder id="ad-vidro" className="max-w-3xl mx-auto" /></div>
-                <div className="container py-8 md:py-12">
-                    <div className="mx-auto max-w-2xl">
-                        <Link to="/" className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"><ArrowLeft className="h-4 w-4" /> Voltar</Link>
+                <PrintHeader title="Cálculo de Vidros" />
+                <div className="container pt-6 print:hidden"><AdPlaceholder id="ad-vidro" className="max-w-3xl mx-auto" /></div>
+                <div className="container py-8 md:py-12 print:py-0">
+                    <div className="mx-auto max-w-2xl print:max-w-full">
+                        <Link to="/" className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground print:hidden"><ArrowLeft className="h-4 w-4" /> Voltar</Link>
 
                         <div className="mb-8 font-bold text-2xl flex items-center gap-3">
-                            <div className="bg-cyan-500 rounded-xl p-3 text-white"><AppWindow /></div>
-                            <h1>Calculadora de Vidro</h1>
+                            <div className="bg-cyan-500 rounded-xl p-3 text-white print:bg-white print:text-cyan-500 print:border print:border-cyan-200 print:shadow-none"><AppWindow /></div>
+                            <h1 className="print:text-2xl">Calculadora de Vidro</h1>
                         </div>
 
-                        <div className="bg-card border border-border rounded-xl p-6 shadow-card space-y-5">
-                            <div className="grid grid-cols-2 gap-4">
-                                <div className="space-y-2">
-                                    <Label>Altura (m)</Label>
-                                    <Input value={altura} onChange={e => setAltura(e.target.value)} placeholder="2.10" />
+                        <div className="bg-card border border-border rounded-xl p-6 shadow-card space-y-5 print:shadow-none print:border-none print:p-0 print:mb-6">
+                            <div className="print:hidden space-y-5">
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div className="space-y-2">
+                                        <Label>Altura (m)</Label>
+                                        <Input value={altura} onChange={e => setAltura(e.target.value)} placeholder="2.10" />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <Label>Largura (m)</Label>
+                                        <Input value={largura} onChange={e => setLargura(e.target.value)} placeholder="0.80" />
+                                    </div>
                                 </div>
                                 <div className="space-y-2">
-                                    <Label>Largura (m)</Label>
-                                    <Input value={largura} onChange={e => setLargura(e.target.value)} placeholder="0.80" />
+                                    <Label>Espessura do Vidro (mm)</Label>
+                                    <Select value={espessura} onValueChange={setEspessura}>
+                                        <SelectTrigger className="h-12"><SelectValue /></SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem value="4">4mm (Box simples/Janelinha)</SelectItem>
+                                            <SelectItem value="6">6mm</SelectItem>
+                                            <SelectItem value="8">8mm (Temperado Padrão)</SelectItem>
+                                            <SelectItem value="10">10mm (Portas Grandes/Divisórias)</SelectItem>
+                                            <SelectItem value="12">12mm</SelectItem>
+                                        </SelectContent>
+                                    </Select>
                                 </div>
                             </div>
-                            <div className="space-y-2">
-                                <Label>Espessura do Vidro (mm)</Label>
-                                <Select value={espessura} onValueChange={setEspessura}>
-                                    <SelectTrigger className="h-12"><SelectValue /></SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value="4">4mm (Box simples/Janelinha)</SelectItem>
-                                        <SelectItem value="6">6mm</SelectItem>
-                                        <SelectItem value="8">8mm (Temperado Padrão)</SelectItem>
-                                        <SelectItem value="10">10mm (Portas Grandes/Divisórias)</SelectItem>
-                                        <SelectItem value="12">12mm</SelectItem>
-                                    </SelectContent>
-                                </Select>
+
+                            {/* Print Summary */}
+                            <div className="hidden print:block mb-4 p-4 border rounded-lg bg-gray-50">
+                                <h3 className="font-bold text-sm mb-2 uppercase text-gray-500">Parâmetros do Cálculo</h3>
+                                <div className="grid grid-cols-2 gap-4 text-sm">
+                                    <div>
+                                        <span className="block text-gray-500">Dimensões:</span>
+                                        <span className="font-medium">{largura}x{altura} m</span>
+                                    </div>
+                                    <div>
+                                        <span className="block text-gray-500">Espessura:</span>
+                                        <span className="font-medium">{espessura} mm</span>
+                                    </div>
+                                </div>
                             </div>
-                            <Button onClick={calcular} size="xl" className="w-full">CALCULAR PESO</Button>
+
+                            <div className="print:hidden grid grid-cols-1 gap-4">
+                                <Button onClick={calcular} size="xl" className="w-full">CALCULAR PESO</Button>
+                                {resultado && (
+                                    <Button onClick={handlePrint} variant="outline" size="xl" className="w-full border-2">
+                                        <Printer className="mr-2 h-5 w-5" /> Salvar em PDF
+                                    </Button>
+                                )}
+                            </div>
                         </div>
 
                         {resultado && (
-                            <div className="mt-8 animate-scale-in">
-                                <div className="bg-gradient-result p-8 rounded-xl border-2 border-primary text-center">
-                                    <p className="text-xl">Peso Estimado da Peça:</p>
-                                    <p className="text-5xl font-extrabold text-primary my-3 flex items-center justify-center gap-3">
-                                        <Weight className="h-8 w-8 text-foreground/50" />
+                            <div className="mt-8 animate-scale-in print:mt-4">
+                                <div className="bg-gradient-result p-8 rounded-xl border-2 border-primary text-center print:bg-white print:border-black print:p-0 print:text-left">
+                                    <p className="text-xl print:text-gray-600">Peso Estimado da Peça:</p>
+                                    <p className="text-5xl font-extrabold text-primary my-3 flex items-center justify-center gap-3 print:justify-start print:text-black">
+                                        <Weight className="h-8 w-8 text-foreground/50 print:hidden" />
                                         {resultado.peso} kg
                                     </p>
-                                    <p className="text-sm text-muted-foreground">Área Total: {resultado.area} m²</p>
+                                    <p className="text-sm text-muted-foreground print:text-gray-500">Área Total: {resultado.area} m²</p>
                                 </div>
-                                <div className="mt-6 p-4 bg-muted/30 rounded-lg text-sm text-muted-foreground">
+                                <div className="mt-6 p-4 bg-muted/30 rounded-lg text-sm text-muted-foreground print:hidden">
                                     ⚠️ <strong>Importante:</strong> Use este peso para dimensionar as "Roldanas" ou o "Kit Trilho" da porta de correr. Roldanas fracas quebram com vidros pesados.
                                 </div>
 
-                                <Button
-                                    onClick={() => {
-                                        addItem({
-                                            id: crypto.randomUUID(),
-                                            name: `Vidro Temperado ${espessura}mm`,
-                                            description: `Peça de ${altura}m x ${largura}m | Peso estim. ${resultado.peso}kg`,
-                                            quantity: resultado.area,
-                                            unit: "m²",
-                                            category: "Vidraçaria",
-                                            estimatedPrice: resultado.area * 450 // R$450/m2
-                                        });
-                                    }}
-                                    variant="outline"
-                                    size="xl"
-                                    className="w-full mt-3 border-2 hover:bg-cyan-50 text-cyan-800 border-cyan-200"
-                                >
-                                    <ShoppingCart className="mr-2 h-5 w-5" /> Adicionar Vidro ao Orçamento
-                                </Button>
+                                <div className="print:hidden">
+                                    <Button
+                                        onClick={() => {
+                                            addItem({
+                                                id: crypto.randomUUID(),
+                                                name: `Vidro Temperado ${espessura}mm`,
+                                                description: `Peça de ${altura}m x ${largura}m | Peso estim. ${resultado.peso}kg`,
+                                                quantity: resultado.area,
+                                                unit: "m²",
+                                                category: "Vidraçaria",
+                                                estimatedPrice: resultado.area * 450 // R$450/m2
+                                            });
+                                        }}
+                                        variant="outline"
+                                        size="xl"
+                                        className="w-full mt-3 border-2 hover:bg-cyan-50 text-cyan-800 border-cyan-200"
+                                    >
+                                        <ShoppingCart className="mr-2 h-5 w-5" /> Adicionar Vidro ao Orçamento
+                                    </Button>
+                                </div>
                             </div>
                         )}
 
-                        <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up" style={{ animationDelay: "200ms" }}>
+                        <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up print:hidden">
                             <h2 className="mb-4 text-lg font-semibold text-foreground">
                                 ⚖️ Entenda o cálculo de Peso
                             </h2>
@@ -148,7 +183,9 @@ const CalculadoraVidro = () => {
                     </div>
                 </div>
             </main>
-            <Footer />
+            <div className="print:hidden">
+                <Footer />
+            </div>
         </div>
     );
 };

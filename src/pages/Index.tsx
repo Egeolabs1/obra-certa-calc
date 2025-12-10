@@ -31,16 +31,16 @@ const Index = () => {
                 Mais de 25 Ferramentas Gratuitas
               </div>
 
-              <h1 className="mb-6 text-4xl font-extrabold tracking-tight text-card md:text-5xl lg:text-6xl animate-fade-up" style={{ animationDelay: "100ms" }}>
+              <h1 className="mb-6 text-4xl font-extrabold tracking-tight text-card md:text-5xl lg:text-6xl animate-fade-up">
                 O Guia Definitivo para <br />
                 <span className="text-primary">Sua Obra Certa</span>
               </h1>
 
-              <p className="mb-8 text-lg text-card/80 md:text-xl animate-fade-up" style={{ animationDelay: "200ms" }}>
+              <p className="mb-8 text-lg text-card/80 md:text-xl animate-fade-up">
                 Ferramentas profissionais para Arquitetos, Pedreiros e Você. Do fio elétrico ao churrasco da inauguração.
               </p>
 
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-up" style={{ animationDelay: "300ms" }}>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-up">
                 <Button asChild variant="hero" size="lg">
                   <Link to="/calculadora-escada">
                     <ArrowUpFromLine className="h-5 w-5 mr-2" />

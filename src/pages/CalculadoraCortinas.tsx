@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Blinds, Calculator, ShoppingCart, ArrowLeft } from "lucide-react";
+import { Blinds, Calculator, ShoppingCart, ArrowLeft, Printer } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
+import PrintHeader from "@/components/PrintHeader";
 import Footer from "@/components/Footer";
 import AdPlaceholder from "@/components/AdPlaceholder";
 import { Button } from "@/components/ui/button";
@@ -38,6 +39,10 @@ const CalculadoraCortinas = () => {
             tecidoL: Math.ceil(larguraTecido * 100) / 100,
             tecidoA: Math.ceil(alturaTecido * 100) / 100
         });
+    }
+
+    const handlePrint = () => {
+        window.print();
     };
 
     return (
@@ -52,19 +57,21 @@ const CalculadoraCortinas = () => {
                     "https://suaobracerta.com.br/calculadora-cortinas"
                 )}
             />
-            <Header />
+            <div className="print:hidden">
+                <Header />
+            </div>
             <main className="flex-1">
-                <div className="container pt-6"><AdPlaceholder id="ad-cortina" className="max-w-3xl mx-auto" /></div>
+                <div className="container pt-6"><AdPlaceholder id="ad-cortina" className="max-w-3xl mx-auto print:hidden" /></div>
                 <div className="container py-8 md:py-12">
                     <div className="mx-auto max-w-2xl">
-                        <Link to="/" className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"><ArrowLeft className="h-4 w-4" /> Voltar</Link>
+                        <Link to="/" className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground print:hidden"><ArrowLeft className="h-4 w-4" /> Voltar</Link>
 
-                        <div className="mb-8 font-bold text-2xl flex items-center gap-3">
+                        <div className="mb-8 font-bold text-2xl flex items-center gap-3 print:hidden">
                             <div className="bg-pink-500 rounded-xl p-3 text-white"><Blinds /></div>
                             <h1>Calculadora de Cortinas</h1>
                         </div>
 
-                        <div className="bg-card border border-border rounded-xl p-6 shadow-card space-y-5">
+                        <div className="bg-card border border-border rounded-xl p-6 shadow-card mb-8 print:hidden space-y-5">
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="space-y-2">
                                     <Label>Largura Janela (m)</Label>
@@ -91,8 +98,24 @@ const CalculadoraCortinas = () => {
                             <Button onClick={calcular} size="xl" className="w-full">CALCULAR TECIDO</Button>
                         </div>
 
+                        {/* Print Summary */}
+                        <div className="hidden print:block mb-6 p-4 border rounded-lg bg-gray-50">
+                            <h3 className="font-bold text-sm mb-2 uppercase text-gray-500">Parâmetros do Cálculo</h3>
+                            <div className="grid grid-cols-2 gap-4 text-sm">
+                                <div>
+                                    <span className="block text-gray-500">Janela:</span>
+                                    <span className="font-medium">{larguraJanela}x{alturaJanela} m</span>
+                                </div>
+                                <div>
+                                    <span className="block text-gray-500">Pregas:</span>
+                                    <span className="font-medium">{pregas}x</span>
+                                </div>
+                            </div>
+                        </div>
+
                         {resultado && (
-                            <div className="mt-8 text-center bg-gradient-result p-8 rounded-xl border-2 border-primary animate-scale-in">
+                            <div className="mt-8 text-center bg-gradient-result p-8 rounded-xl border-2 border-primary animate-scale-in print:shadow-none print:border-none print:bg-white">
+                                <PrintHeader />
                                 <p className="text-xl">Dimensões do Tecido:</p>
                                 <div className="flex justify-center gap-8 my-4">
                                     <div>
@@ -105,7 +128,9 @@ const CalculadoraCortinas = () => {
                                     </div>
                                 </div>
                                 <p className="text-sm text-muted-foreground mb-4">Já incluindo margens laterais e barra.</p>
-                                <Button asChild className="w-full" variant="secondary" size="lg"><a href={affiliateLinks.furniture.curtains} target="_blank" rel="noopener noreferrer"><ShoppingCart className="mr-2" /> VER TECIDOS E CORTINAS</a></Button>
+                                <Button asChild variant="success" size="lg" className="w-full print:hidden">
+                                    <a href={affiliateLinks.furniture.curtains} target="_blank" rel="noopener noreferrer"><ShoppingCart className="mr-2" /> VER MODELOS DE CORTINA</a>
+                                </Button>
 
                                 <Button
                                     onClick={() => {
@@ -123,12 +148,21 @@ const CalculadoraCortinas = () => {
                                     size="xl"
                                     className="w-full mt-3 border-2 hover:bg-pink-50 text-pink-700 border-pink-100"
                                 >
-                                    <ShoppingCart className="mr-2 h-5 w-5" /> Adicionar Tecido ao Orçamento
+                                    <ShoppingCart className="mr-2 h-5 w-5" /> Adicionar ao Orçamento
+                                </Button>
+
+                                <Button
+                                    onClick={handlePrint}
+                                    variant="outline"
+                                    size="xl"
+                                    className="w-full mt-3 bg-white hover:bg-gray-100 text-slate-800 border-2 border-slate-200 print:hidden"
+                                >
+                                    <Printer className="mr-2 h-5 w-5" /> Salvar em PDF
                                 </Button>
                             </div>
                         )}
 
-                        <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up" style={{ animationDelay: "200ms" }}>
+                        <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up print:hidden">
                             <h2 className="mb-4 text-lg font-semibold text-foreground">
                                 🪟 Entenda o cálculo de Tecido
                             </h2>
@@ -154,7 +188,9 @@ const CalculadoraCortinas = () => {
                     </div>
                 </div>
             </main>
-            <Footer />
+            <div className="print:hidden">
+                <Footer />
+            </div>
         </div>
     );
 };

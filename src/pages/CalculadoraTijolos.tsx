@@ -221,7 +221,7 @@ const CalculadoraTijolos = () => {
             </div>
 
             {/* Form Card */}
-            <div className="rounded-xl border border-border bg-card p-6 shadow-card animate-fade-up print:hidden" style={{ animationDelay: "100ms" }}>
+            <div className="rounded-xl border border-border bg-card p-6 shadow-card animate-fade-up print:hidden">
               <div className="grid gap-5">
                 {/* Tipo de Tijolo */}
                 <div className="space-y-2">
@@ -368,6 +368,29 @@ const CalculadoraTijolos = () => {
             {resultado && (
               <div className="mt-6 space-y-4 animate-scale-in">
                 <PrintHeader />
+                {/* Print Summary of Inputs */}
+                <div className="hidden print:block mb-4 p-4 border rounded-lg bg-gray-50 border-gray-200">
+                  <h3 className="font-bold text-sm mb-2 uppercase text-gray-500">Parâmetros do Projeto</h3>
+                  <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                      <span className="block text-gray-500">Parede:</span>
+                      <span className="font-medium">{alturaParede}m x {comprimentoParede}m (Bruta: {resultado.areaBruta}m²)</span>
+                    </div>
+                    <div>
+                      <span className="block text-gray-500">Vãos:</span>
+                      <span className="font-medium text-red-600">-{resultado.areaDescontada}m² ({qtdPortas || 0} Pts, {qtdJanelas || 0} Jan)</span>
+                    </div>
+                    <div>
+                      <span className="block text-gray-500">Tipo de Tijolo:</span>
+                      <span className="font-medium">{TIPOS_TIJOLOS[tipoTijolo].nome}</span>
+                    </div>
+                    <div>
+                      <span className="block text-gray-500">Margem Perda:</span>
+                      <span className="font-medium">{perdas}%</span>
+                    </div>
+                  </div>
+                </div>
+
                 {/* Resultado Tijolos */}
                 <div className="rounded-xl border-2 border-primary bg-gradient-result p-6 print:border print:border-slate-300 print:shadow-none print:bg-none">
                   <div className="text-center mb-6">
@@ -528,7 +551,7 @@ const CalculadoraTijolos = () => {
             )}
 
             {/* Informações extras */}
-            <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up print:hidden" style={{ animationDelay: "200ms" }}>
+            <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up print:hidden">
               <h2 className="mb-4 text-lg font-semibold text-foreground">
                 📋 Tipos de Tijolos e Rendimento
               </h2>

@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Wind, Calculator, ShoppingCart, ExternalLink, ArrowLeft, Sun, Smartphone, Users } from "lucide-react";
+import { Wind, Calculator, ShoppingCart, ExternalLink, ArrowLeft, Sun, Smartphone, Users, Printer } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import PrintHeader from "@/components/PrintHeader";
 import AdPlaceholder from "@/components/AdPlaceholder";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -93,6 +94,10 @@ const CalculadoraArCondicionado = () => {
         });
     };
 
+    const handlePrint = () => {
+        window.print();
+    };
+
     return (
         <div className="flex min-h-screen flex-col bg-background">
             <SEO
@@ -105,24 +110,26 @@ const CalculadoraArCondicionado = () => {
                     "https://suaobracerta.com.br/calculadora-ar-condicionado"
                 )}
             />
-            <Header />
+            <div className="print:hidden">
+                <Header />
+            </div>
 
             <main className="flex-1">
                 <div className="container pt-6">
-                    <AdPlaceholder id="ad-topo-ar" className="max-w-3xl mx-auto" />
+                    <AdPlaceholder id="ad-topo-ar" className="max-w-3xl mx-auto print:hidden" />
                 </div>
 
                 <div className="container py-8 md:py-12">
                     <div className="mx-auto max-w-2xl">
                         <Link
                             to="/"
-                            className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                            className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors print:hidden"
                         >
                             <ArrowLeft className="h-4 w-4" />
                             Voltar para Início
                         </Link>
 
-                        <div className="mb-8 animate-fade-up">
+                        <div className="mb-8 animate-fade-up print:hidden">
                             <div className="mb-4 flex items-center gap-3">
                                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-500">
                                     <Wind className="h-6 w-6 text-white" />
@@ -136,7 +143,7 @@ const CalculadoraArCondicionado = () => {
                             </p>
                         </div>
 
-                        <div className="rounded-xl border border-border bg-card p-6 shadow-card animate-fade-up" style={{ animationDelay: "100ms" }}>
+                        <div className="rounded-xl border border-border bg-card p-6 shadow-card animate-fade-up print:hidden">
                             <div className="grid gap-6">
 
                                 {/* Área */}
@@ -232,7 +239,8 @@ const CalculadoraArCondicionado = () => {
                         </div>
 
                         {resultado && (
-                            <div className="mt-6 rounded-xl border-2 border-primary bg-gradient-result p-6 animate-scale-in">
+                            <div className="mt-6 rounded-xl border-2 border-primary bg-gradient-result p-6 animate-scale-in print:shadow-none print:border-none print:bg-white">
+                                <PrintHeader />
                                 <div className="text-center">
                                     <p className="text-lg font-medium text-foreground mb-1">
                                         Potência recomendada:
@@ -251,7 +259,7 @@ const CalculadoraArCondicionado = () => {
                                         asChild
                                         variant="success"
                                         size="xl"
-                                        className="w-full"
+                                        className="w-full print:hidden"
                                     >
                                         <a href={affiliateLinks.electrical.ac} target="_blank" rel="noopener noreferrer">
                                             <ShoppingCart className="h-5 w-5" />
@@ -274,10 +282,20 @@ const CalculadoraArCondicionado = () => {
                                         }}
                                         variant="outline"
                                         size="xl"
-                                        className="w-full border-2 hover:bg-slate-50 text-slate-700"
+                                        className="w-full border-2 hover:bg-slate-50 text-slate-700 print:hidden"
                                     >
                                         <ShoppingCart className="h-5 w-5 mr-2" />
                                         Adicionar ao Orçamento
+                                    </Button>
+
+                                    <Button
+                                        onClick={handlePrint}
+                                        variant="outline"
+                                        size="xl"
+                                        className="w-full border-2 hover:bg-slate-50 text-slate-700 mt-2 print:hidden"
+                                    >
+                                        <Printer className="h-5 w-5 mr-2" />
+                                        Salvar em PDF
                                     </Button>
                                     <p className="mt-2 text-center text-xs text-muted-foreground">
                                         *Melhores preços na Amazon/Mercado Livre.
@@ -286,7 +304,7 @@ const CalculadoraArCondicionado = () => {
                             </div>
                         )}
 
-                        <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up">
+                        <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up print:hidden">
                             <h2 className="mb-4 text-lg font-semibold text-foreground">
                                 ❄️ Guia Completo: Escolhendo seu Ar Condicionado
                             </h2>
@@ -337,7 +355,9 @@ const CalculadoraArCondicionado = () => {
                 </div>
             </main >
 
-            <Footer />
+            <div className="print:hidden">
+                <Footer />
+            </div>
         </div >
     );
 };

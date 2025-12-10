@@ -159,7 +159,7 @@ const CalculadoraPisos = () => {
             </div>
 
             {/* Form Card */}
-            <div className="rounded-xl border border-border bg-card p-6 shadow-card animate-fade-up" style={{ animationDelay: "100ms" }}>
+            <div className="rounded-xl border border-border bg-card p-6 shadow-card animate-fade-up">
               <div className="grid gap-5">
                 {/* Tipo de Piso */}
                 <div className="space-y-2">
@@ -458,7 +458,7 @@ const CalculadoraPisos = () => {
             )}
 
             {/* Informações extras */}
-            <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up" style={{ animationDelay: "200ms" }}>
+            <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up">
               <h2 className="mb-4 text-lg font-semibold text-foreground">
                 📋 Como calcular a quantidade de piso?
               </h2>

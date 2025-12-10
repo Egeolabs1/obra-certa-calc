@@ -1,8 +1,12 @@
 import { HardHat } from "lucide-react";
 
-const PrintHeader = () => {
+interface PrintHeaderProps {
+    title?: string;
+}
+
+const PrintHeader = ({ title }: PrintHeaderProps) => {
     return (
-        <div className="hidden print:flex flex-row items-center justify-between mb-8 border-b pb-4">
+        <div className="hidden print:flex flex-row items-center justify-between mb-8 border-b pb-4 relative">
             <div className="flex items-center gap-3">
                 {/* Use transparent bg and black text for print to ensure visibility */}
                 <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-900 bg-slate-900 print:bg-transparent print:border-black">
@@ -25,6 +29,13 @@ const PrintHeader = () => {
                     {new Date().toLocaleDateString('pt-BR')}
                 </p>
             </div>
+            {title && (
+                <div className="absolute left-1/2 -translate-x-1/2 top-4">
+                    <h2 className="text-xl font-bold text-slate-900 print:text-black uppercase tracking-tight border-b-2 border-slate-900 pb-1">
+                        {title}
+                    </h2>
+                </div>
+            )}
         </div>
     );
 };

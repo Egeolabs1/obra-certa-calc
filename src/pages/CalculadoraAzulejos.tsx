@@ -1,8 +1,9 @@
 import { useState, useRef } from "react";
-import { Grid3X3, ArrowLeft, Ruler, Calculator, ShoppingCart, Info } from "lucide-react";
+import { Grid3X3, ArrowLeft, Ruler, Calculator, ShoppingCart, Info, Printer } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import PrintHeader from "@/components/PrintHeader";
 import AdPlaceholder from "@/components/AdPlaceholder";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -78,6 +79,10 @@ const CalculadoraAzulejos = () => {
         }, 100);
     };
 
+    const handlePrint = () => {
+        window.print();
+    };
+
     return (
         <div className="flex min-h-screen flex-col bg-background">
             <SEO
@@ -90,15 +95,17 @@ const CalculadoraAzulejos = () => {
                     "https://suaobracerta.com.br/calculadora-azulejos"
                 )}
             />
-            <Header />
+            <div className="print:hidden">
+                <Header />
+            </div>
             <main className="flex-1">
-                <div className="container pt-6"><AdPlaceholder id="ad-azulejo-top" className="max-w-3xl mx-auto" /></div>
+                <div className="container pt-6"><AdPlaceholder id="ad-azulejo-top" className="max-w-3xl mx-auto print:hidden" /></div>
 
                 <div className="container py-8 md:py-12">
                     <div className="mx-auto max-w-2xl">
-                        <Link to="/" className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"><ArrowLeft className="h-4 w-4" /> Voltar</Link>
+                        <Link to="/" className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground print:hidden"><ArrowLeft className="h-4 w-4" /> Voltar</Link>
 
-                        <div className="mb-8 font-bold text-2xl flex items-center gap-3">
+                        <div className="mb-8 font-bold text-2xl flex items-center gap-3 print:hidden">
                             <div className="bg-cyan-600 rounded-xl p-3 text-white"><Grid3X3 /></div>
                             <div>
                                 <h1 className="leading-none text-3xl text-foreground">Calculadora de Azulejos</h1>
@@ -107,7 +114,7 @@ const CalculadoraAzulejos = () => {
                         </div>
 
                         {/* Inputs */}
-                        <div className="bg-card border border-border rounded-xl p-6 shadow-card mb-8">
+                        <div className="bg-card border border-border rounded-xl p-6 shadow-card mb-8 print:hidden">
                             <div className="grid gap-6 md:grid-cols-2">
                                 <div className="space-y-2">
                                     <Label>Largura da Área (m)</Label>
@@ -175,14 +182,35 @@ const CalculadoraAzulejos = () => {
                             </div>
 
                             <Button onClick={calcular} size="lg" className="w-full mt-6 bg-cyan-700 hover:bg-cyan-800 text-white font-bold h-14 text-lg">
-                                CALCULAR QUANTIDADE
                             </Button>
+                        </div>
+
+                        {/* Print Summary */}
+                        <div className="hidden print:block mb-6 p-4 border rounded-lg bg-gray-50">
+                            <h3 className="font-bold text-sm mb-2 uppercase text-gray-500">Parâmetros do Cálculo</h3>
+                            <div className="grid grid-cols-2 gap-4 text-sm">
+                                <div>
+                                    <span className="block text-gray-500">Dimensões:</span>
+                                    <span className="font-medium">{largura}x{altura} m</span>
+                                </div>
+                                <div>
+                                    <span className="block text-gray-500">Tamanho Peça:</span>
+                                    <span className="font-medium">
+                                        {tamAzulejo === 'custom' ? `${customWidth}x${customHeight} cm` : `${tamAzulejo} cm`}
+                                    </span>
+                                </div>
+                                <div>
+                                    <span className="block text-gray-500">Margem Perda:</span>
+                                    <span className="font-medium">{perda}%</span>
+                                </div>
+                            </div>
                         </div>
 
                         {/* Result */}
                         {resultado && (
                             <div ref={resultRef} className="animate-fade-up space-y-6">
-                                <div className="bg-card border border-cyan-200 rounded-xl p-6 shadow-lg">
+                                <PrintHeader />
+                                <div className="bg-card border border-cyan-200 rounded-xl p-6 shadow-lg print:shadow-none print:border-none">
                                     <div className="grid grid-cols-2 gap-8 text-center">
                                         <div>
                                             <p className="text-4xl font-bold text-cyan-800">{resultado.qtdPecas}</p>
@@ -215,7 +243,7 @@ const CalculadoraAzulejos = () => {
                                     <p>Sempre arredonde para cima na hora de comprar e verifique a metragem exata por caixa indicada pelo fabricante.</p>
                                 </div>
 
-                                <Button asChild size="xl" className="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold h-16 shadow-lg">
+                                <Button asChild size="xl" className="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold h-16 shadow-lg print:hidden">
                                     <a href={affiliateLinks.flooring.general} target="_blank" rel="noopener noreferrer">
                                         <ShoppingCart className="mr-2 h-6 w-6" /> COTAR PREÇOS DE PISOS
                                     </a>
@@ -238,10 +266,18 @@ const CalculadoraAzulejos = () => {
                                 >
                                     <ShoppingCart className="mr-2 h-5 w-5" /> Adicionar ao Orçamento
                                 </Button>
+                                <Button
+                                    onClick={handlePrint}
+                                    variant="outline"
+                                    size="xl"
+                                    className="w-full bg-white hover:bg-gray-100 text-slate-800 border-2 border-slate-200 mt-3 print:hidden"
+                                >
+                                    <Printer className="mr-2 h-5 w-5" /> Salvar em PDF
+                                </Button>
                             </div>
                         )}
 
-                        <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up" style={{ animationDelay: "200ms" }}>
+                        <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up print:hidden">
                             <h2 className="mb-4 text-lg font-semibold text-foreground">
                                 🧱 Como calcular pisos e revestimentos?
                             </h2>
@@ -264,7 +300,9 @@ const CalculadoraAzulejos = () => {
                     </div>
                 </div>
             </main>
-            <Footer />
+            <div className="print:hidden">
+                <Footer />
+            </div>
         </div>
     );
 };

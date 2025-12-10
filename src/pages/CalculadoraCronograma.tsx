@@ -1,10 +1,11 @@
 import { useState, useRef } from "react";
-import { CalendarDays, ArrowLeft, Clock, Hammer, Paintbrush, HardHat, CheckCircle2, Calendar as CalendarIcon, FileDown } from "lucide-react";
+import { CalendarDays, ArrowLeft, Clock, Hammer, Paintbrush, HardHat, CheckCircle2, Calendar as CalendarIcon, Printer, FileDown } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AdPlaceholder from "@/components/AdPlaceholder";
 import { Button } from "@/components/ui/button";
+import PrintHeader from "@/components/PrintHeader";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -199,6 +200,7 @@ const CalculadoraCronograma = () => {
                         {/* Results */}
                         {cronograma && (
                             <div ref={resultRef} className="animate-fade-up">
+                                <PrintHeader />
                                 <AlertBox duration={totalDuration} />
 
                                 {/* Timeline Visualization */}
@@ -246,18 +248,16 @@ const CalculadoraCronograma = () => {
 
                                 <div className="mt-8 flex justify-center print:hidden">
                                     <Button onClick={handlePrint} size="lg" variant="outline" className="gap-2 border-orange-200 text-orange-700 hover:bg-orange-50 font-bold">
-                                        <FileDown className="h-5 w-5" /> Imprimir / Salvar PDF
+                                        <Printer className="h-5 w-5" /> Salvar em PDF
                                     </Button>
                                 </div>
 
                                 <div className="hidden print:block mt-8 text-center text-xs text-muted-foreground w-full border-t pt-4">
-                                    <p>Cronograma gerado automaticamente por <strong>suaobracerta.com.br</strong></p>
-                                    <p>Acesse o site para mais calculadoras de obra gratuitas.</p>
                                 </div>
                             </div>
                         )}
                         {/* Explicação Metodologia */}
-                        <div className="mt-12 rounded-xl border border-border bg-muted/30 p-6 md:p-8 animate-fade-up print:hidden" style={{ animationDelay: "200ms" }}>
+                        <div className="mt-12 rounded-xl border border-border bg-muted/30 p-6 md:p-8 animate-fade-up print:hidden">
                             <h2 className="mb-4 text-lg font-semibold text-foreground">
                                 📊 Como este cronograma é calculado?
                             </h2>

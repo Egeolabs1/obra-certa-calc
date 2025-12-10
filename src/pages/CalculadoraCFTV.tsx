@@ -1,8 +1,9 @@
 import { useState, useRef } from "react";
-import { Cctv, ArrowLeft, ShieldCheck, HardDrive, Eye, Lock, ShoppingCart, ExternalLink } from "lucide-react";
+import { Cctv, ArrowLeft, ShieldCheck, HardDrive, Eye, Lock, ShoppingCart, ExternalLink, Printer } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import PrintHeader from "@/components/PrintHeader";
 import AdPlaceholder from "@/components/AdPlaceholder";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -68,6 +69,10 @@ const CalculadoraCFTV = () => {
         }, 100);
     };
 
+    const handlePrint = () => {
+        window.print();
+    };
+
     return (
         <div className="flex min-h-screen flex-col bg-background">
             <SEO
@@ -81,16 +86,19 @@ const CalculadoraCFTV = () => {
                     "https://suaobracerta.com.br/calculadora-cftv"
                 )}
             />
-            <Header />
+            <div className="print:hidden">
+                <Header />
+            </div>
 
             <main className="flex-1">
-                <div className="container pt-6"><AdPlaceholder id="ad-cftv-top" className="max-w-3xl mx-auto" /></div>
+                <PrintHeader title="Projeto de Segurança (CFTV)" />
+                <div className="container pt-6"><AdPlaceholder id="ad-cftv-top" className="max-w-3xl mx-auto print:hidden" /></div>
 
-                <div className="container py-8 md:py-12">
-                    <div className="mx-auto max-w-4xl">
-                        <Link to="/" className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"><ArrowLeft className="h-4 w-4" /> Voltar</Link>
+                <div className="container py-8 md:py-12 print:py-0">
+                    <div className="mx-auto max-w-4xl print:max-w-full">
+                        <Link to="/" className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground print:hidden"><ArrowLeft className="h-4 w-4" /> Voltar</Link>
 
-                        <div className="mb-8 font-bold text-2xl flex items-center gap-3">
+                        <div className="mb-8 font-bold text-2xl flex items-center gap-3 print:hidden">
                             <div className="bg-slate-900 rounded-xl p-3 text-white shadow-lg"><Cctv className="h-8 w-8" /></div>
                             <div>
                                 <h1 className="leading-none text-3xl md:text-4xl text-foreground">Projeto de Segurança (CFTV)</h1>
@@ -99,8 +107,8 @@ const CalculadoraCFTV = () => {
                         </div>
 
                         {/* Inputs */}
-                        <div className="bg-card border border-border rounded-xl p-6 shadow-card mb-8">
-                            <div className="grid gap-6 md:grid-cols-3">
+                        <div className="bg-card border border-border rounded-xl p-6 shadow-card mb-8 print:shadow-none print:border-none print:p-0 print:mb-6">
+                            <div className="grid gap-6 md:grid-cols-3 print:hidden">
                                 <div className="space-y-2">
                                     <Label>Quantos cômodos INTERNOS?</Label>
                                     <div className="relative">
@@ -144,26 +152,47 @@ const CalculadoraCFTV = () => {
                                     </div>
                                 </div>
                             </div>
-                            <Button onClick={calcular} size="lg" className="w-full mt-6 bg-slate-900 hover:bg-black text-white h-14 font-bold text-lg">
+
+                            <Button onClick={calcular} size="lg" className="w-full mt-6 bg-slate-900 hover:bg-black text-white h-14 font-bold text-lg print:hidden">
                                 <Lock className="mr-2 h-5 w-5" /> PROJETAR MEU KIT
                             </Button>
+
+                            {/* Print Summary */}
+                            <div className="hidden print:block mb-6 p-4 border rounded-lg bg-gray-50">
+                                <h3 className="font-bold text-sm mb-2 uppercase text-gray-500">Parâmetros do Projeto</h3>
+                                <div className="grid grid-cols-2 gap-4 text-sm">
+                                    <div>
+                                        <span className="block text-gray-500">Cômodos Internos:</span>
+                                        <span className="font-medium">{comodos || 0}</span>
+                                    </div>
+                                    <div>
+                                        <span className="block text-gray-500">Áreas Externas:</span>
+                                        <span className="font-medium">{externas || 0}</span>
+                                    </div>
+                                    <div>
+                                        <span className="block text-gray-500">Dias de Gravação:</span>
+                                        <span className="font-medium">{dias || 15} dias</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         {/* Result */}
                         {resultado && (
                             <div ref={resultRef} className="animate-fade-up space-y-6">
-                                <Card className="border-2 border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50">
-                                    <CardContent className="p-6 md:p-8">
-                                        <div className="text-center mb-8">
+                                <Card className="border-2 border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 print:border-none print:shadow-none print:bg-white">
+                                    <CardContent className="p-6 md:p-8 print:p-0">
+                                        <div className="text-center mb-8 print:text-left print:mb-4">
                                             <h3 className="text-lg font-medium text-muted-foreground mb-2">Seu Kit Ideal:</h3>
-                                            <div className="flex flex-col md:flex-row items-center justify-center gap-6">
-                                                <div className="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 min-w-[200px]">
+                                            <div className="flex flex-col md:flex-row items-center justify-center gap-6 print:justify-start">
+                                                <div className="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 min-w-[200px] print:border print:border-slate-300 print:shadow-none">
                                                     <p className="text-sm text-muted-foreground mb-1">Câmeras + DVR</p>
                                                     <p className="text-3xl font-bold text-slate-900 dark:text-white">Kit {resultado.dvrCanais} Canais</p>
-                                                    <Badge variant="secondary" className="mt-2">Suporta até {resultado.dvrCanais} câmeras</Badge>
+                                                    <Badge variant="secondary" className="mt-2 print:hidden">Suporta até {resultado.dvrCanais} câmeras</Badge>
+                                                    <p className="hidden print:block text-xs text-muted-foreground mt-1">Suporta até {resultado.dvrCanais} câmeras</p>
                                                 </div>
-                                                <div className="text-2xl text-slate-300 hidden md:block">+</div>
-                                                <div className="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 min-w-[200px]">
+                                                <div className="text-2xl text-slate-300 hidden md:block print:hidden">+</div>
+                                                <div className="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 min-w-[200px] print:border print:border-slate-300 print:shadow-none">
                                                     <p className="text-sm text-muted-foreground mb-1">HD de Armazenamento</p>
                                                     <p className="text-3xl font-bold text-purple-600">HD {resultado.hdRecomendado}</p>
                                                     <p className="text-xs text-muted-foreground mt-2">Para gravar ~{dias} dias</p>
@@ -171,7 +200,7 @@ const CalculadoraCFTV = () => {
                                             </div>
                                         </div>
 
-                                        <div className="bg-blue-50 dark:bg-blue-950/30 p-4 rounded-lg text-sm text-blue-800 dark:text-blue-200 mb-6 flex gap-3">
+                                        <div className="bg-blue-50 dark:bg-blue-950/30 p-4 rounded-lg text-sm text-blue-800 dark:text-blue-200 mb-6 flex gap-3 print:bg-white print:border print:border-blue-100">
                                             <ShieldCheck className="h-5 w-5 shrink-0" />
                                             <p>
                                                 <strong>Por que esse Kit?</strong><br />
@@ -181,7 +210,7 @@ const CalculadoraCFTV = () => {
                                         </div>
 
                                         {/* Affiliate Links */}
-                                        <div className="grid gap-4 md:grid-cols-2">
+                                        <div className="grid gap-4 md:grid-cols-2 print:hidden">
                                             <Button asChild size="xl" className="h-auto py-4 bg-[#FF9900] hover:bg-[#ffad33] text-black border-none">
                                                 <a href={affiliateLinks.cftv.kitIntelbras4} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center">
                                                     <div className="flex items-center gap-2 mb-1">
@@ -202,44 +231,56 @@ const CalculadoraCFTV = () => {
                                             </Button>
                                         </div>
                                         <div className="mt-4">
-                                            <Button
-                                                onClick={() => {
-                                                    // Add Kit
-                                                    addItem({
-                                                        id: crypto.randomUUID(),
-                                                        name: `Kit CFTV ${resultado.dvrCanais} Canais`,
-                                                        description: `DVR + Câmeras para ${resultado.totalCameras} pontos`,
-                                                        quantity: 1,
-                                                        unit: "Kit",
-                                                        category: "Segurança",
-                                                        estimatedPrice: resultado.dvrCanais * 250 // Estimativa
-                                                    });
-                                                    // Add HD
-                                                    addItem({
-                                                        id: crypto.randomUUID(),
-                                                        name: `HD ${resultado.hdRecomendado} WD Purple`,
-                                                        description: `Para gravação de ${dias} dias`,
-                                                        quantity: 1,
-                                                        unit: "Unidade",
-                                                        category: "Segurança",
-                                                        estimatedPrice: 350 // Estimativa base
-                                                    });
-                                                }}
-                                                variant="outline"
-                                                size="xl"
-                                                className="w-full border-2 hover:bg-slate-100 text-slate-800"
-                                            >
-                                                <ShoppingCart className="h-5 w-5 mr-2" />
-                                                Adicionar Kit Completo ao Orçamento
-                                            </Button>
+                                            <div className="print:hidden space-y-4">
+                                                <Button
+                                                    onClick={() => {
+                                                        // Add Kit
+                                                        addItem({
+                                                            id: crypto.randomUUID(),
+                                                            name: `Kit CFTV ${resultado.dvrCanais} Canais`,
+                                                            description: `DVR + Câmeras para ${resultado.totalCameras} pontos`,
+                                                            quantity: 1,
+                                                            unit: "Kit",
+                                                            category: "Segurança",
+                                                            estimatedPrice: resultado.dvrCanais * 250 // Estimativa
+                                                        });
+                                                        // Add HD
+                                                        addItem({
+                                                            id: crypto.randomUUID(),
+                                                            name: `HD ${resultado.hdRecomendado} WD Purple`,
+                                                            description: `Para gravação de ${dias} dias`,
+                                                            quantity: 1,
+                                                            unit: "Unidade",
+                                                            category: "Segurança",
+                                                            estimatedPrice: 350 // Estimativa base
+                                                        });
+                                                    }}
+                                                    variant="outline"
+                                                    size="xl"
+                                                    className="w-full border-2 hover:bg-slate-100 text-slate-800"
+                                                >
+                                                    <ShoppingCart className="h-5 w-5 mr-2" />
+                                                    Adicionar Kit Completo ao Orçamento
+                                                </Button>
+
+                                                <Button
+                                                    onClick={handlePrint}
+                                                    variant="outline"
+                                                    size="xl"
+                                                    className="w-full border-2 hover:bg-slate-100 text-slate-800"
+                                                >
+                                                    <Printer className="h-5 w-5 mr-2" />
+                                                    Salvar em PDF
+                                                </Button>
+                                            </div>
                                         </div>
-                                        <p className="text-center text-xs text-muted-foreground mt-3">*Links seguros da Amazon Brasil</p>
+                                        <p className="text-center text-xs text-muted-foreground mt-3 print:hidden">*Links seguros da Amazon Brasil</p>
                                     </CardContent>
                                 </Card>
                             </div>
                         )}
 
-                        <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up" style={{ animationDelay: "200ms" }}>
+                        <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up print:hidden">
                             <h2 className="mb-4 text-lg font-semibold text-foreground">
                                 📹 Entenda o seu Projeto de CFTV
                             </h2>
@@ -262,7 +303,9 @@ const CalculadoraCFTV = () => {
                     </div>
                 </div>
             </main>
-            <Footer />
+            <div className="print:hidden">
+                <Footer />
+            </div>
         </div>
     );
 };

@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Droplets, Calculator, ShoppingCart, ArrowLeft, ExternalLink } from "lucide-react";
+import { Droplets, Calculator, ShoppingCart, ArrowLeft, ExternalLink, Printer } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import PrintHeader from "@/components/PrintHeader";
 import AdPlaceholder from "@/components/AdPlaceholder";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -30,6 +31,10 @@ const CalculadoraCaixaAgua = () => {
         setResultado(total);
     }
 
+    const handlePrint = () => {
+        window.print();
+    };
+
     return (
         <div className="flex min-h-screen flex-col bg-background">
             <SEO
@@ -42,19 +47,21 @@ const CalculadoraCaixaAgua = () => {
                     "https://suaobracerta.com.br/calculadora-caixa-agua"
                 )}
             />
-            <Header />
+            <div className="print:hidden">
+                <Header />
+            </div>
             <main className="flex-1">
-                <div className="container pt-6"><AdPlaceholder id="ad-agua" className="max-w-3xl mx-auto" /></div>
+                <div className="container pt-6"><AdPlaceholder id="ad-agua" className="max-w-3xl mx-auto print:hidden" /></div>
                 <div className="container py-8 md:py-12">
                     <div className="mx-auto max-w-2xl">
-                        <Link to="/" className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"><ArrowLeft className="h-4 w-4" /> Voltar</Link>
+                        <Link to="/" className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground print:hidden"><ArrowLeft className="h-4 w-4" /> Voltar</Link>
 
-                        <div className="mb-8 font-bold text-2xl flex items-center gap-3">
+                        <div className="mb-8 font-bold text-2xl flex items-center gap-3 print:hidden">
                             <div className="bg-blue-600 rounded-xl p-3 text-white"><Droplets /></div>
                             <h1>Calculadora de Caixa D'água</h1>
                         </div>
 
-                        <div className="bg-card border border-border rounded-xl p-6 shadow-card space-y-5">
+                        <div className="bg-card border border-border rounded-xl p-6 shadow-card space-y-5 print:hidden">
                             <div className="space-y-2">
                                 <Label>Número de Moradores</Label>
                                 <Input type="number" value={pessoas} onChange={e => setPessoas(e.target.value)} className="h-12" />
@@ -67,8 +74,24 @@ const CalculadoraCaixaAgua = () => {
                             <Button onClick={calcular} size="xl" className="w-full">CALCULAR VOLUME</Button>
                         </div>
 
+                        {/* Print Summary */}
+                        <div className="hidden print:block mb-6 p-4 border rounded-lg bg-gray-50">
+                            <h3 className="font-bold text-sm mb-2 uppercase text-gray-500">Parâmetros do Cálculo</h3>
+                            <div className="grid grid-cols-2 gap-4 text-sm">
+                                <div>
+                                    <span className="block text-gray-500">Moradores:</span>
+                                    <span className="font-medium">{pessoas}</span>
+                                </div>
+                                <div>
+                                    <span className="block text-gray-500">Dias de Reserva:</span>
+                                    <span className="font-medium">{dias} dias</span>
+                                </div>
+                            </div>
+                        </div>
+
                         {resultado && (
-                            <div className="mt-8 bg-gradient-result p-6 rounded-xl border-2 border-primary text-center animate-scale-in">
+                            <div className="mt-8 bg-gradient-result p-6 rounded-xl border-2 border-primary text-center animate-scale-in print:bg-white print:border-none print:shadow-none">
+                                <PrintHeader />
                                 <p className="text-xl text-foreground">Volume Recomendado:</p>
                                 <p className="text-5xl font-extrabold text-primary my-3">{resultado} Litros</p>
 
@@ -82,7 +105,7 @@ const CalculadoraCaixaAgua = () => {
                                     </p>
                                 </div>
 
-                                <Button asChild variant="success" size="lg" className="w-full">
+                                <Button asChild variant="success" size="lg" className="w-full print:hidden">
                                     <a href={affiliateLinks.water.tank} target="_blank" rel="noopener noreferrer"><ShoppingCart className="mr-2" /> VER PREÇOS DE CAIXAS</a>
                                 </Button>
 
@@ -100,14 +123,23 @@ const CalculadoraCaixaAgua = () => {
                                     }}
                                     variant="outline"
                                     size="xl"
-                                    className="w-full mt-3 bg-white hover:bg-gray-100 text-slate-800 border-2 border-slate-200"
+                                    className="w-full mt-3 bg-white hover:bg-gray-100 text-slate-800 border-2 border-slate-200 print:hidden"
                                 >
                                     <ShoppingCart className="mr-2 h-5 w-5" /> Adicionar ao Orçamento
+                                </Button>
+
+                                <Button
+                                    onClick={handlePrint}
+                                    variant="outline"
+                                    size="xl"
+                                    className="w-full mt-3 bg-white hover:bg-gray-100 text-slate-800 border-2 border-slate-200 print:hidden"
+                                >
+                                    <Printer className="mr-2 h-5 w-5" /> Salvar em PDF
                                 </Button>
                             </div>
                         )}
 
-                        <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up" style={{ animationDelay: "200ms" }}>
+                        <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up print:hidden">
                             <h2 className="mb-4 text-lg font-semibold text-foreground">
                                 💧 Entenda o consumo de água
                             </h2>
@@ -130,7 +162,9 @@ const CalculadoraCaixaAgua = () => {
                     </div>
                 </div>
             </main>
-            <Footer />
+            <div className="print:hidden">
+                <Footer />
+            </div>
         </div>
     );
 };

@@ -1,9 +1,10 @@
 import { useState } from "react";
 import SEO from "@/components/SEO";
 import { generateCalculatorSchema } from "@/utils/schemas";
-import { TrendingUp, Calculator, ArrowLeft, Accessibility } from "lucide-react";
+import { TrendingUp, Calculator, ArrowLeft, Accessibility, Printer } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
+import PrintHeader from "@/components/PrintHeader";
 import Footer from "@/components/Footer";
 import AdPlaceholder from "@/components/AdPlaceholder";
 import { Button } from "@/components/ui/button";
@@ -39,6 +40,10 @@ const CalculadoraRampa = () => {
         });
     };
 
+    const handlePrint = () => {
+        window.print();
+    };
+
     return (
         <div className="flex min-h-screen flex-col bg-background">
             <SEO
@@ -51,53 +56,86 @@ const CalculadoraRampa = () => {
                     "https://suaobracerta.com.br/calculadora-rampa"
                 )}
             />
-            <Header />
+            <div className="print:hidden">
+                <Header />
+            </div>
             <main className="flex-1">
-                <div className="container pt-6"><AdPlaceholder id="ad-rampa" className="max-w-3xl mx-auto" /></div>
-                <div className="container py-8 md:py-12">
-                    <div className="mx-auto max-w-2xl">
-                        <Link to="/" className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"><ArrowLeft className="h-4 w-4" /> Voltar</Link>
+                <PrintHeader title="Calculadora de Rampa" />
+                <div className="container pt-6 print:hidden"><AdPlaceholder id="ad-rampa" className="max-w-3xl mx-auto" /></div>
+                <div className="container py-8 md:py-12 print:py-0">
+                    <div className="mx-auto max-w-2xl print:max-w-full">
+                        <Link to="/" className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground print:hidden"><ArrowLeft className="h-4 w-4" /> Voltar</Link>
 
                         <div className="mb-8 font-bold text-2xl flex items-center gap-3">
-                            <div className="bg-teal-600 rounded-xl p-3 text-white"><TrendingUp /></div>
-                            <h1>Calculadora de Rampa</h1>
+                            <div className="bg-teal-600 rounded-xl p-3 text-white print:bg-white print:text-teal-600 print:shadow-none print:border print:border-teal-200"><TrendingUp /></div>
+                            <div>
+                                <h1 className="print:text-2xl">Calculadora de Rampa</h1>
+                            </div>
                         </div>
 
-                        <div className="bg-card border border-border rounded-xl p-6 shadow-card space-y-5">
-                            <div className="space-y-2">
-                                <Label>Altura do Desnível (metros)</Label>
-                                <Input value={altura} onChange={e => setAltura(e.target.value)} placeholder="Ex: 0.50" className="h-12" />
+                        <div className="bg-card border border-border rounded-xl p-6 shadow-card space-y-5 print:shadow-none print:border-none print:p-0 print:mb-6">
+                            <div className="print:hidden space-y-5">
+                                <div className="space-y-2">
+                                    <Label>Altura do Desnível (metros)</Label>
+                                    <Input value={altura} onChange={e => setAltura(e.target.value)} placeholder="Ex: 0.50" className="h-12" />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label>Finalidade da Rampa</Label>
+                                    <Select value={tipo} onValueChange={setTipo}>
+                                        <SelectTrigger className="h-12"><SelectValue /></SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem value="acessibilidade">Cadeirantes / Acessibilidade (Norma NBR 9050)</SelectItem>
+                                            <SelectItem value="carro">Carros (Garagem)</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                                <Button onClick={calcular} size="xl" className="w-full">CALCULAR COMPRIMENTO</Button>
                             </div>
-                            <div className="space-y-2">
-                                <Label>Finalidade da Rampa</Label>
-                                <Select value={tipo} onValueChange={setTipo}>
-                                    <SelectTrigger className="h-12"><SelectValue /></SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value="acessibilidade">Cadeirantes / Acessibilidade (Norma NBR 9050)</SelectItem>
-                                        <SelectItem value="carro">Carros (Garagem)</SelectItem>
-                                    </SelectContent>
-                                </Select>
+
+                            {/* Print Summary */}
+                            <div className="hidden print:block mb-6 p-4 border rounded-lg bg-gray-50">
+                                <h3 className="font-bold text-sm mb-2 uppercase text-gray-500">Parâmetros do Cálculo</h3>
+                                <div className="grid grid-cols-2 gap-4 text-sm">
+                                    <div>
+                                        <span className="block text-gray-500">Altura do Desnível:</span>
+                                        <span className="font-medium">{altura} m</span>
+                                    </div>
+                                    <div>
+                                        <span className="block text-gray-500">Finalidade:</span>
+                                        <span className="font-medium capitalize">{tipo === "acessibilidade" ? "Acessibilidade (NBR 9050)" : "Carros"}</span>
+                                    </div>
+                                </div>
                             </div>
-                            <Button onClick={calcular} size="xl" className="w-full">CALCULAR COMPRIMENTO</Button>
                         </div>
 
                         {resultado && (
                             <div className="mt-8 animate-scale-in">
-                                <div className="bg-gradient-result p-8 rounded-xl border-2 border-primary text-center">
-                                    <p className="text-xl">Comprimento Mínimo:</p>
-                                    <p className="text-5xl font-extrabold text-primary my-3">{resultado.comprimento} metros</p>
-                                    <div className="inline-flex items-center gap-2 bg-background/50 px-3 py-1 rounded-full text-sm">
+                                <div className="bg-gradient-result p-8 rounded-xl border-2 border-primary text-center print:bg-white print:border-black print:text-left print:p-0 print:mt-4">
+                                    <p className="text-xl print:text-gray-600">Comprimento Mínimo:</p>
+                                    <p className="text-5xl font-extrabold text-primary my-3 print:text-black">{resultado.comprimento} metros</p>
+                                    <div className="inline-flex items-center gap-2 bg-background/50 px-3 py-1 rounded-full text-sm print:bg-gray-100 print:text-gray-800">
                                         {tipo === "acessibilidade" && <Accessibility className="h-4 w-4" />}
                                         <span>Inclinação calculada: {resultado.inclinacao}%</span>
                                     </div>
                                 </div>
-                                <p className="mt-4 text-center text-sm text-muted-foreground">
+                                <p className="mt-4 text-center text-sm text-muted-foreground print:hidden">
                                     *Este é o comprimento da rampa em projeção horizontal.
                                 </p>
+
+                                <div className="print:hidden mt-6">
+                                    <Button
+                                        onClick={handlePrint}
+                                        variant="outline"
+                                        size="xl"
+                                        className="w-full border-2 border-slate-200 bg-white text-slate-800 hover:bg-gray-100"
+                                    >
+                                        <Printer className="mr-2 h-5 w-5" /> Salvar em PDF
+                                    </Button>
+                                </div>
                             </div>
                         )}
 
-                        <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up" style={{ animationDelay: "200ms" }}>
+                        <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up print:hidden">
                             <h2 className="mb-4 text-lg font-semibold text-foreground">
                                 📐 Normas de Inclinação
                             </h2>
@@ -120,7 +158,9 @@ const CalculadoraRampa = () => {
                     </div>
                 </div>
             </main>
-            <Footer />
+            <div className="print:hidden">
+                <Footer />
+            </div>
         </div>
     );
 };

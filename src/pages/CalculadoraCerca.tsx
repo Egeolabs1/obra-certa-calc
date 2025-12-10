@@ -1,8 +1,9 @@
 import { useState, useRef } from "react";
-import { Ruler, ArrowLeft, Component, ShoppingCart } from "lucide-react";
+import { Ruler, ArrowLeft, Component, ShoppingCart, Printer } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import PrintHeader from "@/components/PrintHeader";
 import AdPlaceholder from "@/components/AdPlaceholder";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -80,6 +81,10 @@ const CalculadoraCerca = () => {
         }, 100);
     };
 
+    const handlePrint = () => {
+        window.print();
+    };
+
     return (
         <div className="flex min-h-screen flex-col bg-background">
             <SEO
@@ -92,15 +97,17 @@ const CalculadoraCerca = () => {
                     "https://suaobracerta.com.br/calculadora-cerca"
                 )}
             />
-            <Header />
+            <div className="print:hidden">
+                <Header />
+            </div>
             <main className="flex-1">
-                <div className="container pt-6"><AdPlaceholder id="ad-cerca-top" className="max-w-3xl mx-auto" /></div>
+                <div className="container pt-6"><AdPlaceholder id="ad-cerca-top" className="max-w-3xl mx-auto print:hidden" /></div>
 
                 <div className="container py-8 md:py-12">
                     <div className="mx-auto max-w-2xl">
-                        <Link to="/" className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"><ArrowLeft className="h-4 w-4" /> Voltar</Link>
+                        <Link to="/" className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground print:hidden"><ArrowLeft className="h-4 w-4" /> Voltar</Link>
 
-                        <div className="mb-8 font-bold text-2xl flex items-center gap-3">
+                        <div className="mb-8 font-bold text-2xl flex items-center gap-3 print:hidden">
                             <div className="bg-amber-800 rounded-xl p-3 text-white"><Component /></div>
                             <div>
                                 <h1 className="leading-none text-3xl text-foreground">Calculadora de Cerca</h1>
@@ -109,7 +116,7 @@ const CalculadoraCerca = () => {
                         </div>
 
                         {/* Inputs */}
-                        <div className="bg-card border border-border rounded-xl p-6 shadow-card mb-8">
+                        <div className="bg-card border border-border rounded-xl p-6 shadow-card mb-8 print:hidden">
                             <div className="space-y-4">
                                 <div className="space-y-2">
                                     <Label>Perímetro total da Cerca (metros)</Label>
@@ -170,10 +177,40 @@ const CalculadoraCerca = () => {
                             </Button>
                         </div>
 
+                        {/* Print Summary */}
+                        <div className="hidden print:block mb-6 p-4 border rounded-lg bg-gray-50">
+                            <h3 className="font-bold text-sm mb-2 uppercase text-gray-500">Parâmetros do Cálculo</h3>
+                            <div className="grid grid-cols-2 gap-4 text-sm">
+                                <div>
+                                    <span className="block text-gray-500">Perímetro:</span>
+                                    <span className="font-medium">{perimetro} m</span>
+                                </div>
+                                <div>
+                                    <span className="block text-gray-500">Tipo de Cerca:</span>
+                                    <span className="font-medium">
+                                        {tipoCerca === 'arame_farpado' && 'Arame Farpado'}
+                                        {tipoCerca === 'arame_liso' && 'Arame Liso'}
+                                        {tipoCerca === 'tela' && 'Tela (Alambrado)'}
+                                    </span>
+                                </div>
+                                <div>
+                                    <span className="block text-gray-500">Distância Mourões:</span>
+                                    <span className="font-medium">{distanciaMourao} m</span>
+                                </div>
+                                {tipoCerca !== 'tela' && (
+                                    <div>
+                                        <span className="block text-gray-500">Fios:</span>
+                                        <span className="font-medium">{fiosArame}</span>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
                         {/* Result */}
                         {resultado && (
                             <div ref={resultRef} className="animate-fade-up">
-                                <div className="bg-card border-2 border-amber-800/20 rounded-xl p-6 shadow-lg mb-6">
+                                <div className="bg-card border-2 border-amber-800/20 rounded-xl p-6 shadow-lg mb-6 print:border-none print:shadow-none print:bg-white">
+                                    <PrintHeader />
                                     <h3 className="text-lg font-bold text-amber-900 mb-4 border-b border-amber-200 pb-2">Lista de Materiais Estimada</h3>
 
                                     <div className="grid grid-cols-2 gap-6 text-center">
@@ -206,7 +243,7 @@ const CalculadoraCerca = () => {
                                     )}
                                 </div>
 
-                                <Button asChild size="xl" className="w-full bg-green-600 hover:bg-green-700 text-white font-bold h-16 text-lg shadow-lg">
+                                <Button asChild size="xl" className="w-full bg-green-600 hover:bg-green-700 text-white font-bold h-16 text-lg shadow-lg print:hidden">
                                     <a href={affiliateLinks.services.findProfessional} target="_blank" rel="noopener noreferrer">
                                         <ShoppingCart className="mr-2 h-6 w-6" /> VER PREÇOS DE ARAME
                                     </a>
@@ -261,14 +298,23 @@ const CalculadoraCerca = () => {
                                     }}
                                     variant="outline"
                                     size="xl"
-                                    className="w-full mt-4 border-2 hover:bg-amber-50 text-amber-900"
+                                    className="w-full mt-4 border-2 hover:bg-amber-50 text-amber-900 print:hidden"
                                 >
                                     <ShoppingCart className="mr-2 h-5 w-5" /> Adicionar Tudo ao Orçamento
+                                </Button>
+
+                                <Button
+                                    onClick={handlePrint}
+                                    variant="outline"
+                                    size="xl"
+                                    className="w-full mt-4 border-2 hover:bg-amber-50 text-amber-900 print:hidden"
+                                >
+                                    <Printer className="mr-2 h-5 w-5" /> Salvar em PDF
                                 </Button>
                             </div>
                         )}
 
-                        <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up" style={{ animationDelay: "200ms" }}>
+                        <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up print:hidden">
                             <h2 className="mb-4 text-lg font-semibold text-foreground">
                                 🚧 Como calcular material para cerca?
                             </h2>
@@ -290,7 +336,9 @@ const CalculadoraCerca = () => {
                     </div>
                 </div>
             </main>
-            <Footer />
+            <div className="print:hidden">
+                <Footer />
+            </div>
         </div>
     );
 };

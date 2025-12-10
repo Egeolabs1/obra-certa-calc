@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Home, Calculator, ShoppingCart, ArrowLeft } from "lucide-react";
+import { Home, Calculator, ShoppingCart, ArrowLeft, Printer } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
+import PrintHeader from "@/components/PrintHeader";
 import Footer from "@/components/Footer";
 import AdPlaceholder from "@/components/AdPlaceholder";
 import { Button } from "@/components/ui/button";
@@ -35,10 +36,13 @@ const CalculadoraTelhado = () => {
         let consumo = 16;
         if (tipoTelha === "portuguesa") consumo = 17;
         if (tipoTelha === "americana") consumo = 12.5;
-        if (tipoTelha === "fibrocimento") consumo = 1.1; // Chapa grande, cálculo diferente, mas vamos simplificar p/ telha cerâmica por eqnt
 
         const total = Math.ceil(areaReal * consumo);
         setResultado(total);
+    };
+
+    const handlePrint = () => {
+        window.print();
     };
 
     return (
@@ -53,49 +57,85 @@ const CalculadoraTelhado = () => {
                     "https://suaobracerta.com.br/calculadora-telhado"
                 )}
             />
-            <Header />
+            <div className="print:hidden">
+                <Header />
+            </div>
             <main className="flex-1">
-                <div className="container pt-6"><AdPlaceholder id="ad-telhado" className="max-w-3xl mx-auto" /></div>
-                <div className="container py-8 md:py-12">
-                    <div className="mx-auto max-w-2xl">
-                        <Link to="/" className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"><ArrowLeft className="h-4 w-4" /> Voltar</Link>
+                <PrintHeader title="Orçamento de Telhas" />
+                <div className="container pt-6 print:hidden"><AdPlaceholder id="ad-telhado" className="max-w-3xl mx-auto" /></div>
+                <div className="container py-8 md:py-12 print:py-0">
+                    <div className="mx-auto max-w-2xl print:max-w-full">
+                        <Link to="/" className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground print:hidden"><ArrowLeft className="h-4 w-4" /> Voltar</Link>
                         <div className="mb-8 font-bold text-2xl flex items-center gap-3">
-                            <div className="bg-red-700 rounded-xl p-3"><Home className="text-white" /></div>
-                            <h1>Calculadora de Telhas</h1>
+                            <div className="bg-red-700 rounded-xl p-3 text-white print:bg-white print:text-red-700 print:border print:border-red-200 print:shadow-none"><Home /></div>
+                            <h1 className="print:text-2xl">Calculadora de Telhas</h1>
                         </div>
 
-                        <div className="bg-card border border-border rounded-xl p-6 shadow-card space-y-5">
-                            <div className="space-y-2">
-                                <Label>Área de Cobertura (m²) - Projeção Plana</Label>
-                                <Input value={area} onChange={e => setArea(e.target.value)} placeholder="Ex: 80" className="h-12" />
-                            </div>
-                            <div className="grid grid-cols-2 gap-4">
+                        <div className="bg-card border border-border rounded-xl p-6 shadow-card space-y-5 print:shadow-none print:border-none print:p-0 print:mb-6">
+                            <div className="print:hidden space-y-5">
                                 <div className="space-y-2">
-                                    <Label>Tipo de Telha</Label>
-                                    <Select value={tipoTelha} onValueChange={setTipoTelha}>
-                                        <SelectTrigger className="h-12"><SelectValue /></SelectTrigger>
-                                        <SelectContent>
-                                            <SelectItem value="romana">Romana (16/m²)</SelectItem>
-                                            <SelectItem value="portuguesa">Portuguesa (17/m²)</SelectItem>
-                                            <SelectItem value="americana">Americana (12.5/m²)</SelectItem>
-                                        </SelectContent>
-                                    </Select>
+                                    <Label>Área de Cobertura (m²) - Projeção Plana</Label>
+                                    <Input value={area} onChange={e => setArea(e.target.value)} placeholder="Ex: 80" className="h-12" />
                                 </div>
-                                <div className="space-y-2">
-                                    <Label>Inclinação (%)</Label>
-                                    <Input value={inclinacao} onChange={e => setInclinacao(e.target.value)} placeholder="30" className="h-12" />
-                                    <span className="text-xs text-muted-foreground">Padrão: 30% a 35%</span>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div className="space-y-2">
+                                        <Label>Tipo de Telha</Label>
+                                        <Select value={tipoTelha} onValueChange={setTipoTelha}>
+                                            <SelectTrigger className="h-12"><SelectValue /></SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="romana">Romana (16/m²)</SelectItem>
+                                                <SelectItem value="portuguesa">Portuguesa (17/m²)</SelectItem>
+                                                <SelectItem value="americana">Americana (12.5/m²)</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+                                    <div className="space-y-2">
+                                        <Label>Inclinação (%)</Label>
+                                        <Input value={inclinacao} onChange={e => setInclinacao(e.target.value)} placeholder="30" className="h-12" />
+                                        <span className="text-xs text-muted-foreground">Padrão: 30% a 35%</span>
+                                    </div>
                                 </div>
                             </div>
-                            <Button onClick={calcular} size="xl" className="w-full">CALCULAR QUANTIDADE</Button>
+
+                            {/* Print Summary */}
+                            <div className="hidden print:block mb-4 p-4 border rounded-lg bg-gray-50">
+                                <h3 className="font-bold text-sm mb-2 uppercase text-gray-500">Parâmetros do Cálculo</h3>
+                                <div className="grid grid-cols-3 gap-4 text-sm">
+                                    <div>
+                                        <span className="block text-gray-500">Área (Plana):</span>
+                                        <span className="font-medium">{area} m²</span>
+                                    </div>
+                                    <div>
+                                        <span className="block text-gray-500">Tipo de Telha:</span>
+                                        <span className="font-medium">
+                                            {tipoTelha === 'romana' && 'Romana'}
+                                            {tipoTelha === 'portuguesa' && 'Portuguesa'}
+                                            {tipoTelha === 'americana' && 'Americana'}
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <span className="block text-gray-500">Inclinação:</span>
+                                        <span className="font-medium">{inclinacao}%</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="print:hidden grid grid-cols-1 gap-4">
+                                <Button onClick={calcular} size="xl" className="w-full">CALCULAR QUANTIDADE</Button>
+                                {resultado && (
+                                    <Button onClick={handlePrint} variant="outline" size="xl" className="w-full border-2">
+                                        <Printer className="mr-2 h-5 w-5" /> Salvar em PDF
+                                    </Button>
+                                )}
+                            </div>
                         </div>
 
                         {resultado && (
-                            <div className="mt-8 text-center bg-gradient-result p-8 rounded-xl border-2 border-primary animate-scale-in">
-                                <p className="text-lg">Você precisa de:</p>
-                                <p className="text-5xl font-extrabold text-primary my-2">{resultado} Telhas</p>
+                            <div className="mt-8 text-center bg-gradient-result p-8 rounded-xl border-2 border-primary animate-scale-in print:bg-white print:border-black print:p-0 print:text-left print:mt-4">
+                                <p className="text-lg print:text-gray-600">Você precisa de:</p>
+                                <p className="text-5xl font-extrabold text-primary my-2 print:text-black">{resultado} Telhas</p>
 
-                                <div className="mt-6 space-y-3">
+                                <div className="mt-6 space-y-3 print:hidden">
                                     <Button
                                         onClick={() => {
                                             addItem({
@@ -123,7 +163,7 @@ const CalculadoraTelhado = () => {
                     </div>
 
                     {/* Informações extras */}
-                    <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up" style={{ animationDelay: "200ms" }}>
+                    <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up print:hidden">
                         <h2 className="mb-4 text-lg font-semibold text-foreground">
                             🏠 Entenda o Cálculo de Telhas
                         </h2>
@@ -148,7 +188,9 @@ const CalculadoraTelhado = () => {
                     </div>
                 </div>
             </main>
-            <Footer />
+            <div className="print:hidden">
+                <Footer />
+            </div>
         </div>
     );
 };

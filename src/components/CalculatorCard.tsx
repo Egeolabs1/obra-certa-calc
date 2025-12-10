@@ -24,7 +24,6 @@ const CalculatorCard = ({
   return (
     <div
       className="group relative overflow-hidden rounded-xl border border-border bg-gradient-card p-6 shadow-card transition-all duration-300 hover:shadow-xl hover:-translate-y-1 animate-fade-up"
-      style={{ animationDelay: `${delay}ms` }}
     >
       {/* Decorative corner */}
       <div className="absolute -right-4 -top-4 h-20 w-20 rounded-full bg-primary/10 transition-transform duration-300 group-hover:scale-150" />

@@ -1,7 +1,8 @@
 import { useState, useRef } from "react";
-import { Zap, Calculator, ShoppingCart, ArrowLeft, Sun, BatteryCharging, Leaf, PiggyBank, Briefcase } from "lucide-react";
+import { Zap, Calculator, ShoppingCart, ArrowLeft, Sun, BatteryCharging, Leaf, PiggyBank, Briefcase, Printer } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
+import PrintHeader from "@/components/PrintHeader";
 import Footer from "@/components/Footer";
 import AdPlaceholder from "@/components/AdPlaceholder";
 import { Button } from "@/components/ui/button";
@@ -87,6 +88,10 @@ const CalculadoraEnergia = () => {
         }, 100);
     };
 
+    const handlePrint = () => {
+        window.print();
+    };
+
     return (
         <div className="flex min-h-screen flex-col bg-background">
             <SEO
@@ -100,25 +105,28 @@ const CalculadoraEnergia = () => {
                     "https://suaobracerta.com.br/calculadora-energia"
                 )}
             />
-            <Header />
+            <div className="print:hidden">
+                <Header />
+            </div>
             <main className="flex-1">
-                <div className="container pt-6"><AdPlaceholder id="ad-solar-top" className="max-w-3xl mx-auto" /></div>
+                <PrintHeader title="Relatório de Energia Solar" />
+                <div className="container pt-6 print:hidden"><AdPlaceholder id="ad-solar-top" className="max-w-3xl mx-auto" /></div>
 
-                <div className="container py-8 md:py-12">
-                    <div className="mx-auto max-w-4xl">
-                        <Link to="/" className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"><ArrowLeft className="h-4 w-4" /> Voltar</Link>
+                <div className="container py-8 md:py-12 print:py-0">
+                    <div className="mx-auto max-w-4xl print:max-w-full">
+                        <Link to="/" className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground print:hidden"><ArrowLeft className="h-4 w-4" /> Voltar</Link>
 
                         <div className="mb-8 font-bold text-2xl flex items-center gap-3">
-                            <div className="bg-yellow-500 rounded-xl p-3 text-white shadow-lg"><Sun className="h-8 w-8" /></div>
+                            <div className="bg-yellow-500 rounded-xl p-3 text-white shadow-lg print:bg-yellow-500/10 print:text-yellow-600 print:shadow-none print:border print:border-yellow-200"><Sun className="h-8 w-8" /></div>
                             <div>
-                                <h1 className="leading-none text-3xl md:text-4xl text-foreground">Calculadora Solar</h1>
+                                <h1 className="leading-none text-3xl md:text-4xl text-foreground print:text-2xl">Calculadora Solar</h1>
                                 <p className="text-sm font-normal text-muted-foreground mt-1">Simule seu sistema On-Grid</p>
                             </div>
                         </div>
 
                         {/* Input Section */}
-                        <div className="bg-card border border-border rounded-xl p-6 md:p-8 shadow-card mb-12">
-                            <div className="grid gap-6 md:grid-cols-2">
+                        <div className="bg-card border border-border rounded-xl p-6 md:p-8 shadow-card mb-12 print:shadow-none print:border-none print:p-0 print:mb-6">
+                            <div className="grid gap-6 md:grid-cols-2 print:hidden">
                                 <div className="space-y-2">
                                     <Label className="text-base">Onde você mora?</Label>
                                     <Select value={regiao} onValueChange={setRegiao}>
@@ -147,9 +155,31 @@ const CalculadoraEnergia = () => {
                                 </div>
                             </div>
 
-                            <Button onClick={calcular} size="xl" className="w-full mt-8 text-lg font-bold bg-green-600 hover:bg-green-700 text-white shadow-lg h-14">
-                                CALCULAR ECONOMIA E KIT SOLAR
-                            </Button>
+                            {/* Print Summary */}
+                            <div className="hidden print:block mb-4 p-4 border rounded-lg bg-gray-50">
+                                <h3 className="font-bold text-sm mb-2 uppercase text-gray-500">Dados da Simulação</h3>
+                                <div className="grid grid-cols-2 gap-4 text-sm">
+                                    <div>
+                                        <span className="block text-gray-500">Região:</span>
+                                        <span className="font-medium capitalize">{regiao || "Não informada"}</span>
+                                    </div>
+                                    <div>
+                                        <span className="block text-gray-500">Conta de Luz Mensal:</span>
+                                        <span className="font-medium">R$ {valorConta || "0"}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 print:hidden">
+                                <Button onClick={calcular} size="xl" className="w-full mt-4 text-lg font-bold bg-green-600 hover:bg-green-700 text-white shadow-lg h-14">
+                                    CALCULAR ECONOMIA E KIT SOLAR
+                                </Button>
+                                {resultado && (
+                                    <Button onClick={handlePrint} variant="outline" size="xl" className="w-full mt-4 h-14 border-2">
+                                        <Printer className="mr-2 h-5 w-5" /> Salvar Projeto
+                                    </Button>
+                                )}
+                            </div>
                         </div>
 
                         {/* Results Section */}
@@ -157,34 +187,34 @@ const CalculadoraEnergia = () => {
                             <div ref={resultSectionRef} className="animate-fade-up space-y-8">
 
                                 {/* Card Destaque: Sistema */}
-                                <div className="bg-gradient-to-br from-blue-600 to-indigo-700 text-white rounded-xl shadow-xl p-8 relative overflow-hidden">
-                                    <div className="absolute top-0 right-0 p-8 opacity-10"><Zap size={180} /></div>
+                                <div className="bg-gradient-to-br from-blue-600 to-indigo-700 text-white rounded-xl shadow-xl p-8 relative overflow-hidden print:bg-white print:text-black print:border print:border-blue-200 print:shadow-none">
+                                    <div className="absolute top-0 right-0 p-8 opacity-10 print:hidden"><Zap size={180} /></div>
                                     <div className="relative z-10">
-                                        <h2 className="text-2xl font-bold mb-4 opacity-90 uppercase tracking-wider flex items-center gap-2"><Sun className="text-yellow-400" /> Seu Sistema Ideal</h2>
+                                        <h2 className="text-2xl font-bold mb-4 opacity-90 uppercase tracking-wider flex items-center gap-2 print:text-blue-800"><Sun className="text-yellow-400 print:text-yellow-600" /> Seu Sistema Ideal</h2>
                                         <div className="flex flex-col md:flex-row gap-8 items-start md:items-end">
                                             <div>
-                                                <p className="text-6xl font-black mb-2">{resultado.qtdPaineis} <span className="text-3xl font-medium">Painéis</span></p>
-                                                <p className="text-xl opacity-80">Potência Total: {resultado.tamanhoSistema} kWp</p>
+                                                <p className="text-6xl font-black mb-2 print:text-5xl">{resultado.qtdPaineis} <span className="text-3xl font-medium">Painéis</span></p>
+                                                <p className="text-xl opacity-80 print:opacity-100">Potência Total: {resultado.tamanhoSistema} kWp</p>
                                             </div>
-                                            <div className="bg-white/10 p-4 rounded-lg backdrop-blur-sm">
-                                                <p className="font-semibold text-lg flex items-center gap-2"><Leaf className="h-5 w-5 text-green-400" /> Área Necessária</p>
-                                                <p className="opacity-80">Aprox. {resultado.areaNecessaria} m² de telhado</p>
+                                            <div className="bg-white/10 p-4 rounded-lg backdrop-blur-sm print:bg-gray-100 print:border print:border-gray-200">
+                                                <p className="font-semibold text-lg flex items-center gap-2 print:text-green-700"><Leaf className="h-5 w-5 text-green-400 print:text-green-600" /> Área Necessária</p>
+                                                <p className="opacity-80 print:opacity-100">Aprox. {resultado.areaNecessaria} m² de telhado</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div className="grid gap-6 md:grid-cols-2">
+                                <div className="grid gap-6 md:grid-cols-2 print:grid-cols-2">
                                     {/* Card Financeiro */}
-                                    <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-900 rounded-xl p-6 shadow-md flex flex-col justify-between">
+                                    <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-900 rounded-xl p-6 shadow-md flex flex-col justify-between print:bg-white print:border-emerald-200 print:shadow-none">
                                         <div>
-                                            <h3 className="text-lg font-bold text-emerald-800 dark:text-emerald-400 uppercase tracking-wider mb-4 flex items-center gap-2">
+                                            <h3 className="text-lg font-bold text-emerald-800 dark:text-emerald-400 uppercase tracking-wider mb-4 flex items-center gap-2 print:text-emerald-800">
                                                 <PiggyBank /> Bolso Cheio
                                             </h3>
                                             <div className="space-y-4">
                                                 <div>
                                                     <p className="text-sm text-muted-foreground">Economia Anual Estimada</p>
-                                                    <p className="text-4xl font-black text-emerald-600 dark:text-emerald-400">R$ {resultado.economiaAnual.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
+                                                    <p className="text-4xl font-black text-emerald-600 dark:text-emerald-400 print:text-emerald-700">R$ {resultado.economiaAnual.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
                                                 </div>
                                                 <div>
                                                     <p className="text-sm text-muted-foreground">Investimento Estimado</p>
@@ -192,7 +222,7 @@ const CalculadoraEnergia = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="mt-6 bg-white dark:bg-black/20 p-3 rounded-lg text-center">
+                                        <div className="mt-6 bg-white dark:bg-black/20 p-3 rounded-lg text-center print:bg-gray-50 print:border print:border-emerald-100">
                                             <p className="font-medium text-emerald-700 dark:text-emerald-300">
                                                 Seu investimento se paga em <span className="font-bold text-xl">{resultado.tempoRetorno.toLocaleString('pt-BR')} Anos</span>!
                                             </p>
@@ -200,7 +230,7 @@ const CalculadoraEnergia = () => {
                                     </div>
 
                                     {/* Card Ação */}
-                                    <div className="bg-card border border-border rounded-xl p-6 shadow-md flex flex-col justify-between">
+                                    <div className="bg-card border border-border rounded-xl p-6 shadow-md flex flex-col justify-between print:hidden">
                                         <div>
                                             <h3 className="text-lg font-bold text-muted-foreground uppercase tracking-wider mb-4 flex items-center gap-2">
                                                 <Briefcase /> Próximo Passo
@@ -266,7 +296,7 @@ const CalculadoraEnergia = () => {
                             </div>
                         )}
 
-                        <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up" style={{ animationDelay: "200ms" }}>
+                        <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up print:hidden">
                             <h2 className="mb-4 text-lg font-semibold text-foreground">
                                 ☀️ Como calculamos seu sistema solar?
                             </h2>
@@ -289,7 +319,9 @@ const CalculadoraEnergia = () => {
                     </div>
                 </div>
             </main>
-            <Footer />
+            <div className="print:hidden">
+                <Footer />
+            </div>
         </div>
     );
 };

@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Copy, Calculator, ShoppingCart, ExternalLink, ArrowLeft, Layers } from "lucide-react";
+import { Copy, Calculator, ShoppingCart, ExternalLink, ArrowLeft, Layers, Printer } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
+import PrintHeader from "@/components/PrintHeader";
 import Footer from "@/components/Footer";
 import AdPlaceholder from "@/components/AdPlaceholder";
 import { Button } from "@/components/ui/button";
@@ -129,6 +130,10 @@ const CalculadoraDrywall = () => {
         });
     };
 
+    const handlePrint = () => {
+        window.print();
+    };
+
     return (
         <div className="flex min-h-screen flex-col bg-background">
             <SEO
@@ -141,28 +146,31 @@ const CalculadoraDrywall = () => {
                     "https://suaobracerta.com.br/calculadora-drywall"
                 )}
             />
-            <Header />
+            <div className="print:hidden">
+                <Header />
+            </div>
             <main className="flex-1">
-                <div className="container pt-6">
+                <PrintHeader title="Orçamento de Drywall" />
+                <div className="container pt-6 print:hidden">
                     <AdPlaceholder id="ad-drywall" className="max-w-3xl mx-auto" />
                 </div>
-                <div className="container py-8 md:py-12">
-                    <div className="mx-auto max-w-2xl">
-                        <Link to="/" className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"><ArrowLeft className="h-4 w-4" /> Voltar</Link>
+                <div className="container py-8 md:py-12 print:py-0">
+                    <div className="mx-auto max-w-2xl print:max-w-full">
+                        <Link to="/" className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground print:hidden"><ArrowLeft className="h-4 w-4" /> Voltar</Link>
 
                         <div className="mb-8 animate-fade-up">
                             <div className="mb-4 flex items-center gap-3">
-                                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gray-600">
-                                    <Layers className="h-6 w-6 text-white" />
+                                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gray-600 print:bg-white print:border print:border-gray-200">
+                                    <Layers className="h-6 w-6 text-white print:text-gray-900" />
                                 </div>
-                                <h1 className="text-2xl font-bold text-foreground md:text-3xl">Calculadora de Drywall</h1>
+                                <h1 className="text-2xl font-bold text-foreground md:text-3xl print:text-xl">Calculadora de Drywall</h1>
                             </div>
-                            <p className="text-muted-foreground">Calcule materiais para divisórias e forros de gesso acartonado.</p>
+                            <p className="text-muted-foreground print:hidden">Calcule materiais para divisórias e forros de gesso acartonado.</p>
                         </div>
 
                         {/* Form */}
-                        <div className="rounded-xl border border-border bg-card p-6 shadow-card animate-fade-up">
-                            <div className="grid gap-5">
+                        <div className="rounded-xl border border-border bg-card p-6 shadow-card animate-fade-up print:shadow-none print:border-none print:p-0">
+                            <div className="grid gap-5 print:hidden">
                                 <div className="space-y-2">
                                     <Label>Tipo de Instalação</Label>
                                     <Select value={estrutura} onValueChange={setEstrutura}>
@@ -187,19 +195,43 @@ const CalculadoraDrywall = () => {
 
                                 {erro && <div className="text-destructive text-sm">{erro}</div>}
 
-                                <Button onClick={calcular} size="xl" className="w-full mt-2"><Calculator className="mr-2 h-5 w-5" /> Calcular Materiais</Button>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <Button onClick={calcular} size="xl" className="w-full"><Calculator className="mr-2 h-5 w-5" /> Calcular Materiais</Button>
+                                    <Button onClick={handlePrint} variant="outline" size="xl" className="w-full border-2">
+                                        <Printer className="mr-2 h-5 w-5" /> Salvar em PDF
+                                    </Button>
+                                </div>
+                            </div>
+
+                            {/* Show inputs summary for print only */}
+                            <div className="hidden print:block mb-6 p-4 border rounded-lg bg-gray-50">
+                                <h3 className="font-bold text-sm mb-2 uppercase text-gray-500">Parâmetros do Cálculo</h3>
+                                <div className="grid grid-cols-3 gap-4 text-sm">
+                                    <div>
+                                        <span className="block text-gray-500">Tipo:</span>
+                                        <span className="font-medium">{estrutura === 'parede' ? 'Divisória (Parede)' : 'Forro (Teto)'}</span>
+                                    </div>
+                                    <div>
+                                        <span className="block text-gray-500">Altura:</span>
+                                        <span className="font-medium">{altura} m</span>
+                                    </div>
+                                    <div>
+                                        <span className="block text-gray-500">Comprimento:</span>
+                                        <span className="font-medium">{comprimento} m</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
                         {/* Resultado */}
                         {resultado && (
                             <div className="mt-8 animate-fade-up space-y-6">
-                                <div className="rounded-xl border border-border overflow-hidden">
+                                <div className="rounded-xl border border-border overflow-hidden print:border-gray-200">
                                     <Table>
                                         <TableHeader>
-                                            <TableRow>
-                                                <TableHead>Material</TableHead>
-                                                <TableHead className="text-right">Quantidade Estimada</TableHead>
+                                            <TableRow className="print:bg-gray-100">
+                                                <TableHead className="print:text-black font-bold">Material</TableHead>
+                                                <TableHead className="text-right print:text-black font-bold">Quantidade Estimada</TableHead>
                                             </TableRow>
                                         </TableHeader>
                                         <TableBody>
@@ -235,11 +267,11 @@ const CalculadoraDrywall = () => {
                                     </Table>
                                 </div>
 
-                                <div className="rounded-lg bg-yellow-500/10 border border-yellow-500/20 p-4 text-sm text-yellow-600 dark:text-yellow-400">
+                                <div className="rounded-lg bg-yellow-500/10 border border-yellow-500/20 p-4 text-sm text-yellow-600 dark:text-yellow-400 print:bg-white print:border-red-200 print:text-red-700">
                                     ⚠️ <strong>Atenção:</strong> Os valores são estimativas baseadas em instalação padrão. Perdas por cortes podem variar. Sempre consulte um instalador profissional.
                                 </div>
 
-                                <Button asChild variant="success" size="xl" className="w-full">
+                                <Button asChild variant="success" size="xl" className="w-full print:hidden">
                                     <a href={affiliateLinks.structural.drywall} target="_blank" rel="noopener noreferrer"><ShoppingCart className="mr-2 h-5 w-5" /> ORÇAR MATERIAIS ONLINE</a>
                                 </Button>
 
@@ -288,14 +320,14 @@ const CalculadoraDrywall = () => {
                                     }}
                                     variant="outline"
                                     size="xl"
-                                    className="w-full mt-3 border-2 hover:bg-gray-100 text-gray-800 border-gray-200"
+                                    className="w-full mt-3 border-2 hover:bg-gray-100 text-gray-800 border-gray-200 print:hidden"
                                 >
                                     <ShoppingCart className="mr-2 h-5 w-5" /> Adicionar Materiais ao Orçamento
                                 </Button>
                             </div>
                         )}
 
-                        <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up" style={{ animationDelay: "200ms" }}>
+                        <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up print:hidden">
                             <h2 className="mb-4 text-lg font-semibold text-foreground">
                                 🏗️ Detalhes dos Materiais
                             </h2>
@@ -312,7 +344,9 @@ const CalculadoraDrywall = () => {
                     </div>
                 </div>
             </main>
-            <Footer />
+            <div className="print:hidden">
+                <Footer />
+            </div>
         </div>
     );
 };

@@ -1,7 +1,8 @@
-import { useState } from "react";
-import { Container, Calculator, ShoppingCart, ExternalLink, ArrowLeft, Info } from "lucide-react";
+import { useState, useRef } from "react";
+import { Container, Calculator, ShoppingCart, ExternalLink, ArrowLeft, Info, Printer } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
+import PrintHeader from "@/components/PrintHeader";
 import Footer from "@/components/Footer";
 import AdPlaceholder from "@/components/AdPlaceholder";
 import { Button } from "@/components/ui/button";
@@ -98,6 +99,7 @@ const CalculadoraConcreto = () => {
   const [perdas, setPerdas] = useState("10");
   const [resultado, setResultado] = useState<ResultadoCalculo | null>(null);
   const [erro, setErro] = useState("");
+  const resultRef = useRef<HTMLDivElement>(null);
 
   const parseNumero = (valor: string): number => {
     const valorLimpo = valor.replace(",", ".").trim();
@@ -163,6 +165,10 @@ const CalculadoraConcreto = () => {
     });
   };
 
+  const handlePrint = () => {
+    window.print();
+  };
+
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <SEO
@@ -175,12 +181,14 @@ const CalculadoraConcreto = () => {
           "https://suaobracerta.com.br/calculadora-concreto"
         )}
       />
-      <Header />
+      <div className="print:hidden">
+        <Header />
+      </div>
 
       <main className="flex-1">
         {/* Ad Placeholder - Topo */}
         <div className="container pt-6">
-          <AdPlaceholder id="ad-topo-calc-concreto" className="max-w-3xl mx-auto" />
+          <AdPlaceholder id="ad-topo-calc-concreto" className="max-w-3xl mx-auto print:hidden" />
         </div>
 
         <div className="container py-8 md:py-12">
@@ -188,7 +196,7 @@ const CalculadoraConcreto = () => {
             {/* Breadcrumb */}
             <Link
               to="/"
-              className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+              className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors print:hidden"
             >
               <ArrowLeft className="h-4 w-4" />
               Voltar para Início
@@ -210,7 +218,7 @@ const CalculadoraConcreto = () => {
             </div>
 
             {/* Form Card */}
-            <div className="rounded-xl border border-border bg-card p-6 shadow-card animate-fade-up" style={{ animationDelay: "100ms" }}>
+            <div className="rounded-xl border border-border bg-card p-6 shadow-card animate-fade-up print:hidden">
               <div className="grid gap-5">
                 {/* Tipo de Cálculo */}
                 <div className="space-y-2">
@@ -376,9 +384,37 @@ const CalculadoraConcreto = () => {
 
             {/* Resultado */}
             {resultado && (
-              <div className="mt-6 space-y-4 animate-scale-in">
+              <div ref={resultRef} className="mt-6 space-y-4 animate-scale-in">
+                <PrintHeader />
+                {/* Print Summary */}
+                <div className="hidden print:block mb-4 p-4 border rounded-lg bg-gray-50 border-gray-200 text-left">
+                  <h3 className="font-bold text-sm mb-2 uppercase text-gray-500">Detalhes do Cálculo</h3>
+                  <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                      <span className="block text-gray-500">Traço:</span>
+                      <span className="font-medium">{resultado.traco.nome}</span>
+                    </div>
+                    <div>
+                      <span className="block text-gray-500">Tipo de Cálculo:</span>
+                      <span className="font-medium">{tipoCalculo === "volume" ? "Volume Direto" : "Por Dimensões"}</span>
+                    </div>
+                    <div>
+                      <span className="block text-gray-500">Volume Bruto:</span>
+                      <span className="font-medium">
+                        {tipoCalculo === "volume"
+                          ? `${volumeManual} m³`
+                          : `${comprimento}m x ${largura}m x ${altura}m`}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="block text-gray-500">Margem Perda:</span>
+                      <span className="font-medium">{perdas}%</span>
+                    </div>
+                  </div>
+                </div>
+
                 {/* Resumo */}
-                <div className="rounded-xl border-2 border-primary bg-gradient-result p-6">
+                <div className="rounded-xl border-2 border-primary bg-gradient-result p-6 print:border-none print:shadow-none print:bg-white">
                   <div className="text-center mb-6">
                     <p className="text-sm font-medium text-muted-foreground mb-1">
                       Para {resultado.volumeTotal} m³ de concreto ({resultado.traco.nome})
@@ -391,7 +427,7 @@ const CalculadoraConcreto = () => {
                   {/* Grid de Materiais */}
                   <div className="grid gap-4 sm:grid-cols-2">
                     {/* Cimento */}
-                    <div className="rounded-lg bg-card p-4 text-center shadow-sm">
+                    <div className="rounded-lg bg-card p-4 text-center shadow-sm print:border print:border-gray-200">
                       <div className="text-4xl mb-2">🧱</div>
                       <p className="text-3xl font-bold text-foreground mb-1">
                         {resultado.materiais.sacosCimento}
@@ -405,7 +441,7 @@ const CalculadoraConcreto = () => {
                     </div>
 
                     {/* Areia */}
-                    <div className="rounded-lg bg-card p-4 text-center shadow-sm">
+                    <div className="rounded-lg bg-card p-4 text-center shadow-sm print:border print:border-gray-200">
                       <div className="text-4xl mb-2">🏖️</div>
                       <p className="text-3xl font-bold text-foreground mb-1">
                         {resultado.materiais.areiaM3} m³
@@ -419,7 +455,7 @@ const CalculadoraConcreto = () => {
                     </div>
 
                     {/* Brita */}
-                    <div className="rounded-lg bg-card p-4 text-center shadow-sm">
+                    <div className="rounded-lg bg-card p-4 text-center shadow-sm print:border print:border-gray-200">
                       <div className="text-4xl mb-2">🪨</div>
                       <p className="text-3xl font-bold text-foreground mb-1">
                         {resultado.materiais.britaM3} m³
@@ -433,7 +469,7 @@ const CalculadoraConcreto = () => {
                     </div>
 
                     {/* Água */}
-                    <div className="rounded-lg bg-card p-4 text-center shadow-sm">
+                    <div className="rounded-lg bg-card p-4 text-center shadow-sm print:border print:border-gray-200">
                       <div className="text-4xl mb-2">💧</div>
                       <p className="text-3xl font-bold text-foreground mb-1">
                         {resultado.materiais.aguaLitros} L
@@ -457,10 +493,10 @@ const CalculadoraConcreto = () => {
                 </div>
 
                 {/* Ad Placeholder - Meio do Resultado */}
-                <AdPlaceholder id="ad-meio-resultado-concreto" />
+                <AdPlaceholder id="ad-meio-resultado-concreto" className="print:hidden" />
 
                 {/* Botão Afiliado */}
-                <div className="rounded-xl border border-border bg-card p-6">
+                <div className="rounded-xl border border-border bg-card p-6 print:hidden">
                   <Button
                     asChild
                     variant="success"
@@ -514,14 +550,23 @@ const CalculadoraConcreto = () => {
                     size="xl"
                     className="w-full mt-3 border-2 hover:bg-primary/5 text-primary"
                   >
-                    <ShoppingCart className="mr-2 h-5 w-5" /> Adicionar Materiais ao Orçamento
+                    <ShoppingCart className="mr-2 h-5 w-5" /> Adicionar Tudo ao Orçamento
+                  </Button>
+
+                  <Button
+                    onClick={handlePrint}
+                    variant="outline"
+                    size="xl"
+                    className="w-full mt-4 border-2 hover:bg-orange-50 text-orange-900 print:hidden"
+                  >
+                    <Printer className="mr-2 h-5 w-5" /> Salvar em PDF
                   </Button>
                 </div>
               </div>
             )}
 
             {/* Informações extras */}
-            <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up" style={{ animationDelay: "200ms" }}>
+            <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up print:hidden">
               <h2 className="mb-4 text-lg font-semibold text-foreground">
                 📋 Tipos de Concreto e Aplicações
               </h2>
