@@ -15,6 +15,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { affiliateLinks } from "@/config/affiliateLinks";
 import { generateCalculatorSchema } from "@/utils/schemas";
 import { useOrcamento } from "@/context/OrcamentoContext";
+import { ProductCard } from "@/components/ProductCard";
 
 interface ResultadoCalculo {
   litrosNecessarios: number;
@@ -402,6 +403,43 @@ const CalculadoraTinta = () => {
                   <AdPlaceholder id="ad-meio-resultado" />
                 </div>
 
+                {/* Affiliate Products */}
+                <div className="mt-8 mb-8 print:hidden">
+                  <h3 className="font-bold text-sm mb-4 uppercase text-muted-foreground flex items-center gap-2">
+                    <ShoppingCart className="h-4 w-4" /> Ofertas Relacionadas
+                  </h3>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <ProductCard
+                      title="Kit Pintura 7 Peças Tigre"
+                      image="https://m.media-amazon.com/images/I/41D+9+a+K+L._AC._SR360,460.jpg"
+                      price="R$ 49,90"
+                      link="https://amzn.to/3VjQjOq" // Placeholder
+                      category="Kits"
+                    />
+                    <ProductCard
+                      title="Tinta Suvinil Fosco Completo 18L Branco"
+                      image="https://m.media-amazon.com/images/I/51p+f+w+pJL._AC_SX679_.jpg" // Placeholder image
+                      price="R$ 389,90"
+                      link="https://amzn.to/3VjQjOq"
+                      category="Tintas"
+                    />
+                    <ProductCard
+                      title="Fita Crepe Automotiva Verde"
+                      image="https://m.media-amazon.com/images/I/51p+f+w+pJL._AC_SX679_.jpg"
+                      price="R$ 15,90"
+                      link="https://amzn.to/3VjQjOq"
+                      category="Acessórios"
+                    />
+                    <ProductCard
+                      title="Lona Plástica Preta 4x4m"
+                      image="https://m.media-amazon.com/images/I/51p+f+w+pJL._AC_SX679_.jpg"
+                      price="R$ 22,90"
+                      link="https://amzn.to/3VjQjOq"
+                      category="Proteção"
+                    />
+                  </div>
+                </div>
+
                 {/* Botão Afiliado & Orçamento */}
                 <div className="mt-6 space-y-3 print:hidden">
                   <Button
@@ -424,17 +462,7 @@ const CalculadoraTinta = () => {
                     Adicionar ao Meu Orçamento
                   </Button>
 
-                  <Button
-                    asChild
-                    variant="success"
-                    size="xl"
-                    className="w-full"
-                  >
-                    <a href={affiliateLinks.paints.general} target="_blank" rel="noopener noreferrer">
-                      <ExternalLink className="h-5 w-5 mr-2" />
-                      VER PREÇO DAS TINTAS NA AMAZON
-                    </a>
-                  </Button>
+
                   <Button
                     onClick={handlePrint}
                     variant="outline"

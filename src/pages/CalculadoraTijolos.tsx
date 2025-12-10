@@ -14,6 +14,7 @@ import SEO from "@/components/SEO";
 import { generateCalculatorSchema } from "@/utils/schemas";
 import { useOrcamento } from "@/context/OrcamentoContext";
 import PrintHeader from "@/components/PrintHeader";
+import { ProductCard } from "@/components/ProductCard";
 
 interface TipoTijolo {
   nome: string;
@@ -479,21 +480,42 @@ const CalculadoraTijolos = () => {
                 {/* Ad Placeholder - Meio do Resultado */}
                 <AdPlaceholder id="ad-meio-resultado-tijolos" className="print:hidden" />
 
-                {/* Botão Afiliado */}
+                {/* Affiliate Products */}
                 <div className="rounded-xl border border-border bg-card p-6 print:hidden">
-                  <Button
-                    asChild
-                    variant="success"
-                    size="xl"
-                    className="w-full"
-                  >
-                    <a href={affiliateLinks.structural.bricks} target="_blank" rel="noopener noreferrer">
-                      <ShoppingCart className="h-5 w-5" />
-                      VER MATERIAIS NA AMAZON
-                      <ExternalLink className="h-4 w-4" />
-                    </a>
-                  </Button>
-                  <p className="mt-2 text-center text-xs text-muted-foreground">
+                  <h3 className="font-bold text-sm mb-4 uppercase text-muted-foreground flex items-center gap-2">
+                    <ShoppingCart className="h-4 w-4" /> Ofertas Relacionadas
+                  </h3>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <ProductCard
+                      title="Colher de Pedreiro 8 Polegadas"
+                      image="https://m.media-amazon.com/images/I/61k8w-n+d+L._AC_SX679_.jpg"
+                      price="R$ 39,90"
+                      link="https://amzn.to/3VjQjOq"
+                      category="Ferramentas"
+                    />
+                    <ProductCard
+                      title="Trena Profissional 8m"
+                      image="https://m.media-amazon.com/images/I/718tC7zG+FL._AC_SX679_.jpg"
+                      price="R$ 54,90"
+                      link="https://amzn.to/3VjQjOq"
+                      category="Medição"
+                    />
+                    <ProductCard
+                      title="Desempenadeira de Aço"
+                      image="https://m.media-amazon.com/images/I/61I2a9T+T+L._AC_SX679_.jpg"
+                      price="R$ 29,90"
+                      link="https://amzn.to/3VjQjOq"
+                      category="Acabamento"
+                    />
+                    <ProductCard
+                      title="Kit Construção Civil (Nível + Prumo + Linha)"
+                      image="https://m.media-amazon.com/images/I/71O0g+v+u+L._AC_SX679_.jpg"
+                      price="R$ 89,90"
+                      link="https://amzn.to/3VjQjOq"
+                      category="Kits"
+                    />
+                  </div>
+                  <p className="mt-4 text-center text-xs text-muted-foreground">
                     *Link de afiliado. Você não paga nada a mais por isso.
                   </p>
                 </div>

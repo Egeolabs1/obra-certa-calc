@@ -14,6 +14,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import SEO from "@/components/SEO";
 import { generateCalculatorSchema } from "@/utils/schemas";
 import { useOrcamento } from "@/context/OrcamentoContext";
+import { ProductCard } from "@/components/ProductCard";
 
 interface TracoConcreto {
   nome: string;
@@ -495,21 +496,42 @@ const CalculadoraConcreto = () => {
                 {/* Ad Placeholder - Meio do Resultado */}
                 <AdPlaceholder id="ad-meio-resultado-concreto" className="print:hidden" />
 
-                {/* Botão Afiliado */}
+                {/* Affiliate Products */}
                 <div className="rounded-xl border border-border bg-card p-6 print:hidden">
-                  <Button
-                    asChild
-                    variant="success"
-                    size="xl"
-                    className="w-full"
-                  >
-                    <a href={affiliateLinks.structural.cement} target="_blank" rel="noopener noreferrer">
-                      <ShoppingCart className="h-5 w-5" />
-                      VER BETONEIRAS NA AMAZON
-                      <ExternalLink className="h-4 w-4" />
-                    </a>
-                  </Button>
-                  <p className="mt-2 text-center text-xs text-muted-foreground">
+                  <h3 className="font-bold text-sm mb-4 uppercase text-muted-foreground flex items-center gap-2">
+                    <ShoppingCart className="h-4 w-4" /> Ofertas Relacionadas
+                  </h3>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <ProductCard
+                      title="Betoneira 400 Litros Monofásica"
+                      image="https://m.media-amazon.com/images/I/61Nl-X3qI6L._AC_SX679_.jpg"
+                      price="R$ 3.899"
+                      link="https://amzn.to/3VjQjOq"
+                      category="Maquinário"
+                    />
+                    <ProductCard
+                      title="Carrinho de Mão Reforçado"
+                      image="https://m.media-amazon.com/images/I/61y+M+gg+BL._AC_SX679_.jpg"
+                      price="R$ 249,90"
+                      link="https://amzn.to/3VjQjOq"
+                      category="Ferramentas"
+                    />
+                    <ProductCard
+                      title="Pá Quadrada com Cabo"
+                      image="https://m.media-amazon.com/images/I/51p+f+w+pJL._AC_SX679_.jpg"
+                      price="R$ 45,90"
+                      link="https://amzn.to/3VjQjOq"
+                      category="Ferramentas"
+                    />
+                    <ProductCard
+                      title="Enxada Larga 2.5 com Cabo"
+                      image="https://m.media-amazon.com/images/I/51p+f+w+pJL._AC_SX679_.jpg"
+                      price="R$ 59,90"
+                      link="https://amzn.to/3VjQjOq"
+                      category="Ferramentas"
+                    />
+                  </div>
+                  <p className="mt-4 text-center text-xs text-muted-foreground">
                     *Link de afiliado. Você não paga nada a mais por isso.
                   </p>
 

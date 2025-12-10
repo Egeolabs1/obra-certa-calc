@@ -13,6 +13,7 @@ import { Label } from "@/components/ui/label";
 import { affiliateLinks } from "@/config/affiliateLinks";
 import { generateCalculatorSchema } from "@/utils/schemas";
 import { useOrcamento } from "@/context/OrcamentoContext";
+import { ProductCard } from "@/components/ProductCard";
 
 const CalculadoraChurrasco = () => {
     const resultRef = useRef<HTMLDivElement>(null);
@@ -469,6 +470,43 @@ const CalculadoraChurrasco = () => {
                                 </div>
                             )
                         }
+
+                        {/* Affiliate Products */}
+                        <div className="mt-8 mb-8 print:hidden">
+                            <h3 className="font-bold text-sm mb-4 uppercase text-muted-foreground flex items-center gap-2">
+                                <ShoppingCart className="h-4 w-4" /> Itens Essenciais em Oferta
+                            </h3>
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                <ProductCard
+                                    title="Kit Churrasco Tramontina 15 Peças Inox"
+                                    image="https://m.media-amazon.com/images/I/61K5Xy6yRlL._AC_SX679_.jpg"
+                                    price="R$ 149,90"
+                                    link="https://amzn.to/3VjQjOq" // Placeholder or generic Amazon search
+                                    category="Utensílios"
+                                />
+                                <ProductCard
+                                    title="Carvão Vegetal Premium 4kg"
+                                    image="https://m.media-amazon.com/images/I/61y+M+gg+BL._AC_SX679_.jpg"
+                                    price="R$ 25,90"
+                                    link="https://amzn.to/3VjQjOq"
+                                    category="Consumíveis"
+                                />
+                                <ProductCard
+                                    title="Cervejeira Consul Titanium"
+                                    image="https://m.media-amazon.com/images/I/51p+f+w+pJL._AC_SX679_.jpg"
+                                    price="R$ 2.199"
+                                    link="https://amzn.to/3VjQjOq"
+                                    category="Eletro"
+                                />
+                                <ProductCard
+                                    title="Tábua de Corte Bambu Grande"
+                                    image="https://m.media-amazon.com/images/I/71w-w-w+wJL._AC_SX679_.jpg"
+                                    price="R$ 89,90"
+                                    link="https://amzn.to/3VjQjOq"
+                                    category="Acessórios"
+                                />
+                            </div>
+                        </div>
 
                         <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up print:hidden">
                             <h2 className="mb-4 text-lg font-semibold text-foreground">
