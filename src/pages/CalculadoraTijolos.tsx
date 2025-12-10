@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Boxes, Calculator, ShoppingCart, ExternalLink, ArrowLeft, Info } from "lucide-react";
+import { Boxes, Calculator, ShoppingCart, ExternalLink, ArrowLeft, Info, Printer } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -13,6 +13,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import SEO from "@/components/SEO";
 import { generateCalculatorSchema } from "@/utils/schemas";
 import { useOrcamento } from "@/context/OrcamentoContext";
+import PrintHeader from "@/components/PrintHeader";
 
 interface TipoTijolo {
   nome: string;
@@ -167,6 +168,12 @@ const CalculadoraTijolos = () => {
     });
   };
 
+
+
+  const handlePrint = () => {
+    window.print();
+  };
+
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <SEO
@@ -179,11 +186,11 @@ const CalculadoraTijolos = () => {
           "https://suaobracerta.com.br/calculadora-tijolos"
         )}
       />
-      <Header />
+      <div className="print:hidden"><Header /></div>
 
       <main className="flex-1">
         {/* Ad Placeholder - Topo */}
-        <div className="container pt-6">
+        <div className="container pt-6 print:hidden">
           <AdPlaceholder id="ad-topo-calc-tijolos" className="max-w-3xl mx-auto" />
         </div>
 
@@ -214,7 +221,7 @@ const CalculadoraTijolos = () => {
             </div>
 
             {/* Form Card */}
-            <div className="rounded-xl border border-border bg-card p-6 shadow-card animate-fade-up" style={{ animationDelay: "100ms" }}>
+            <div className="rounded-xl border border-border bg-card p-6 shadow-card animate-fade-up print:hidden" style={{ animationDelay: "100ms" }}>
               <div className="grid gap-5">
                 {/* Tipo de Tijolo */}
                 <div className="space-y-2">
@@ -360,8 +367,9 @@ const CalculadoraTijolos = () => {
             {/* Resultado */}
             {resultado && (
               <div className="mt-6 space-y-4 animate-scale-in">
+                <PrintHeader />
                 {/* Resultado Tijolos */}
-                <div className="rounded-xl border-2 border-primary bg-gradient-result p-6">
+                <div className="rounded-xl border-2 border-primary bg-gradient-result p-6 print:border print:border-slate-300 print:shadow-none print:bg-none">
                   <div className="text-center mb-6">
                     <p className="text-lg font-medium text-foreground mb-1">
                       Você precisa de aproximadamente
@@ -446,10 +454,10 @@ const CalculadoraTijolos = () => {
                 </div>
 
                 {/* Ad Placeholder - Meio do Resultado */}
-                <AdPlaceholder id="ad-meio-resultado-tijolos" />
+                <AdPlaceholder id="ad-meio-resultado-tijolos" className="print:hidden" />
 
                 {/* Botão Afiliado */}
-                <div className="rounded-xl border border-border bg-card p-6">
+                <div className="rounded-xl border border-border bg-card p-6 print:hidden">
                   <Button
                     asChild
                     variant="success"
@@ -467,50 +475,60 @@ const CalculadoraTijolos = () => {
                   </p>
                 </div>
 
-                <Button
-                  onClick={() => {
-                    // Tijolos
-                    addItem({
-                      id: crypto.randomUUID(),
-                      name: `Tijolo ${resultado.tipoTijolo.nome.split('(')[0].trim()}`,
-                      description: `Parede ${resultado.areaLiquida}m² | Margem ${perdas}%`,
-                      quantity: resultado.qtdTijolosComPerda,
-                      unit: "Unidades",
-                      category: "Estrutural - Alvenaria",
-                      estimatedPrice: resultado.qtdTijolosComPerda * 0.80 // R$0.80/tijolo est.
-                    });
-                    // Cimento
-                    addItem({
-                      id: crypto.randomUUID(),
-                      name: `Cimento CP II (50kg)`,
-                      description: `Para assentamento de ${resultado.areaLiquida}m²`,
-                      quantity: resultado.argamassa.sacosCimento,
-                      unit: "Sacos",
-                      category: "Estrutural - Agregados",
-                      estimatedPrice: resultado.argamassa.sacosCimento * 35 // R$35/saco
-                    });
-                    // Areia
-                    addItem({
-                      id: crypto.randomUUID(),
-                      name: `Areia Média (20kg)`,
-                      description: `Para traço 1:4`,
-                      quantity: resultado.argamassa.sacosAreia,
-                      unit: "Sacos",
-                      category: "Estrutural - Agregados",
-                      estimatedPrice: resultado.argamassa.sacosAreia * 5 // R$5/saco
-                    });
-                  }}
-                  variant="outline"
-                  size="xl"
-                  className="w-full border-2 hover:bg-orange-50 text-orange-800 border-orange-200"
-                >
-                  <ShoppingCart className="mr-2 h-5 w-5" /> Adicionar Tudo ao Orçamento
-                </Button>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 print:hidden">
+                  <Button
+                    onClick={handlePrint}
+                    variant="outline"
+                    size="xl"
+                    className="w-full border-2 hover:bg-slate-50 text-slate-700 border-slate-200"
+                  >
+                    <Printer className="mr-2 h-5 w-5" /> Salvar em PDF
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      // Tijolos
+                      addItem({
+                        id: crypto.randomUUID(),
+                        name: `Tijolo ${resultado.tipoTijolo.nome.split('(')[0].trim()}`,
+                        description: `Parede ${resultado.areaLiquida}m² | Margem ${perdas}%`,
+                        quantity: resultado.qtdTijolosComPerda,
+                        unit: "Unidades",
+                        category: "Estrutural - Alvenaria",
+                        estimatedPrice: resultado.qtdTijolosComPerda * 0.80 // R$0.80/tijolo est.
+                      });
+                      // Cimento
+                      addItem({
+                        id: crypto.randomUUID(),
+                        name: `Cimento CP II (50kg)`,
+                        description: `Para assentamento de ${resultado.areaLiquida}m²`,
+                        quantity: resultado.argamassa.sacosCimento,
+                        unit: "Sacos",
+                        category: "Estrutural - Agregados",
+                        estimatedPrice: resultado.argamassa.sacosCimento * 35 // R$35/saco
+                      });
+                      // Areia
+                      addItem({
+                        id: crypto.randomUUID(),
+                        name: `Areia Média (20kg)`,
+                        description: `Para traço 1:4`,
+                        quantity: resultado.argamassa.sacosAreia,
+                        unit: "Sacos",
+                        category: "Estrutural - Agregados",
+                        estimatedPrice: resultado.argamassa.sacosAreia * 5 // R$5/saco
+                      });
+                    }}
+                    variant="outline"
+                    size="xl"
+                    className="w-full border-2 hover:bg-orange-50 text-orange-800 border-orange-200"
+                  >
+                    <ShoppingCart className="mr-2 h-5 w-5" /> Adicionar Tudo ao Orçamento
+                  </Button>
+                </div>
               </div>
             )}
 
             {/* Informações extras */}
-            <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up" style={{ animationDelay: "200ms" }}>
+            <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up print:hidden" style={{ animationDelay: "200ms" }}>
               <h2 className="mb-4 text-lg font-semibold text-foreground">
                 📋 Tipos de Tijolos e Rendimento
               </h2>
@@ -560,7 +578,7 @@ const CalculadoraTijolos = () => {
         </div>
       </main>
 
-      <Footer />
+      <div className="print:hidden"><Footer /></div>
     </div>
   );
 };

@@ -5,7 +5,8 @@ import SEO from "@/components/SEO";
 import { generateCalculatorSchema } from "@/utils/schemas";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Trash2, FileDown, ShoppingCart, Share2, HardHat } from "lucide-react";
+import { ArrowLeft, Trash2, FileDown, ShoppingCart, Share2 } from "lucide-react";
+import PrintHeader from "@/components/PrintHeader";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 
@@ -68,18 +69,7 @@ const MeuOrcamento = () => {
                         </div>
                     </div>
 
-                    <div className="hidden print:flex flex-row items-center justify-between mb-4 border-b pb-2">
-                        <div className="flex items-center gap-2">
-                            {/* Use transparent bg and black text for print to ensure visibility even without 'Background Graphics' enabled */}
-                            <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-900 bg-slate-900 print:bg-transparent print:border-black">
-                                <HardHat className="h-5 w-5 text-white print:text-black" />
-                            </div>
-                            <span className="text-lg font-bold text-slate-900 print:text-black">
-                                SuaObraCerta
-                            </span>
-                        </div>
-                        <p className="text-xs text-slate-500 font-medium print:text-gray-600">suaobracerta.com.br</p>
-                    </div>
+                    <PrintHeader />
 
                     <div className="flex items-center gap-4 mb-8 print:mb-4">
                         <div className="bg-primary/10 p-4 rounded-full text-primary print:hidden"><ShoppingCart className="h-8 w-8" /></div>
