@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useOrcamento } from "@/context/OrcamentoContext";
+import { CommandSearch } from "./CommandSearch";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -33,6 +34,8 @@ const Header = () => {
           <Link to="/" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
             Início
           </Link>
+
+          <CommandSearch />
 
           <DropdownMenu>
             <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors focus:outline-none">
@@ -125,6 +128,10 @@ const Header = () => {
         <nav className="md:hidden border-t border-border bg-card animate-fade-in max-h-[calc(100vh-4rem)] overflow-y-auto pb-8">
           <div className="container py-4 flex flex-col gap-3">
             <Link to="/" onClick={() => setIsMenuOpen(false)} className="font-bold text-lg">Início</Link>
+
+            <div className="py-2" onClick={() => setIsMenuOpen(false)}>
+              <CommandSearch />
+            </div>
 
             <Link to="/meu-orcamento" onClick={() => setIsMenuOpen(false)} className="flex items-center gap-2 font-bold text-primary py-2 px-2 bg-primary/10 rounded">
               <ShoppingCart className="h-4 w-4" /> Meu Orçamento ({totalItems})
