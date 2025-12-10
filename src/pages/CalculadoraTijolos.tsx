@@ -194,19 +194,19 @@ const CalculadoraTijolos = () => {
           <AdPlaceholder id="ad-topo-calc-tijolos" className="max-w-3xl mx-auto" />
         </div>
 
-        <div className="container py-8 md:py-12">
-          <div className="mx-auto max-w-2xl">
+        <div className="container py-8 md:py-12 print:py-0 print:m-0 print:max-w-none">
+          <div className="mx-auto max-w-2xl px-0 print:max-w-none">
             {/* Breadcrumb */}
             <Link
               to="/"
-              className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+              className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors print:hidden"
             >
               <ArrowLeft className="h-4 w-4" />
               Voltar para Início
             </Link>
 
             {/* Title */}
-            <div className="mb-8 animate-fade-up">
+            <div className="mb-8 animate-fade-up print:hidden">
               <div className="mb-4 flex items-center gap-3">
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary">
                   <Boxes className="h-6 w-6 text-primary-foreground" />
@@ -392,46 +392,46 @@ const CalculadoraTijolos = () => {
                 </div>
 
                 {/* Resultado Tijolos */}
-                <div className="rounded-xl border-2 border-primary bg-gradient-result p-6 print:border print:border-slate-300 print:shadow-none print:bg-none">
-                  <div className="text-center mb-6">
-                    <p className="text-lg font-medium text-foreground mb-1">
+                <div className="rounded-xl border-2 border-primary bg-gradient-result p-6 print:border print:border-slate-300 print:shadow-none print:bg-none print:p-4 print:mb-4">
+                  <div className="text-center mb-6 print:mb-2">
+                    <p className="text-lg font-medium text-foreground mb-1 print:text-sm">
                       Você precisa de aproximadamente
                     </p>
-                    <p className="text-5xl font-extrabold text-primary mb-2">
+                    <p className="text-5xl font-extrabold text-primary mb-2 print:text-3xl">
                       {resultado.qtdTijolosComPerda.toLocaleString('pt-BR')} tijolos
                     </p>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-muted-foreground print:text-xs">
                       ({resultado.qtdTijolos.toLocaleString('pt-BR')} + {perdas}% de margem)
                     </p>
                   </div>
 
                   {/* Detalhamento Área */}
-                  <div className="grid gap-3 rounded-lg bg-card/80 p-4 mb-4">
-                    <h3 className="font-semibold text-foreground text-sm border-b border-border pb-2">
+                  <div className="grid gap-3 rounded-lg bg-card/80 p-4 mb-4 print:p-2 print:gap-1 print:text-xs">
+                    <h3 className="font-semibold text-foreground text-sm border-b border-border pb-2 print:pb-1">
                       📐 Detalhamento da Área
                     </h3>
-                    <div className="flex justify-between text-sm">
+                    <div className="flex justify-between text-sm print:text-xs">
                       <span className="text-muted-foreground">Área bruta:</span>
                       <span className="font-medium text-foreground">{resultado.areaBruta} m²</span>
                     </div>
                     {resultado.areaDescontada > 0 && (
-                      <div className="flex justify-between text-sm">
+                      <div className="flex justify-between text-sm print:text-xs">
                         <span className="text-muted-foreground">Desconto (portas/janelas):</span>
                         <span className="font-medium text-foreground">- {resultado.areaDescontada} m²</span>
                       </div>
                     )}
-                    <div className="flex justify-between text-sm">
+                    <div className="flex justify-between text-sm print:text-xs">
                       <span className="text-muted-foreground">Área líquida:</span>
                       <span className="font-medium text-foreground">{resultado.areaLiquida} m²</span>
                     </div>
-                    <div className="flex justify-between text-sm pt-2 border-t border-border">
+                    <div className="flex justify-between text-sm pt-2 border-t border-border print:text-xs print:pt-1">
                       <span className="text-muted-foreground">Tipo de tijolo:</span>
                       <span className="font-medium text-foreground">{resultado.tipoTijolo.nome}</span>
                     </div>
                   </div>
 
                   {/* Dica */}
-                  <div className="rounded-lg bg-accent/10 border border-accent/20 p-4 text-center">
+                  <div className="rounded-lg bg-accent/10 border border-accent/20 p-4 text-center print:hidden">
                     <p className="text-sm text-foreground">
                       💡 <strong>Milheiros:</strong> Você precisa de aproximadamente{" "}
                       <strong>{Math.ceil(resultado.qtdTijolosComPerda / 1000)} milheiro(s)</strong> de tijolos.
@@ -440,38 +440,38 @@ const CalculadoraTijolos = () => {
                 </div>
 
                 {/* Resultado Argamassa */}
-                <div className="rounded-xl border border-border bg-card p-6 shadow-card">
-                  <h3 className="font-bold text-foreground text-lg mb-4 flex items-center gap-2">
+                <div className="rounded-xl border border-border bg-card p-6 shadow-card print:p-4 print:shadow-none print:border-slate-200">
+                  <h3 className="font-bold text-foreground text-lg mb-4 flex items-center gap-2 print:text-base print:mb-2">
                     🧱 Argamassa Necessária
                     <span className="text-xs font-normal text-muted-foreground">(Traço 1:4)</span>
                   </h3>
 
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <div className="rounded-lg bg-muted/50 p-4 text-center">
-                      <p className="text-3xl font-bold text-foreground mb-1">
+                  <div className="grid gap-4 sm:grid-cols-2 print:gap-2">
+                    <div className="rounded-lg bg-muted/50 p-4 text-center print:p-2 print:border print:border-gray-100">
+                      <p className="text-3xl font-bold text-foreground mb-1 print:text-2xl">
                         {resultado.argamassa.sacosCimento}
                       </p>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-muted-foreground print:text-xs">
                         Sacos de Cimento (50kg)
                       </p>
-                      <p className="text-xs text-muted-foreground mt-1">
+                      <p className="text-xs text-muted-foreground mt-1 print:hidden">
                         = {resultado.argamassa.cimento} kg
                       </p>
                     </div>
-                    <div className="rounded-lg bg-muted/50 p-4 text-center">
-                      <p className="text-3xl font-bold text-foreground mb-1">
+                    <div className="rounded-lg bg-muted/50 p-4 text-center print:p-2 print:border print:border-gray-100">
+                      <p className="text-3xl font-bold text-foreground mb-1 print:text-2xl">
                         {resultado.argamassa.sacosAreia}
                       </p>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-muted-foreground print:text-xs">
                         Sacos de Areia (20kg)
                       </p>
-                      <p className="text-xs text-muted-foreground mt-1">
+                      <p className="text-xs text-muted-foreground mt-1 print:hidden">
                         = {resultado.argamassa.areia} kg
                       </p>
                     </div>
                   </div>
 
-                  <p className="text-xs text-muted-foreground mt-4 text-center">
+                  <p className="text-xs text-muted-foreground mt-4 text-center print:mt-2">
                     Volume total de argamassa: ~{resultado.argamassa.volumeTotal} litros
                   </p>
                 </div>
