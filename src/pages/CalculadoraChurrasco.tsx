@@ -403,7 +403,7 @@ const CalculadoraChurrasco = () => {
                                                 alert("Itens adicionados ao orçamento!");
                                             }}
                                             variant="secondary"
-                                            className="w-full border-2 border-orange-200 text-orange-800 hover:bg-orange-50"
+                                            className="w-full border-2 border-orange-200 text-orange-800 hover:bg-orange-50 print:hidden"
                                         >
                                             <ShoppingCart className="mr-2 h-4 w-4" /> Adicionar Tudo ao Orçamento
                                         </Button>

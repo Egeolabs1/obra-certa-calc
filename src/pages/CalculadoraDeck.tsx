@@ -163,7 +163,7 @@ const CalculadoraDeck = () => {
                                         }}
                                         variant="outline"
                                         size="xl"
-                                        className="w-full mt-3 border-2 hover:bg-amber-50 text-amber-900 border-amber-100"
+                                        className="w-full mt-3 border-2 hover:bg-amber-50 text-amber-900 border-amber-100 print:hidden"
                                     >
                                         <ShoppingCart className="mr-2 h-5 w-5" /> Adicionar ao Orçamento
                                     </Button>

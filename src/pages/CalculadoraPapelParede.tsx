@@ -182,7 +182,7 @@ const CalculadoraPapelParede = () => {
                                         }}
                                         variant="outline"
                                         size="xl"
-                                        className="w-full mt-3 border-2 hover:bg-purple-50 text-purple-800 border-purple-200"
+                                        className="w-full mt-3 border-2 hover:bg-purple-50 text-purple-800 border-purple-200 print:hidden"
                                     >
                                         <ShoppingCart className="mr-2 h-5 w-5" /> Adicionar Papel ao Orçamento
                                     </Button>

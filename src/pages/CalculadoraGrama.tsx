@@ -125,7 +125,7 @@ const CalculadoraGrama = () => {
                                         }}
                                         variant="outline"
                                         size="xl"
-                                        className="w-full mt-3 border-2 hover:bg-green-50 text-green-800 border-green-200"
+                                        className="w-full mt-3 border-2 hover:bg-green-50 text-green-800 border-green-200 print:hidden"
                                     >
                                         <ShoppingCart className="mr-2 h-5 w-5" /> Adicionar Grama ao Orçamento
                                     </Button>

@@ -261,7 +261,7 @@ const CalculadoraEnergia = () => {
                                                 }}
                                                 variant="outline"
                                                 size="lg"
-                                                className="w-full border-green-200 hover:bg-green-50 text-green-800"
+                                                className="w-full border-green-200 hover:bg-green-50 text-green-800 print:hidden"
                                             >
                                                 <ShoppingCart className="mr-2 h-5 w-5" /> Adicionar Kit ao Orçamento
                                             </Button>

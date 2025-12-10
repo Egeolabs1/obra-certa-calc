@@ -115,7 +115,7 @@ const CalculadoraEscada = () => {
                                             });
                                         }}
                                         variant="default"
-                                        className="w-full mt-2 bg-blue-600 hover:bg-blue-700 text-white"
+                                        className="w-full mt-2 bg-blue-600 hover:bg-blue-700 text-white print:hidden"
                                     >
                                         <ArrowUpFromLine className="mr-2 h-4 w-4" /> Salvar no Orçamento
                                     </Button>

@@ -433,7 +433,7 @@ const CalculadoraPisos = () => {
                     }}
                     variant="outline"
                     size="xl"
-                    className="w-full border-2 hover:bg-slate-50 text-slate-700"
+                    className="w-full border-2 hover:bg-slate-50 text-slate-700 print:hidden"
                   >
                     <ShoppingCart className="h-5 w-5 mr-2" />
                     Adicionar Piso ao Orçamento

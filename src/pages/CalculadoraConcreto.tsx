@@ -548,7 +548,7 @@ const CalculadoraConcreto = () => {
                     }}
                     variant="outline"
                     size="xl"
-                    className="w-full mt-3 border-2 hover:bg-primary/5 text-primary"
+                    className="w-full mt-3 border-2 hover:bg-primary/5 text-primary print:hidden"
                   >
                     <ShoppingCart className="mr-2 h-5 w-5" /> Adicionar Tudo ao Orçamento
                   </Button>

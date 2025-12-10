@@ -170,7 +170,7 @@ const CalculadoraRejunte = () => {
                                         }}
                                         variant="outline"
                                         size="lg"
-                                        className="w-full max-w-sm mt-2 border-2 hover:bg-orange-50 text-orange-800 border-orange-200"
+                                        className="w-full max-w-sm mt-2 border-2 hover:bg-orange-50 text-orange-800 border-orange-200 print:hidden"
                                     >
                                         <ShoppingCart className="mr-2 h-4 w-4" /> Adicionar ao Orçamento
                                     </Button>

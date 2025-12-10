@@ -150,7 +150,7 @@ const CalculadoraIluminacao = () => {
                                         }}
                                         variant="outline"
                                         size="xl"
-                                        className="w-full border-2 hover:bg-yellow-50 text-yellow-800 border-yellow-200"
+                                        className="w-full border-2 hover:bg-yellow-50 text-yellow-800 border-yellow-200 print:hidden"
                                     >
                                         <ShoppingCart className="mr-2 h-5 w-5" /> Adicionar Lâmpadas ao Orçamento
                                     </Button>

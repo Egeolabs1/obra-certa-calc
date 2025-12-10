@@ -201,7 +201,7 @@ const CalculadoraFios = () => {
                                         }}
                                         variant="outline"
                                         size="xl"
-                                        className="w-full mt-3 border-2 hover:bg-yellow-50 text-yellow-700 border-yellow-200"
+                                        className="w-full mt-3 border-2 hover:bg-yellow-50 text-yellow-700 border-yellow-200 print:hidden"
                                     >
                                         <ShoppingCart className="mr-2 h-5 w-5" /> Adicionar Material Elétrico
                                     </Button>
