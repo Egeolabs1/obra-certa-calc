@@ -15,7 +15,7 @@ export default defineConfig(({ mode }) => ({
     mode === "development" && componentTagger(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'favicon.ico', 'robots.txt', 'apple-touch-icon.png', 'ads.txt'],
+      includeAssets: ['favicon.svg', 'favicon.ico', 'robots.txt', 'apple-touch-icon.png', 'ads.txt', 'sitemap.xml'],
       manifest: {
         name: 'SuaObraCerta - Calculadoras de Construção',
         short_name: 'SuaObraCerta',
