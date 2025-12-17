@@ -20,7 +20,7 @@ type ObraType = "construcao" | "reforma_total" | "reforma_banheiro" | "reforma_c
 interface Phase {
     name: string;
     description: string;
-    icon: any;
+    icon: React.ElementType;
     durationWeeks: number;
     startDate: Date;
     endDate: Date;
@@ -51,7 +51,7 @@ const CalculadoraCronograma = () => {
 
         // Common addPhase helper
         let current = start;
-        const addPhase = (name: string, desc: string, icon: any, w: number, color: string) => {
+        const addPhase = (name: string, desc: string, icon: React.ElementType, w: number, color: string) => {
             const end = addDays(current, w * 7);
             phases.push({
                 name,

@@ -126,8 +126,8 @@ const CalculadoraPesoAluminio = () => {
                 descricao: `${qtd}x ${formatarNomePerfil(tipoPerfil)}`
             });
 
-        } catch (err: any) {
-            setErro(err.message || "Verifique as medidas informadas.");
+        } catch (err: unknown) {
+            setErro((err as Error).message || "Verifique as medidas informadas.");
         }
     };
 

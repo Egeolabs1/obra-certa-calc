@@ -34,7 +34,7 @@ interface ServiceItem {
 interface ServiceCategory {
     id: string;
     label: string;
-    icon: any;
+    icon: React.ElementType;
     items: ServiceItem[];
 }
 

@@ -45,7 +45,7 @@ import CalculadoraPesoAluminio from "./pages/CalculadoraPesoAluminio";
 import CalculadoraPesoEstruturaTelhado from "./pages/CalculadoraPesoEstruturaTelhado";
 import CalculadoraMuro from "./pages/CalculadoraMuro";
 
-import { OrcamentoProvider } from "./context/OrcamentoContext";
+import { OrcamentoProvider } from "./context/OrcamentoProvider";
 import MeuOrcamento from "./pages/MeuOrcamento";
 import NotFound from "./pages/NotFound";
 import TermosDeUso from "./pages/TermosDeUso";

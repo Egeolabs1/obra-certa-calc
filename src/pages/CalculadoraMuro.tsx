@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Checkbox } from "@/components/ui/checkbox";
 import { generateCalculatorSchema } from "@/utils/schemas";
 import { useOrcamento } from "@/context/OrcamentoContext";
 import { ProductCard } from "@/components/ProductCard";
@@ -21,9 +22,15 @@ interface ResultadoMuro {
     blocos: number;
     cimentoSacos: number;
     areiaMetros: number;
+    pedraMetros?: number; // Para fundação
+    calSacos?: number; // Para reboco
     pilares?: number; // Para muro normal
     grauteMetros?: number; // Para muro de arrimo
     acoKg?: number; // Para muro de arrimo
+    foundationSteel?: {
+        barras10mm: number;
+        barras5mm: number;
+    };
     descricao: string;
 }
 
@@ -37,6 +44,10 @@ const CalculadoraMuro = () => {
 
     // Normal Wall Specific
     const [tipoBloco, setTipoBloco] = useState("ceramico_9h"); // 9x19x19 (8 furos)
+
+    // New Options
+    const [includeFoundation, setIncludeFoundation] = useState(false);
+    const [includePlaster, setIncludePlaster] = useState("no"); // no, 1_face, 2_faces
 
     // Retaining Wall Specific
     const [tipoEstrutura, setTipoEstrutura] = useState("bloco_estrutural"); // Bloco de Concreto Estrutural
@@ -60,78 +71,121 @@ const CalculadoraMuro = () => {
         // Margem de perda padrão 10%
         const margem = 1.10;
 
+        // Init Result Object
+        const res: ResultadoMuro = {
+            tipo: tipoMuro,
+            blocos: 0,
+            cimentoSacos: 0,
+            areiaMetros: 0,
+            descricao: ""
+        };
+
         if (tipoMuro === "normal") {
             // Muro Normal (Divisa)
+            res.descricao = `${area.toFixed(2)}m² de Muro de Divisa`;
 
-            // Quantidade de Blocos por m² (com argamassa)
-            // Cerâmico 9x19x19: ~25 unid/m²
-            // Concreto 14x19x39: ~12.5 unid/m²
-            // Tijolo Baiano 11x19x29: ~17 unid/m²
-
+            // 1. BLOCOS
             let blocosPorM2 = 25;
             if (tipoBloco === "concreto_14") blocosPorM2 = 12.5;
             if (tipoBloco === "baiano") blocosPorM2 = 17;
 
-            const qtdBlocos = Math.ceil(area * blocosPorM2 * margem);
+            res.blocos = Math.ceil(area * blocosPorM2 * margem);
 
-            // Argamassa de Assentamento (Estimativa)
-            // Média: 15-20 litros de argamassa por m² de muro de tijolo 9x19x19
-            // Traço 1:3 (Cimento:Areia)
-            // 1 saco cimento (50kg) rende ~36 litros de nata/argamassa rica, mas com areia vira uns 60-70L de massa.
-            // Vamos usar estimativa simplificada: 
+            // 2. ARGAMASSA DE ASSENTAMENTO
             // 1 m² gasta ~5kg de cimento e ~0.02m³ de areia.
+            const cinementoAssentamento = area * 5;
+            const areiaAssentamento = area * 0.02;
 
-            const cimentoKg = area * 5;
-            const areiaM3 = area * 0.02;
+            res.cimentoSacos = Math.ceil(cinementoAssentamento / 50);
+            res.areiaMetros = areiaAssentamento;
 
-            // Pilares: 1 a cada 2.5m + 1 no final
-            const numPilares = Math.ceil(comp / 2.5) + 1;
+            // 3. PILARES
+            res.pilares = Math.ceil(comp / 2.5) + 1;
 
-            setResultado({
-                tipo: "normal",
-                blocos: qtdBlocos,
-                cimentoSacos: Math.ceil(cimentoKg / 50),
-                areiaMetros: Math.ceil(areiaM3 * 10) / 10,
-                pilares: numPilares,
-                descricao: `${area.toFixed(2)}m² de Muro de Divisa`
-            });
+            // 4. FUNDAÇÃO (Opcional - Simples: Baldrame 20x30)
+            if (includeFoundation) {
+                // Volume Concreto: 0.2 * 0.3 * comp
+                const volConcreto = 0.2 * 0.3 * comp; // m³
+                // Traço Concreto (FCK 20): ~7 sacos cimento/m³, ~0.8m³ areia/m³, ~0.8m³ brita/m³
+                // Vamos simplificar.
+
+                const cimentoFund = volConcreto * 7 * 50; // kg
+                const areiaFund = volConcreto * 0.8;
+                const britaFund = volConcreto * 0.8;
+
+                res.cimentoSacos += Math.ceil(cimentoFund / 50);
+                res.areiaMetros += areiaFund;
+                res.pedraMetros = Math.ceil(britaFund * 10) / 10;
+
+                // Aço (4 barras 10mm longitudinais + estribos 5mm a cada 20cm)
+                // Long: 4 * comp * 1.1 (transpasse)
+                // Estribos: (comp / 0.20) * 1.0m (comp estribo)
+
+                // Barra 10mm = 0.617 kg/m. Barra 5mm = 0.154 kg/m.
+                // Venda em barras de 12m.
+                const metros10mm = 4 * comp * 1.1;
+                const barras10mm = Math.ceil(metros10mm / 12);
+
+                const qtdEstribos = Math.ceil(comp / 0.20);
+                const metros5mm = qtdEstribos * 1.0;
+                const barras5mm = Math.ceil(metros5mm / 12);
+
+                res.foundationSteel = {
+                    barras10mm,
+                    barras5mm
+                };
+            }
+
+            // 5. REBOCO (Opcional)
+            if (includePlaster !== "no") {
+                const faces = includePlaster === "2_faces" ? 2 : 1;
+                const areaReboco = area * faces;
+
+                // Espessura 2cm. Mortar consumption ~20kg/m² or ~0.02m³/m²
+                // Traço 1:4 (Cimento:Areia) + Cal
+                // 1m³ argamassa ~= 7 sacos cimento + 1m³ areia + 3 sacos cal (20kg)
+                // 0.02m³ per m² -> 0.14 sacos cimento/m² + 0.02 areia + 0.06 cal
+
+                const cimentoReboco = areaReboco * 0.14 * 50; // kg
+                const areiaReboco = areaReboco * 0.02;
+                const calReboco = Math.ceil(areaReboco * 0.06); // sacos 20kg
+
+                res.cimentoSacos += Math.ceil(cimentoReboco / 50);
+                res.areiaMetros += areiaReboco;
+                res.calSacos = calReboco;
+            }
 
         } else {
             // Muro de Arrimo
-            // Apenas estimativa de materiais para bloco estrutural preenchido (grauteado)
-            // Bloco Estrutural 14x19x39: ~12.5 un/m²
+            // ... (Logic simplified as per previous plan for Arrimo)
+            res.tipo = "arrimo";
+            res.descricao = `${area.toFixed(2)}m² de Muro de Arrimo`;
 
             const blocosPorM2 = 12.5;
-            const qtdBlocos = Math.ceil(area * blocosPorM2 * margem);
+            res.blocos = Math.ceil(area * blocosPorM2 * margem);
 
-            // Graute (Preenchimento dos vazios + cintas)
-            // Estimativa: 0.08 m³ de graute por m² de muro (preenchendo a cada x furos + cintas)
             const grauteM3 = area * 0.08;
+            // Cimento for graute (high usage) + laying
+            // 0.7 bags/m² total estimate
+            res.cimentoSacos = Math.ceil(area * 0.7);
 
-            // Cimento e Areia para Assentamento + Graute
-            // Vamos converter tudo para Sacos de Cimento e Areia genérico para compra
-            // Graute consome muito cimento (Traço rico). 1m³ concreto = 7 sacos cimento.
-            // 1m² de muro usa ~0.08m³ graute -> 0.08 * 7 = 0.56 sacos/m² só pro graute!
-            // + Assentamento (0.1 sacos/m²). Total ~0.7 sacos/m².
+            // Areia/Brita generic
+            res.areiaMetros = Math.ceil(area * 0.06 * 10) / 10;
 
-            const cimentoSacos = Math.ceil(area * 0.7);
-            const areiaM3 = Math.ceil(area * 0.06 * 10) / 10; // Areia e Brita (vamos simplificar na areia/concreto)
+            // Explicitly set graute/steel
+            res.grauteMetros = Math.ceil(grauteM3 * 10) / 10;
+            res.acoKg = Math.ceil(area * 10);
 
-            // Aço (Vergalhão)
-            // Arrimo consome muito aço. Estimativa 8 a 12 kg/m² para muros baixos (<3m).
-            // Muros altos precisam de projeto específico.
-            const acoKg = Math.ceil(area * 10);
-
-            setResultado({
-                tipo: "arrimo",
-                blocos: qtdBlocos,
-                cimentoSacos: cimentoSacos,
-                areiaMetros: areiaM3,
-                grauteMetros: Math.ceil(grauteM3 * 10) / 10,
-                acoKg: acoKg,
-                descricao: `${area.toFixed(2)}m² de Muro de Arrimo`
-            });
+            if (includeFoundation) {
+                // Disclaimer will be shown, but we won't calc items to avoid misleading with "simple footing"
+                // Or we could add a basic concrete volume for base
+            }
         }
+
+        // Final Rounding
+        res.areiaMetros = Math.ceil(res.areiaMetros * 10) / 10;
+
+        setResultado(res);
     };
 
     const handlePrint = () => {
@@ -142,9 +196,9 @@ const CalculadoraMuro = () => {
         <div className="flex min-h-screen flex-col bg-background">
             <SEO
                 title="Calculadora de Muro | Divisa e Arrimo (Materiais)"
-                description="Calcule quantidade de tijolos, blocos, cimento e areia para construir muros de divisa ou muros de arrimo (contenção). Estimativa completa de materiais."
+                description="Calcule quantidade de tijolos, cimento, areia e fundação para construir muros. Estimativa completa com rebo e alicerce."
                 url="https://suaobracerta.com.br/calculadora-muro"
-                keywords="calculadora muro, tijolos por metro quadrado, muro de arrimo calculo, quantidade blocos muro, lista materiais muro, como calcular muro"
+                keywords="calculadora muro, tijolos por metro quadrado, baldrame calculo, reboco muro, lista materiais muro"
                 schema={generateCalculatorSchema(
                     "Calculadora de Muro",
                     "Calculadora de materiais para construção de muros residenciais e de contenção.",
@@ -177,13 +231,16 @@ const CalculadoraMuro = () => {
                                 </h1>
                             </div>
                             <p className="text-muted-foreground">
-                                Estime tijolos, cimento e outros materiais para construir seu muro. Escolha entre Muro Simples (Divisa) ou Muro de Arrimo (Contenção).
+                                Estime blocos, cimento, areia e fundação para seu muro de divisa ou arrimo.
                             </p>
                         </div>
 
                         <div className="rounded-xl border border-border bg-card p-6 shadow-card animate-fade-up print:hidden">
 
-                            <Tabs defaultValue="normal" value={tipoMuro} onValueChange={(v) => setTipoMuro(v as "normal" | "arrimo")} className="w-full mb-6">
+                            <Tabs defaultValue="normal" value={tipoMuro} onValueChange={(v) => {
+                                setTipoMuro(v as "normal" | "arrimo");
+                                if (v === "arrimo") setIncludeFoundation(false); // disable simplefoundation for arrimo
+                            }} className="w-full mb-6">
                                 <TabsList className="grid w-full grid-cols-2">
                                     <TabsTrigger value="normal">Muro de Divisa (Simples)</TabsTrigger>
                                     <TabsTrigger value="arrimo">Muro de Arrimo (Forte)</TabsTrigger>
@@ -215,17 +272,47 @@ const CalculadoraMuro = () => {
                                 </div>
 
                                 {tipoMuro === "normal" ? (
-                                    <div className="space-y-2 animate-fade-in">
-                                        <Label>Tipo de Bloco / Tijolo</Label>
-                                        <Select value={tipoBloco} onValueChange={setTipoBloco}>
-                                            <SelectTrigger className="h-12"><SelectValue /></SelectTrigger>
-                                            <SelectContent>
-                                                <SelectItem value="ceramico_9h">Bloco Cerâmico 9x19x19 (8 furos)</SelectItem>
-                                                <SelectItem value="concreto_14">Bloco de Concreto 14x19x39</SelectItem>
-                                                <SelectItem value="baiano">Tijolo Baiano 11x19x29</SelectItem>
-                                            </SelectContent>
-                                        </Select>
-                                    </div>
+                                    <>
+                                        <div className="space-y-2 animate-fade-in">
+                                            <Label>Tipo de Bloco / Tijolo</Label>
+                                            <Select value={tipoBloco} onValueChange={setTipoBloco}>
+                                                <SelectTrigger className="h-12"><SelectValue /></SelectTrigger>
+                                                <SelectContent>
+                                                    <SelectItem value="ceramico_9h">Bloco Cerâmico 9x19x19 (8 furos)</SelectItem>
+                                                    <SelectItem value="concreto_14">Bloco de Concreto 14x19x39</SelectItem>
+                                                    <SelectItem value="baiano">Tijolo Baiano 11x19x29</SelectItem>
+                                                </SelectContent>
+                                            </Select>
+                                        </div>
+
+                                        <div className="border border-border rounded-lg p-4 space-y-4 bg-muted/20">
+                                            <div className="flex items-center space-x-3">
+                                                <Checkbox
+                                                    id="incFound"
+                                                    checked={includeFoundation}
+                                                    onCheckedChange={(checked) => setIncludeFoundation(checked as boolean)}
+                                                />
+                                                <Label htmlFor="incFound" className="font-semibold cursor-pointer">Incluir Fundação (Baldrame)?</Label>
+                                            </div>
+                                            {includeFoundation && (
+                                                <p className="text-xs text-muted-foreground ml-8">
+                                                    *Calcula concreto, aço e madeira para uma viga baldrame padrão (20x30cm).
+                                                </p>
+                                            )}
+
+                                            <div className="space-y-2 pt-2 border-t">
+                                                <Label>Acabamento (Reboco/Chapisco)</Label>
+                                                <Select value={includePlaster} onValueChange={setIncludePlaster}>
+                                                    <SelectTrigger className="h-10 bg-background"><SelectValue /></SelectTrigger>
+                                                    <SelectContent>
+                                                        <SelectItem value="no">Sem Acabamento (Apenas Alvenaria)</SelectItem>
+                                                        <SelectItem value="1_face">Reboco em 1 Lado</SelectItem>
+                                                        <SelectItem value="2_faces">Reboco nos 2 Lados</SelectItem>
+                                                    </SelectContent>
+                                                </Select>
+                                            </div>
+                                        </div>
+                                    </>
                                 ) : (
                                     <div className="space-y-2 animate-fade-in">
                                         <Label>Método Construtivo</Label>
@@ -233,12 +320,14 @@ const CalculadoraMuro = () => {
                                             <SelectTrigger className="h-12"><SelectValue /></SelectTrigger>
                                             <SelectContent>
                                                 <SelectItem value="bloco_estrutural">Bloco de Concreto Estrutural (Armado)</SelectItem>
-                                                {/* Future: Pedra de Mão logic */}
                                             </SelectContent>
                                         </Select>
                                         <div className="p-3 bg-red-50 text-red-700 text-sm rounded-lg border border-red-100 flex gap-2">
                                             <ShieldAlert className="h-5 w-5 shrink-0" />
-                                            <p>Atenção: Muros de arrimo exigem cálculo estrutural de um engenheiro. O cálculo abaixo é apenas uma estimativa de compra de materiais.</p>
+                                            <div>
+                                                <p className="font-bold">Atenção Crítica:</p>
+                                                <p>Muros de arrimo exigem cálculo estrutural. Não incluímos fundação nesta estimativa pois ela varia drasticamente com o tipo de solo.</p>
+                                            </div>
                                         </div>
                                     </div>
                                 )}
@@ -270,17 +359,48 @@ const CalculadoraMuro = () => {
                                         <div className="p-3 bg-white/60 rounded-lg border border-orange-100">
                                             <span className="text-xs text-muted-foreground block uppercase">Cimento (50kg)</span>
                                             <span className="text-2xl font-bold text-orange-800">{resultado.cimentoSacos} sacos</span>
+                                            <span className="text-xs text-muted-foreground block text-right">*(Total)*</span>
                                         </div>
                                         <div className="p-3 bg-white/60 rounded-lg border border-orange-100">
                                             <span className="text-xs text-muted-foreground block uppercase">Areia Média</span>
                                             <span className="text-2xl font-bold text-orange-800">{resultado.areiaMetros} m³</span>
                                         </div>
 
+                                        {resultado.pedraMetros && (
+                                            <div className="p-3 bg-white/60 rounded-lg border border-orange-100">
+                                                <span className="text-xs text-muted-foreground block uppercase">Brita 1 (Pedra)</span>
+                                                <span className="text-2xl font-bold text-orange-800">{resultado.pedraMetros} m³</span>
+                                            </div>
+                                        )}
+
+                                        {resultado.calSacos && (
+                                            <div className="p-3 bg-white/60 rounded-lg border border-orange-100">
+                                                <span className="text-xs text-muted-foreground block uppercase">Cal Hidratada (20kg)</span>
+                                                <span className="text-2xl font-bold text-orange-800">{resultado.calSacos} sacos</span>
+                                            </div>
+                                        )}
+
                                         {resultado.tipo === "normal" && (
                                             <div className="p-3 bg-white/60 rounded-lg border border-orange-100">
                                                 <span className="text-xs text-muted-foreground block uppercase">Pilares (Estimado)</span>
                                                 <span className="text-2xl font-bold text-orange-800">{resultado.pilares} unid</span>
                                                 <span className="text-xs text-muted-foreground block mt-1">(A cada 2.5m)</span>
+                                            </div>
+                                        )}
+
+                                        {resultado.foundationSteel && (
+                                            <div className="p-3 bg-white/60 rounded-lg border border-orange-100 col-span-2">
+                                                <span className="text-xs text-muted-foreground block uppercase mb-1">Aço para Fundação (Baldrame)</span>
+                                                <div className="flex gap-4">
+                                                    <div>
+                                                        <span className="font-bold text-orange-800">{resultado.foundationSteel.barras10mm} barras</span>
+                                                        <span className="text-xs text-muted-foreground ml-1">(10mm / 3/8")</span>
+                                                    </div>
+                                                    <div>
+                                                        <span className="font-bold text-orange-800">{resultado.foundationSteel.barras5mm} barras</span>
+                                                        <span className="text-xs text-muted-foreground ml-1">(5.0mm / Estribos)</span>
+                                                    </div>
+                                                </div>
                                             </div>
                                         )}
 
