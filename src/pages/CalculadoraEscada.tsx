@@ -16,10 +16,12 @@ import { useOrcamento } from "@/context/OrcamentoContext";
 const CalculadoraEscada = () => {
     const { addItem } = useOrcamento();
     const [alturaTotal, setAlturaTotal] = useState("");
-    const [resultado, setResultado] = useState<{ degraus: number; espelho: number; piso: number; formula: string } | null>(null);
+    const [largura, setLargura] = useState("");
+    const [resultado, setResultado] = useState<{ degraus: number; espelho: number; piso: number; formula: string; comprimentoTotal: number; volumeConcreto?: number; compCorrimao?: number } | null>(null);
 
     const calcular = () => {
-        const h = parseFloat(alturaTotal); // em cm ou m? Vamos assumir metros e converter
+        const h = parseFloat(alturaTotal); // metros
+        const l = parseFloat(largura); // metros (opcional)
         if (!h) return;
 
         const alturaCm = h * 100;
@@ -33,11 +35,49 @@ const CalculadoraEscada = () => {
         // P = 64 - 2E
         const pisoIdeal = 64 - (2 * espelhoReal);
 
+        // Comprimento Total (Projeção Horizontal)
+        // É a soma das pisadas. O último degrau geralmente é o próprio patamar/laje superior, 
+        // mas para cálculo de espaço ocupado considera-se (N-1) pisadas se o último espelho "chegar" na laje.
+        // Porem, vamos simplificar: Comprimento = NumDegraus * Piso (considerando que o ultimo degrau também tem piso antes do patamar ou é o patamar).
+        // Ajuste fino: Se a escada "morre" na laje, o comprimento é (N-1)*P. Se o ultimo degrau é um degrau abaixo da laje, (N-1)*P + nariz.
+        // Padrão mais comum: (NumDegraus - 1) * Piso (o ultimo espelho sobe para o piso superior).
+        const comprimentoTotalCm = (numeroDegraus - 1) * pisoIdeal;
+        const comprimentoTotalM = comprimentoTotalCm / 100;
+
+        // Volume de Concreto Estimado
+        // 1. Volume dos degraus (prismas triangulares): AreaTriangulo * Largura * NumDegraus
+        // AreaTriangulo = (Piso * Espelho) / 2
+        // VolumeDegraus = ((Piso/100 * Espelho/100) / 2) * Largura * NumDegraus
+        // 2. Volume da "cinta" ou laje inclinada (waist). Espessura média ~10-12cm.
+        // ComprimentoInclinado = Raiz(ComprimentoTotal^2 + AlturaTotal^2)
+        // VolumeCinta = ComprimentoInclinado * Largura * 0.12 (espessura)
+
+        let volumeConcreto = 0;
+        if (l) {
+            const areaDegrau = ((pisoIdeal / 100) * (espelhoReal / 100)) / 2;
+            const volDegraus = areaDegrau * l * numeroDegraus;
+
+            const comprimentoInclinado = Math.sqrt(Math.pow(comprimentoTotalM, 2) + Math.pow(h, 2));
+            const volCinta = comprimentoInclinado * l * 0.12; // 12cm de espessura média
+
+            volumeConcreto = volDegraus + volCinta;
+        }
+
+        // Estimativa de Corrimão (NBR 9050)
+        // 2 alturas (0.92m e 0.70m) em ambos os lados = 4 linhas
+        // + Extensões de 30cm no inicio e fim.
+        // Comprimento da escada (inclinado)
+        const hypotenusa = Math.sqrt(Math.pow(comprimentoTotalM, 2) + Math.pow(h, 2));
+        const compCorrimao = (hypotenusa + 0.60) * 4;
+
         setResultado({
             degraus: numeroDegraus,
             espelho: Math.round(espelhoReal * 100) / 100,
             piso: Math.round(pisoIdeal * 100) / 100,
-            formula: `2 x ${espelhoReal.toFixed(1)} + ${pisoIdeal.toFixed(1)} = ${(2 * espelhoReal + pisoIdeal).toFixed(1)}`
+            formula: `2 x ${espelhoReal.toFixed(1)} + ${pisoIdeal.toFixed(1)} = ${(2 * espelhoReal + pisoIdeal).toFixed(1)}`,
+            comprimentoTotal: Math.round(comprimentoTotalM * 100) / 100,
+            volumeConcreto: volumeConcreto ? Math.ceil(volumeConcreto * 100) / 100 : undefined,
+            compCorrimao: Math.ceil(compCorrimao * 100) / 100
         });
     };
 
@@ -73,30 +113,74 @@ const CalculadoraEscada = () => {
                         </div>
 
                         <div className="bg-card border border-border rounded-xl p-6 shadow-card space-y-5">
-                            <div className="space-y-2">
-                                <Label>Altura Total do Desnível (metros)</Label>
-                                <Input value={alturaTotal} onChange={e => setAlturaTotal(e.target.value)} placeholder="Ex: 2.80" className="h-12 text-lg" />
-                                <p className="text-xs text-muted-foreground">Medida do chão do andar de baixo até o chão do andar de cima.</p>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                <div className="space-y-2">
+                                    <Label>Altura Total do Desnível (metros)</Label>
+                                    <Input value={alturaTotal} onChange={e => setAlturaTotal(e.target.value)} placeholder="Ex: 2.80" className="h-12" />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label>Largura da Escada (metros) <span className="text-muted-foreground font-normal text-xs">(Opcional)</span></Label>
+                                    <Input value={largura} onChange={e => setLargura(e.target.value)} placeholder="Ex: 1.00" className="h-12" />
+                                </div>
                             </div>
                             <Button onClick={calcular} size="xl" className="w-full">CALCULAR DEGRAUS</Button>
                         </div>
 
                         {resultado && (
                             <div className="mt-8 animate-scale-in">
-                                <div className="grid gap-4 sm:grid-cols-3 text-center mb-6">
-                                    <div className="bg-primary/10 p-4 rounded-xl border border-primary/20">
-                                        <p className="text-3xl font-bold text-primary">{resultado.degraus}</p>
-                                        <p className="text-sm font-medium">Degraus</p>
-                                    </div>
-                                    <div className="bg-card p-4 rounded-xl border border-border">
-                                        <p className="text-3xl font-bold">{resultado.espelho} cm</p>
-                                        <p className="text-sm text-muted-foreground">Altura (Espelho)</p>
-                                    </div>
-                                    <div className="bg-card p-4 rounded-xl border border-border">
-                                        <p className="text-3xl font-bold">{resultado.piso} cm</p>
-                                        <p className="text-sm text-muted-foreground">Pisada (Passo)</p>
+                                <div className="bg-gradient-result p-8 rounded-xl border-2 border-primary/20 mb-8">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                                        <div>
+                                            <p className="text-lg text-muted-foreground">Sua escada terá:</p>
+                                            <p className="text-5xl font-extrabold text-primary my-3">{resultado.degraus} Degraus</p>
+
+                                            <div className="space-y-2 mt-4 text-sm font-medium text-foreground/80">
+                                                <div className="flex justify-between border-b pb-1">
+                                                    <span>Altura (Espelho):</span>
+                                                    <span>{resultado.espelho} cm</span>
+                                                </div>
+                                                <div className="flex justify-between border-b pb-1">
+                                                    <span>Pisada (Passo):</span>
+                                                    <span>{resultado.piso} cm</span>
+                                                </div>
+                                                <div className="flex justify-between border-b pb-1">
+                                                    <span>Comprimento Total (Chão):</span>
+                                                    <span>{resultado.comprimentoTotal} m</span>
+                                                </div>
+                                                {resultado.volumeConcreto && (
+                                                    <div className="flex justify-between border-b pb-1 text-emerald-600">
+                                                        <span>Volume Concreto (Est.):</span>
+                                                        <span>{resultado.volumeConcreto} m³</span>
+                                                    </div>
+                                                )}
+                                                <div className="flex justify-between text-indigo-600">
+                                                    <span>Corrimão (Est.):</span>
+                                                    <span>{resultado.compCorrimao} m</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {/* Visual Diagram */}
+                                        <div className="relative h-48 border-l border-b border-gray-400 bg-white/50 rounded-tr-lg p-4 print:hidden flex items-end justify-start overflow-hidden">
+                                            {/* Step rendering loop */}
+                                            <div className="flex items-end">
+                                                {[...Array(Math.min(resultado.degraus, 6))].map((_, i) => (
+                                                    <div key={i} className="flex bg-primary/20 border-t-2 border-r-2 border-primary relative" style={{
+                                                        width: '20px',
+                                                        height: `${(i + 1) * 20}px`
+                                                    }}>
+
+                                                    </div>
+                                                ))}
+                                                <div className="ml-2 text-xs text-muted-foreground self-center">... {resultado.degraus} total</div>
+                                            </div>
+
+                                            <div className="absolute top-2 left-2 bg-white px-1 text-xs font-bold text-gray-600 border rounded">E = {resultado.espelho}cm</div>
+                                            <div className="absolute bottom-2 right-2 bg-white px-1 text-xs font-bold text-gray-600 border rounded">P = {resultado.piso}cm</div>
+                                        </div>
                                     </div>
                                 </div>
+
 
                                 <div className="bg-muted/30 rounded-xl p-6 border border-border">
                                     <h3 className="font-semibold mb-2 flex items-center gap-2"><Ruler className="h-4 w-4" /> Conferência (Lei de Blondel)</h3>
