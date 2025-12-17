@@ -1,4 +1,4 @@
-import { Paintbrush, LayoutGrid, Boxes, Container, Calculator, ArrowRight, Wind, Layers, Grid3X3, Home, Lightbulb, Droplets, Flower2, LayoutDashboard, Waves, Scroll, Blinds, Zap, Flame, ArrowUpFromLine, TrendingUp, AppWindow, Hammer, AlignHorizontalJustifyStart, Plug, ClipboardCheck, CalendarDays, HardHat, Cctv, Armchair, Landmark, Component } from "lucide-react";
+import { Paintbrush, LayoutGrid, Boxes, Container, Calculator, ArrowRight, Wind, Layers, Grid3X3, Home, Lightbulb, Droplets, Flower2, LayoutDashboard, Waves, Scroll, Blinds, Zap, Flame, ArrowUpFromLine, TrendingUp, AppWindow, Hammer, AlignHorizontalJustifyStart, Plug, ClipboardCheck, CalendarDays, HardHat, Cctv, Armchair, Landmark, Component, Scale, Weight } from "lucide-react";
 import SEO from "@/components/SEO";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
@@ -129,6 +129,20 @@ const Index = () => {
                 title="Telhado"
                 description="Quantidade de telhas e inclinação."
                 href="/calculadora-telhado"
+              />
+              <CalculatorCard
+                icon={Hammer}
+                title="Peso Telhado (Carga)"
+                description="Estimativa de peso da estrutura e telhas."
+                href="/calculadora-peso-estrutura-telhado"
+                badge="Novo"
+              />
+              <CalculatorCard
+                icon={Scale}
+                title="Peso de Alumínio"
+                description="Peso de chapas, barras e perfis."
+                href="/calculadora-peso-aluminio"
+                badge="Novo"
               />
               <CalculatorCard
                 icon={AppWindow}
