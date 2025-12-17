@@ -42,6 +42,7 @@ import CalculadoraRodape from "./pages/CalculadoraRodape";
 import CalculadoraCerca from "./pages/CalculadoraCerca";
 import CalculadoraAzulejos from "./pages/CalculadoraAzulejos";
 import CalculadoraPesoAluminio from "./pages/CalculadoraPesoAluminio";
+import CalculadoraPesoEstruturaTelhado from "./pages/CalculadoraPesoEstruturaTelhado";
 
 import { OrcamentoProvider } from "./context/OrcamentoContext";
 import MeuOrcamento from "./pages/MeuOrcamento";
@@ -77,6 +78,7 @@ const App = () => (
               <Route path="/calculadora-tijolos" element={<CalculadoraTijolos />} />
               <Route path="/calculadora-concreto" element={<CalculadoraConcreto />} />
               <Route path="/calculadora-telhado" element={<CalculadoraTelhado />} />
+              <Route path="/calculadora-peso-estrutura-telhado" element={<CalculadoraPesoEstruturaTelhado />} />
               <Route path="/calculadora-escada" element={<CalculadoraEscada />} />
               <Route path="/calculadora-rampa" element={<CalculadoraRampa />} />
               <Route path="/calculadora-vidro" element={<CalculadoraVidro />} />
