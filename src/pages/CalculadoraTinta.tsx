@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { affiliateLinks } from "@/config/affiliateLinks";
 import { generateCalculatorSchema } from "@/utils/schemas";
@@ -122,9 +123,10 @@ const CalculadoraTinta = () => {
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <SEO
-        title="Calculadora de Tinta"
-        description="Calcule a quantidade exata de tinta para paredes e tetos. Evite desperdícios na sua obra."
+        title="Calculadora de Tinta | Quantidade de Tinta por M²"
+        description="Calcule a quantidade exata de tinta para paredes e tetos. Saiba quantos litros usar, número de demãos e evite desperdícios na sua obra."
         url="https://suaobracerta.com.br/calculadora-tinta"
+        keywords="calculadora de tinta, quanto de tinta preciso, rendimento tinta suvinil, rendimento tinta coral, calcular pintura parede, tinta acrilica rendimento, pintura casa custo, como calcular litro de tinta, tinta parede m2, tinta piso, tinta teto, calcular tinta metros quadrados"
         schema={generateCalculatorSchema(
           "Calculadora de Tinta",
           "Ferramenta para calcular quantidade de tinta para paredes e tetos.",
@@ -480,23 +482,131 @@ const CalculadoraTinta = () => {
             )}
 
             {/* Informações extras */}
-            <div className="mt-8 rounded-xl border border-border bg-muted/30 p-6 animate-fade-up print:hidden">
-              <h2 className="mb-4 text-lg font-semibold text-foreground">
-                📋 Como é feito o cálculo?
-              </h2>
-              <div className="space-y-3 text-sm text-muted-foreground">
-                <p>
-                  Nossa calculadora de tinta considera a área total das paredes (e teto, se selecionado) subtraindo as aberturas.
-                </p>
-                <ul className="list-inside list-disc space-y-1">
-                  <li><strong>Área das Paredes:</strong> Perímetro do ambiente × Altura.</li>
-                  <li><strong>Área do Teto:</strong> Largura × Comprimento.</li>
-                  <li><strong>Descontos:</strong> Portas (1,68m²) e Janelas (1,44m²).</li>
-                  <li><strong>Litragem Final:</strong> (Área Total ÷ Rendimento da Tinta) × Número de Demãos.</li>
-                </ul>
-                <p className="mt-2 font-medium text-foreground">
-                  Dica: O rendimento varia conforme a marca, mas usamos médias de mercado (Econômica, Standard e Premium) para garantir uma estimativa segura.
-                </p>
+            {/* Informações extras e FAQ */}
+            <div className="mt-8 space-y-8 animate-fade-up print:hidden">
+              <div className="rounded-xl border border-border bg-muted/30 p-6">
+                <h2 className="mb-4 text-lg font-semibold text-foreground">
+                  📋 Como é feito o cálculo de tinta?
+                </h2>
+                <div className="space-y-3 text-sm text-muted-foreground">
+                  <p>
+                    Para chegar ao resultado preciso, nossa calculadora considera:
+                  </p>
+                  <ul className="list-inside list-disc space-y-1">
+                    <li><strong>Área Total:</strong> Soma das larguras das paredes multiplicada pela altura (Pé-direito).</li>
+                    <li><strong>Teto:</strong> Área calculada separadamente (Largura x Comprimento) se selecionado.</li>
+                    <li><strong>Descontos:</strong> Subtraímos a área padrão de portas (1,68m²) e janelas (1,44m²).</li>
+                    <li><strong>Rendimento:</strong> Divide-se a área total pelo rendimento m²/L da tinta escolhida.</li>
+                    <li><strong>Demãos:</strong> Multiplica-se o resultado pelo número de demãos necessárias.</li>
+                  </ul>
+                  <p className="mt-2 font-medium text-foreground">
+                    Fatores importantes:
+                  </p>
+                  <p>
+                    O tipo de superfície influencia muito! Paredes rugosas ou texturizadas absorvem mais tinta (reduzem o rendimento em até 20%). Paredes novas com selador absorvem menos. Se for repintura de cor escura para clara, pode ser necessária mais uma demão.
+                  </p>
+                </div>
+              </div>
+
+              {/* FAQ */}
+              <div className="mx-auto max-w-2xl">
+                <h2 className="mb-4 text-lg font-semibold text-foreground">Perguntas Frequentes sobre Pintura (FAQ)</h2>
+                <Accordion type="single" collapsible className="w-full">
+                  <AccordionItem value="item-1">
+                    <AccordionTrigger>Como calcular o metro quadrado (m²) da parede?</AccordionTrigger>
+                    <AccordionContent>
+                      Multiplique a largura pela altura da parede. Se tiver uma parede de 3m de largura e 2,80m de altura, a área é 3 x 2,80 = 8,4m². Some a área de todas as paredes para ter o total.
+                    </AccordionContent>
+                  </AccordionItem>
+                  <AccordionItem value="item-2">
+                    <AccordionTrigger>Qual a diferença entre Tinta Acrílica, Látex e Esmalte?</AccordionTrigger>
+                    <AccordionContent>
+                      <strong>Acrílica:</strong> Resistente à água, ótima para exteriores e áreas molhadas. <br />
+                      <strong>Látex (PVA):</strong> Base água, ideal para interiores e tetos, seca rápido mas limpa menos fácil. <br />
+                      <strong>Esmalte:</strong> Para madeiras e metais, cria película resistente.
+                    </AccordionContent>
+                  </AccordionItem>
+                  <AccordionItem value="item-3">
+                    <AccordionTrigger>Preciso passar Selador antes de pintar?</AccordionTrigger>
+                    <AccordionContent>
+                      Sim, se a parede for nova (reboco cru) ou estiver descascando muito. O selador uniformiza a absorção, fazendo a tinta render muito mais e evitando manchas.
+                    </AccordionContent>
+                  </AccordionItem>
+                  <AccordionItem value="item-4">
+                    <AccordionTrigger>Posso pintar parede com mofo ou umidade?</AccordionTrigger>
+                    <AccordionContent>
+                      Jamais! O mofo voltará em pouco tempo. Limpe com água sanitária e resolva a causa da infiltração antes de pintar. Use fundo preparador se necessário.
+                    </AccordionContent>
+                  </AccordionItem>
+                  <AccordionItem value="item-5">
+                    <AccordionTrigger>Quanto de água devo colocar na tinta?</AccordionTrigger>
+                    <AccordionContent>
+                      Consulte sempre a lata! Geralmente varia de 10% a 30% de água potável. Diluir demais deixa a tinta fraca (cobre menos); diluir de menos deixa difícil de aplicar e marca o rolo.
+                    </AccordionContent>
+                  </AccordionItem>
+                  <AccordionItem value="item-6">
+                    <AccordionTrigger>Pintar madeira e alvenaria requer tintas diferentes?</AccordionTrigger>
+                    <AccordionContent>
+                      Sim. Alvenaria usa Acrílica ou PVA. Madeira requer Esmalte Sintético ou Verniz, pois ela dilata e contrai com a temperatura de forma diferente do cimento.
+                    </AccordionContent>
+                  </AccordionItem>
+                  <AccordionItem value="item-7">
+                    <AccordionTrigger>Qual o tempo de secagem entre demãos?</AccordionTrigger>
+                    <AccordionContent>
+                      Geralmente 4 horas ao toque. Mas para repintura (nova demão), recomenda-se esperar o tempo indicado pelo fabricante (geralmente 4 a 6 horas) para não arrancar a tinta de baixo.
+                    </AccordionContent>
+                  </AccordionItem>
+                  <AccordionItem value="item-8">
+                    <AccordionTrigger>O que significa "Rendimento" na lata?</AccordionTrigger>
+                    <AccordionContent>
+                      É a área que aquele volume de tinta cobre. Ex: "Rende até 100m² por demão". Se você vai dar 2 demãos, essa lata cobrirá 50m² de parede pronta.
+                    </AccordionContent>
+                  </AccordionItem>
+                  <AccordionItem value="item-9">
+                    <AccordionTrigger>Como calcular tinta pro teto?</AccordionTrigger>
+                    <AccordionContent>
+                      A área do teto é igual à área do piso (Largura x Comprimento). Geralmente usa-se tinta Látex PVA ou Acrílica Fosca para disfarçar imperfeições.
+                    </AccordionContent>
+                  </AccordionItem>
+                  <AccordionItem value="item-10">
+                    <AccordionTrigger>Como cobrir uma parede de cor escura?</AccordionTrigger>
+                    <AccordionContent>
+                      Tinta branca sobre parede preta/vermelha exige mais demãos (3 a 4). Uma dica é usar uma demão de tinta cinza claro antes da branca para "quebrar" a cor forte.
+                    </AccordionContent>
+                  </AccordionItem>
+                  <AccordionItem value="item-11">
+                    <AccordionTrigger>Acabamento Fosco, Acetinado ou Semibrilho?</AccordionTrigger>
+                    <AccordionContent>
+                      <strong>Fosco:</strong> Disfarça defeitos, mas suja mais fácil. <br />
+                      <strong>Acetinado:</strong> Toque de seda, brilho leve, fácil de limpar (ótimo para sala/quarto). <br />
+                      <strong>Semibrilho:</strong> Muito resistente e lavável, mas destaca qualquer imperfeição da parede.
+                    </AccordionContent>
+                  </AccordionItem>
+                  <AccordionItem value="item-12">
+                    <AccordionTrigger>Quais ferramentas eu preciso?</AccordionTrigger>
+                    <AccordionContent>
+                      Rolo de lã (pelo baixo para liso, alto para rugoso), trincha (pincel) para recortes cantos, bandeja, fita crepe, lona/jornal para chão e lixa para preparar a parede.
+                    </AccordionContent>
+                  </AccordionItem>
+                  <AccordionItem value="item-13">
+                    <AccordionTrigger>Como proteger o chão e móveis?</AccordionTrigger>
+                    <AccordionContent>
+                      Use lona plástica ou papelão ondulado. Cobrir com jornal pode rasgar e manchar o piso se a tinta pingar e molhar o papel.
+                    </AccordionContent>
+                  </AccordionItem>
+                  <AccordionItem value="item-14">
+                    <AccordionTrigger>Devo descontar portas e janelas do cálculo?</AccordionTrigger>
+                    <AccordionContent>
+                      Sim! Ninguém pinta vidro ou madeira com tinta de parede. Nossa calculadora já faz esse desconto automaticamente para você economizar.
+                    </AccordionContent>
+                  </AccordionItem>
+                  <AccordionItem value="item-15">
+                    <AccordionTrigger>Existem tintas sem cheiro?</AccordionTrigger>
+                    <AccordionContent>
+                      Sim, a maioria das tintas Acrílicas Premium e Standard modernas são à base de água e têm baixo odor ("sem cheiro" após cerca de 3 horas ventilando).
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
               </div>
             </div>
           </div>

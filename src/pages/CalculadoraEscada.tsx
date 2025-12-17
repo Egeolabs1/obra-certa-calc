@@ -160,23 +160,41 @@ const CalculadoraEscada = () => {
                                             </div>
                                         </div>
 
-                                        {/* Visual Diagram */}
-                                        <div className="relative h-48 border-l border-b border-gray-400 bg-white/50 rounded-tr-lg p-4 print:hidden flex items-end justify-start overflow-hidden">
-                                            {/* Step rendering loop */}
-                                            <div className="flex items-end">
-                                                {[...Array(Math.min(resultado.degraus, 6))].map((_, i) => (
-                                                    <div key={i} className="flex bg-primary/20 border-t-2 border-r-2 border-primary relative" style={{
-                                                        width: '20px',
-                                                        height: `${(i + 1) * 20}px`
-                                                    }}>
+                                        {/* Visual Diagram - SVG */}
+                                        <div className="relative h-48 border border-border bg-white/50 rounded-lg p-4 print:hidden flex items-center justify-center overflow-hidden">
+                                            <svg width="300" height="160" viewBox="0 0 300 160" className="w-full h-full text-primary">
+                                                {/* Draw steps using path */}
+                                                <path
+                                                    d={`
+                                                        M 10,150 
+                                                        ${[...Array(Math.min(resultado.degraus, 6))].map((_, i) => {
+                                                        const stepWidth = 40;
+                                                        const stepHeight = 20;
+                                                        const x = 10 + (i * stepWidth);
+                                                        const y = 150 - ((i + 1) * stepHeight);
+                                                        return `L ${x},${y + stepHeight} L ${x},${y} L ${x + stepWidth},${y}`;
+                                                    }).join(" ")}
+                                                        L ${10 + (Math.min(resultado.degraus, 6) * 40)},150 Z
+                                                    `}
+                                                    fill="currentColor"
+                                                    fillOpacity="0.2"
+                                                    stroke="currentColor"
+                                                    strokeWidth="2"
+                                                />
 
-                                                    </div>
-                                                ))}
-                                                <div className="ml-2 text-xs text-muted-foreground self-center">... {resultado.degraus} total</div>
-                                            </div>
+                                                {/* Labels */}
+                                                <g transform="translate(20, 130)">
+                                                    <text x="5" y="-10" fontSize="10" fill="#666" fontWeight="bold">E = {resultado.espelho}cm</text>
+                                                    <line x1="0" y1="0" x2="0" y2="-20" stroke="#666" strokeWidth="1" markerEnd="url(#arrow)" />
+                                                </g>
 
-                                            <div className="absolute top-2 left-2 bg-white px-1 text-xs font-bold text-gray-600 border rounded">E = {resultado.espelho}cm</div>
-                                            <div className="absolute bottom-2 right-2 bg-white px-1 text-xs font-bold text-gray-600 border rounded">P = {resultado.piso}cm</div>
+                                                <g transform="translate(60, 155)">
+                                                    <text x="0" y="0" fontSize="10" fill="#666" fontWeight="bold">P = {resultado.piso}cm</text>
+                                                    <line x1="-10" y1="-5" x2="30" y2="-5" stroke="#666" strokeWidth="1" />
+                                                </g>
+
+                                                <text x="150" y="150" fontSize="10" fill="#999" textAnchor="end">... {resultado.degraus} degraus total</text>
+                                            </svg>
                                         </div>
                                     </div>
                                 </div>
