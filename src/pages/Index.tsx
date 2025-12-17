@@ -1,4 +1,4 @@
-import { Paintbrush, LayoutGrid, Boxes, Container, Calculator, ArrowRight, Wind, Layers, Grid3X3, Home, Lightbulb, Droplets, Flower2, LayoutDashboard, Waves, Scroll, Blinds, Zap, Flame, ArrowUpFromLine, TrendingUp, AppWindow, Hammer, AlignHorizontalJustifyStart, Plug, ClipboardCheck, CalendarDays, HardHat, Cctv, Armchair, Landmark, Component, Scale, Weight } from "lucide-react";
+import { Paintbrush, LayoutGrid, Boxes, Container, Calculator, ArrowRight, Wind, Layers, Grid3X3, Home, Lightbulb, Droplets, Flower2, LayoutDashboard, Waves, Scroll, Blinds, Zap, Flame, ArrowUpFromLine, TrendingUp, AppWindow, Hammer, AlignHorizontalJustifyStart, Plug, ClipboardCheck, CalendarDays, HardHat, Cctv, Armchair, Landmark, Component, Scale, Weight, BrickWall } from "lucide-react";
 import SEO from "@/components/SEO";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
@@ -117,6 +117,13 @@ const Index = () => {
                 title="Tijolos e Blocos"
                 description="Quantidade de milheiros para subir paredes."
                 href="/calculadora-tijolos"
+              />
+              <CalculatorCard
+                icon={BrickWall}
+                title="Muro e Arrimo"
+                description="Blocos p/ Muro Simples ou de Arrimo."
+                href="/calculadora-muro"
+                badge="Completo"
               />
               <CalculatorCard
                 icon={Container}
