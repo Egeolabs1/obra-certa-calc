@@ -41,6 +41,7 @@ import CalculadoraRodape from "./pages/CalculadoraRodape";
 
 import CalculadoraCerca from "./pages/CalculadoraCerca";
 import CalculadoraAzulejos from "./pages/CalculadoraAzulejos";
+import CalculadoraPesoAluminio from "./pages/CalculadoraPesoAluminio";
 
 import { OrcamentoProvider } from "./context/OrcamentoContext";
 import MeuOrcamento from "./pages/MeuOrcamento";
@@ -79,6 +80,7 @@ const App = () => (
               <Route path="/calculadora-escada" element={<CalculadoraEscada />} />
               <Route path="/calculadora-rampa" element={<CalculadoraRampa />} />
               <Route path="/calculadora-vidro" element={<CalculadoraVidro />} />
+              <Route path="/calculadora-peso-aluminio" element={<CalculadoraPesoAluminio />} />
 
               {/* Instalações & Conforto */}
               <Route path="/calculadora-ar-condicionado" element={<CalculadoraArCondicionado />} />
