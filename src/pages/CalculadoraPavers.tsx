@@ -46,11 +46,11 @@ const CalculadoraPavers = () => {
             <SEO
                 title="Calculadora de Pavers"
                 description="Calcule a quantidade de pavers (bloquetes) para calçadas e garagens."
-                url="https://suaobracerta.com.br/calculadora-pavers"
+                url="https://www.suaobracerta.com.br/calculadora-pavers"
                 schema={generateCalculatorSchema(
                     "Calculadora de Pavers",
                     "Calcule a quantidade de blocos de concreto (pavers) por metro quadrado.",
-                    "https://suaobracerta.com.br/calculadora-pavers"
+                    "https://www.suaobracerta.com.br/calculadora-pavers"
                 )}
             />
             <div className="print:hidden">

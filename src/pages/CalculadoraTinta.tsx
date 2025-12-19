@@ -125,12 +125,12 @@ const CalculadoraTinta = () => {
       <SEO
         title="Calculadora de Tinta | Quantidade de Tinta por M²"
         description="Calcule a quantidade exata de tinta para paredes e tetos. Saiba quantos litros usar, número de demãos e evite desperdícios na sua obra."
-        url="https://suaobracerta.com.br/calculadora-tinta"
+        url="https://www.suaobracerta.com.br/calculadora-tinta"
         keywords="calculadora de tinta, quanto de tinta preciso, rendimento tinta suvinil, rendimento tinta coral, calcular pintura parede, tinta acrilica rendimento, pintura casa custo, como calcular litro de tinta, tinta parede m2, tinta piso, tinta teto, calcular tinta metros quadrados"
         schema={generateCalculatorSchema(
           "Calculadora de Tinta",
           "Ferramenta para calcular quantidade de tinta para paredes e tetos.",
-          "https://suaobracerta.com.br/calculadora-tinta"
+          "https://www.suaobracerta.com.br/calculadora-tinta"
         )}
       />
       <div className="print:hidden">

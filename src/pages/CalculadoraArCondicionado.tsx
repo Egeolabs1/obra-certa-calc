@@ -103,11 +103,11 @@ const CalculadoraArCondicionado = () => {
             <SEO
                 title="Calculadora de BTUs - Ar Condicionado"
                 description="Descubra a potência ideal (BTUs) do ar condicionado para seu quarto ou sala."
-                url="https://suaobracerta.com.br/calculadora-ar-condicionado"
+                url="https://www.suaobracerta.com.br/calculadora-ar-condicionado"
                 schema={generateCalculatorSchema(
                     "Calculadora de Ar Condicionado",
                     "Calcule a capacidade necessária de BTUs para ar condicionado baseado no ambiente.",
-                    "https://suaobracerta.com.br/calculadora-ar-condicionado"
+                    "https://www.suaobracerta.com.br/calculadora-ar-condicionado"
                 )}
             />
             <div className="print:hidden">

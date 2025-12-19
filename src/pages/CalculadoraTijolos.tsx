@@ -180,11 +180,11 @@ const CalculadoraTijolos = () => {
       <SEO
         title="Calculadora de Tijolos"
         description="Calcule quantos tijolos e argamassa você precisa para erguer suas paredes."
-        url="https://suaobracerta.com.br/calculadora-tijolos"
+        url="https://www.suaobracerta.com.br/calculadora-tijolos"
         schema={generateCalculatorSchema(
           "Calculadora de Tijolos",
           "Calcule a quantidade de tijolos e argamassa para paredes de alvenaria.",
-          "https://suaobracerta.com.br/calculadora-tijolos"
+          "https://www.suaobracerta.com.br/calculadora-tijolos"
         )}
       />
       <div className="print:hidden"><Header /></div>

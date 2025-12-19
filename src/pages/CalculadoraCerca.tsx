@@ -90,11 +90,11 @@ const CalculadoraCerca = () => {
             <SEO
                 title="Calculadora de Cerca (Arame Farpado, Tela e Mourões)"
                 description="Calcule a quantidade de mourões, arame farpado ou tela para cercar seu terreno. Orçamento completo de cerca."
-                url="https://suaobracerta.com.br/calculadora-cerca"
+                url="https://www.suaobracerta.com.br/calculadora-cerca"
                 schema={generateCalculatorSchema(
                     "Calculadora de Cerca",
                     "Cálculo de materiais para construção de cercas: mourões, arame e tela.",
-                    "https://suaobracerta.com.br/calculadora-cerca"
+                    "https://www.suaobracerta.com.br/calculadora-cerca"
                 )}
             />
             <div className="print:hidden">
