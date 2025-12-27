@@ -200,59 +200,132 @@ const CalculadoraCronograma = () => {
                         {/* Results */}
                         {cronograma && (
                             <div ref={resultRef} className="animate-fade-up">
-                                <PrintHeader />
-                                <AlertBox duration={totalDuration} />
+                                {/* ---------------- SCREEN VIEW (Interactive) ---------------- */}
+                                <div className="print:hidden">
+                                    <PrintHeader />
+                                    <AlertBox duration={totalDuration} />
 
-                                {/* Timeline Visualization */}
-                                <div className="relative ml-4 md:ml-6 space-y-0 py-4 print:ml-0">
-                                    {/* Continuous Vertical Line */}
-                                    <div className="absolute left-[19px] top-6 bottom-6 w-0.5 bg-border print:border-l-2 print:border-gray-300 print:left-[19px]" />
+                                    {/* Timeline Visualization */}
+                                    <div className="relative ml-4 md:ml-6 space-y-0 py-4">
+                                        {/* Continuous Vertical Line */}
+                                        <div className="absolute left-[19px] top-6 bottom-6 w-0.5 bg-border" />
 
-                                    {cronograma.map((phase, idx) => (
-                                        <div key={idx} className="relative pl-12 md:pl-16 pb-8 print:pb-4 page-break-inside-avoid">
-                                            {/* Dot */}
-                                            <div className={`absolute left-[9px] top-6 h-6 w-6 rounded-full border-4 border-background ${phase.color} z-10 print:border-2 print:border-gray-600`} />
+                                        {cronograma.map((phase, idx) => (
+                                            <div key={idx} className="relative pl-12 md:pl-16 pb-8">
+                                                {/* Dot */}
+                                                <div className={`absolute left-[9px] top-6 h-6 w-6 rounded-full border-4 border-background ${phase.color} z-10`} />
 
-                                            <Card className="hover:shadow-lg transition-all border-l-4 border-l-transparent hover:border-l-orange-500 print:shadow-none print:border print:break-inside-avoid">
-                                                <CardHeader className="pb-3">
-                                                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
-                                                        <div className="flex items-center gap-3">
-                                                            <div className={`p-2.5 rounded-lg ${phase.color.replace('bg-', 'bg-opacity-10 text-')} print:bg-transparent print:text-black print:p-0`}>
-                                                                <phase.icon className={`h-5 w-5 ${phase.color.replace('bg-', 'text-')} print:text-black`} />
+                                                <Card className="hover:shadow-lg transition-all border-l-4 border-l-transparent hover:border-l-orange-500">
+                                                    <CardHeader className="pb-3">
+                                                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
+                                                            <div className="flex items-center gap-3">
+                                                                <div className={`p-2.5 rounded-lg ${phase.color.replace('bg-', 'bg-opacity-10 text-')}`}>
+                                                                    <phase.icon className={`h-5 w-5 ${phase.color.replace('bg-', 'text-')}`} />
+                                                                </div>
+                                                                <div>
+                                                                    <CardTitle className="text-lg font-bold">{phase.name}</CardTitle>
+                                                                    <CardDescription className="line-clamp-2 md:line-clamp-none">{phase.description}</CardDescription>
+                                                                </div>
                                                             </div>
-                                                            <div>
-                                                                <CardTitle className="text-lg font-bold">{phase.name}</CardTitle>
-                                                                <CardDescription className="line-clamp-2 md:line-clamp-none print:text-gray-600">{phase.description}</CardDescription>
+                                                            <div className="text-sm font-bold bg-orange-50 text-orange-700 px-3 py-1 rounded-full whitespace-nowrap border border-orange-100">
+                                                                {phase.durationWeeks} Semanas
                                                             </div>
                                                         </div>
-                                                        <div className="text-sm font-bold bg-orange-50 text-orange-700 px-3 py-1 rounded-full whitespace-nowrap border border-orange-100 print:border-gray-300 print:bg-white print:text-black">
-                                                            {phase.durationWeeks} Semanas
+                                                    </CardHeader>
+                                                    <CardContent>
+                                                        <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground bg-muted/30 p-3 rounded-lg">
+                                                            <div className="flex items-center gap-2 bg-background px-3 py-1.5 rounded-md shadow-sm border">
+                                                                <span className="font-semibold text-foreground">Início:</span> {format(phase.startDate, 'dd MMM yyyy', { locale: ptBR })}
+                                                            </div>
+                                                            <ArrowLeft className="h-4 w-4 rotate-180 text-muted-foreground/50 hidden md:block" />
+                                                            <div className="flex items-center gap-2 bg-background px-3 py-1.5 rounded-md shadow-sm border">
+                                                                <span className="font-semibold text-foreground">Fim:</span> {format(phase.endDate, 'dd MMM yyyy', { locale: ptBR })}
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </CardHeader>
-                                                <CardContent>
-                                                    <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground bg-muted/30 p-3 rounded-lg print:bg-gray-50">
-                                                        <div className="flex items-center gap-2 bg-background px-3 py-1.5 rounded-md shadow-sm border print:border-gray-300">
-                                                            <span className="font-semibold text-foreground">Início:</span> {format(phase.startDate, 'dd MMM yyyy', { locale: ptBR })}
-                                                        </div>
-                                                        <ArrowLeft className="h-4 w-4 rotate-180 text-muted-foreground/50 hidden md:block" />
-                                                        <div className="flex items-center gap-2 bg-background px-3 py-1.5 rounded-md shadow-sm border print:border-gray-300">
-                                                            <span className="font-semibold text-foreground">Fim:</span> {format(phase.endDate, 'dd MMM yyyy', { locale: ptBR })}
-                                                        </div>
-                                                    </div>
-                                                </CardContent>
-                                            </Card>
+                                                    </CardContent>
+                                                </Card>
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    <div className="mt-8 flex justify-center">
+                                        <Button onClick={handlePrint} size="lg" variant="outline" className="gap-2 border-orange-200 text-orange-700 hover:bg-orange-50 font-bold">
+                                            <Printer className="h-5 w-5" /> Salvar em PDF
+                                        </Button>
+                                    </div>
+                                </div>
+
+                                {/* ---------------- PRINT VIEW (PDF) ---------------- */}
+                                <div className="hidden print:block p-8 bg-white text-black max-w-[210mm] mx-auto">
+                                    {/* Header */}
+                                    <div className="border-b-2 border-orange-500 pb-4 mb-6 flex justify-between items-end">
+                                        <div>
+                                            <h1 className="text-2xl font-bold uppercase tracking-tight text-slate-900">Cronograma de Obra</h1>
+                                            <p className="text-sm text-slate-500">Estimativa Físico-Financeira</p>
                                         </div>
-                                    ))}
-                                </div>
+                                        <div className="text-right text-sm">
+                                            <p><strong>Emissão:</strong> {format(new Date(), "dd/MM/yyyy")}</p>
+                                            <p className="text-slate-500">SuaObraCerta.com.br</p>
+                                        </div>
+                                    </div>
 
-                                <div className="mt-8 flex justify-center print:hidden">
-                                    <Button onClick={handlePrint} size="lg" variant="outline" className="gap-2 border-orange-200 text-orange-700 hover:bg-orange-50 font-bold">
-                                        <Printer className="h-5 w-5" /> Salvar em PDF
-                                    </Button>
-                                </div>
+                                    {/* Project Info */}
+                                    <div className="bg-slate-50 border rounded-lg p-4 mb-8 grid grid-cols-2 gap-4 text-sm">
+                                        <div>
+                                            <span className="block text-xs uppercase text-slate-500 font-bold">Tipo de Obra</span>
+                                            <span className="font-medium text-lg">
+                                                {tipo === "construcao" ? "Construção Completa" :
+                                                    tipo === "reforma_total" ? "Reforma Geral" : "Reforma Banheiro/Cozinha"}
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <span className="block text-xs uppercase text-slate-500 font-bold">Área Total</span>
+                                            <span className="font-medium text-lg">{area} m²</span>
+                                        </div>
+                                        <div>
+                                            <span className="block text-xs uppercase text-slate-500 font-bold">Início Previsto</span>
+                                            <span className="font-medium">{format(new Date(dataInicio), "dd/MM/yyyy")}</span>
+                                        </div>
+                                        <div>
+                                            <span className="block text-xs uppercase text-slate-500 font-bold">Duração Total Estimada</span>
+                                            <span className="font-medium text-orange-700">{totalDuration} Semanas</span>
+                                        </div>
+                                    </div>
 
-                                <div className="hidden print:block mt-8 text-center text-xs text-muted-foreground w-full border-t pt-4">
+                                    {/* Timeline Table */}
+                                    <table className="w-full text-sm text-left">
+                                        <thead>
+                                            <tr className="border-b-2 border-slate-200 text-slate-500 uppercase text-xs tracking-wider">
+                                                <th className="py-2 pl-2">Etapa</th>
+                                                <th className="py-2">Atividades / Descrição</th>
+                                                <th className="py-2 text-center">Duração</th>
+                                                <th className="py-2 text-right pr-2">Período</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="divide-y divide-slate-100">
+                                            {cronograma.map((phase, idx) => (
+                                                <tr key={idx} className="break-inside-avoid">
+                                                    <td className="py-3 pl-2 font-bold text-slate-900 align-top w-1/4">
+                                                        {idx + 1}. {phase.name}
+                                                    </td>
+                                                    <td className="py-3 text-slate-600 align-top">
+                                                        {phase.description}
+                                                    </td>
+                                                    <td className="py-3 text-center font-medium text-orange-700 align-top whitespace-nowrap">
+                                                        {phase.durationWeeks} Semanas
+                                                    </td>
+                                                    <td className="py-3 text-right pr-2 text-slate-500 align-top whitespace-nowrap text-xs">
+                                                        <div>{format(phase.startDate, "dd/MM")} a {format(phase.endDate, "dd/MM/yyyy")}</div>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+
+                                    {/* Disclaimer */}
+                                    <div className="mt-8 pt-4 border-t border-slate-200 text-xs text-slate-400 text-justify">
+                                        <p><strong>Nota Importante:</strong> Este cronograma é uma estimativa baseada em índices médios de produtividade da construção civil. Prazos reais podem variar devido a chuvas, atrasos na entrega de materiais, disponibilidade de mão de obra e imprevistos técnicos. Utilize este documento como referência inicial para seu planejamento.</p>
+                                    </div>
                                 </div>
                             </div>
                         )}
