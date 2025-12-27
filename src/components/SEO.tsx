@@ -14,7 +14,7 @@ const SEO = ({
     title,
     description,
     url = window.location.href,
-    image = "/og-image.png", // Assuming a default image exists or we will create one placeholder
+    image = "/og-image.jpg", // Assuming a default image exists or we will create one placeholder
     type = "website",
     keywords,
     schema
