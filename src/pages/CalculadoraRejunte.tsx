@@ -57,11 +57,11 @@ const CalculadoraRejunte = () => {
             <SEO
                 title="Calculadora de Rejunte"
                 description="Descubra a quantidade de rejunte (kg) necessária para seu piso ou revestimento."
-                url="https://www.suaobracerta.com.br/calculadora-rejunte"
+                url="https://suaobracerta.com.br/calculadora-rejunte"
                 schema={generateCalculatorSchema(
                     "Calculadora de Rejunte",
                     "Calcule o consumo de rejunte para pisos e azulejos.",
-                    "https://www.suaobracerta.com.br/calculadora-rejunte"
+                    "https://suaobracerta.com.br/calculadora-rejunte"
                 )}
             />
             <div className="print:hidden">

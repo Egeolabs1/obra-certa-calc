@@ -39,12 +39,12 @@ const MeuOrcamento = () => {
             <SEO
                 title="Meu Orçamento de Obra"
                 description="Visualize e gerencie sua lista de materiais e serviços para a obra."
-                url="https://www.suaobracerta.com.br/meu-orcamento"
+                url="https://suaobracerta.com.br/meu-orcamento"
                 schema={generateCalculatorSchema(
                     "Meu Orçamento de Obra",
                     "Ferramenta de orçamento para visualizar e gerenciar custos de materiais de construção.",
-                    "https://www.suaobracerta.com.br/meu-orcamento",
-                    "https://www.suaobracerta.com.br/og-image.png",
+                    "https://suaobracerta.com.br/meu-orcamento",
+                    "https://suaobracerta.com.br/og-image.png",
                     "UtilitiesApplication"
                 )}
             />

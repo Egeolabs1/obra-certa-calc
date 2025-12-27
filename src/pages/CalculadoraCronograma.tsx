@@ -142,13 +142,13 @@ const CalculadoraCronograma = () => {
             <SEO
                 title="Gerador de Cronograma de Obra Grátis"
                 description="Planeje sua obra com nosso gerador de cronograma físico-financeiro. Ideal para construções e reformas."
-                url="https://www.suaobracerta.com.br/calculadora-cronograma"
+                url="https://suaobracerta.com.br/calculadora-cronograma"
                 keywords="cronograma obra, planejamento construção, etapas reforma, cronograma reforma banheiro"
                 schema={generateCalculatorSchema(
                     "Gerador de Cronograma",
                     "Estime o tempo e as etapas da sua obra com precisão.",
-                    "https://www.suaobracerta.com.br/calculadora-cronograma",
-                    "https://www.suaobracerta.com.br/og-image.png",
+                    "https://suaobracerta.com.br/calculadora-cronograma",
+                    "https://suaobracerta.com.br/og-image.png",
                     "UtilitiesApplication"
                 )}
             />

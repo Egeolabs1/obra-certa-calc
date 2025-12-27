@@ -102,11 +102,11 @@ const CalculadoraPiscina = () => {
             <SEO
                 title="Calculadora de Material de Piscina Completa"
                 description="Calcule volume, filtro, revestimento, impermeabilização e aquecimento solar para sua piscina."
-                url="https://www.suaobracerta.com.br/calculadora-piscina"
+                url="https://suaobracerta.com.br/calculadora-piscina"
                 schema={generateCalculatorSchema(
                     "Calculadora de Piscina",
                     "Ferramenta completa para calcular materiais de construção, filtro e manutenção de piscinas.",
-                    "https://www.suaobracerta.com.br/calculadora-piscina"
+                    "https://suaobracerta.com.br/calculadora-piscina"
                 )}
             />
             <div className="print:hidden">

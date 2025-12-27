@@ -73,11 +73,11 @@ const CalculadoraFios = () => {
             <SEO
                 title="Calculadora de Fios Elétricos"
                 description="Descubra a bitola de fio e o disjuntor ideal para chuveiros e tomadas. Cálculo baseado na NBR 5410."
-                url="https://www.suaobracerta.com.br/calculadora-fios"
+                url="https://suaobracerta.com.br/calculadora-fios"
                 schema={generateCalculatorSchema(
                     "Calculadora de Fios",
                     "Calcule a bitola de fios elétricos e disjuntores para sua instalação.",
-                    "https://www.suaobracerta.com.br/calculadora-fios"
+                    "https://suaobracerta.com.br/calculadora-fios"
                 )}
             />
             <div className="print:hidden">

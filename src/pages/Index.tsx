@@ -14,7 +14,7 @@ const Index = () => {
       <SEO
         title="Sua Obra Certa - Ferramentas para Construção"
         description="mais de 20 calculadoras gratuitas para sua obra. Tijolos, Tinta, Telhado, Concreto e muito mais."
-        url="https://www.suaobracerta.com.br/"
+        url="https://suaobracerta.com.br/"
         schema={generateWebSiteSchema()}
       />
       <Header />

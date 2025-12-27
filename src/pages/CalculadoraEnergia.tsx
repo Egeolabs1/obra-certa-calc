@@ -97,12 +97,12 @@ const CalculadoraEnergia = () => {
             <SEO
                 title="Calculadora de Energia Solar Fotovoltaica (On-Grid)"
                 description="Descubra quantos painéis solares você precisa para zerar sua conta de luz e calcule o retorno do investimento. Simule de graça!"
-                url="https://www.suaobracerta.com.br/calculadora-energia"
+                url="https://suaobracerta.com.br/calculadora-energia"
                 keywords="energia solar, calculadora solar, placa solar, painel solar, kit energia solar, on grid, off grid, inversor solar, economia de energia, reduzir conta de luz, fotovoltaica, energia limpa, sustentabilidade, financiamento solar, orçamento solar, quanto custa energia solar, retorno investimento solar, payback solar, kit solar amazon, energia solar residencial"
                 schema={generateCalculatorSchema(
                     "Calculadora Solar",
                     "Simule seu kit de energia solar fotovoltaica e economia estimada.",
-                    "https://www.suaobracerta.com.br/calculadora-energia"
+                    "https://suaobracerta.com.br/calculadora-energia"
                 )}
             />
             <div className="print:hidden">
@@ -122,17 +122,6 @@ const CalculadoraEnergia = () => {
                                 <h1 className="leading-none text-3xl md:text-4xl text-foreground print:text-2xl">Calculadora Solar</h1>
                                 <p className="text-sm font-normal text-muted-foreground mt-1">Simule seu sistema On-Grid</p>
                             </div>
-                        </div>
-
-                        {/* Introdução com conteúdo textual para SEO */}
-                        <div className="mb-6 rounded-lg bg-muted/50 p-4 text-sm text-muted-foreground print:hidden">
-                            <p className="mb-2">
-                                <strong className="text-foreground">Calculadora de Energia Solar Fotovoltaica gratuita.</strong> Descubra quantos painéis solares você precisa para zerar sua conta de luz e calcule o retorno do investimento em energia solar. 
-                                Nossa calculadora considera a irradiação solar da sua região, o consumo mensal de energia e os custos atuais do mercado para fornecer uma estimativa precisa do tamanho do sistema, quantidade de painéis, área necessária no telhado e tempo de retorno do investimento.
-                            </p>
-                            <p>
-                                Ideal para quem está planejando instalar energia solar residencial ou comercial. Simule de graça e descubra quanto você pode economizar com energia limpa e sustentável.
-                            </p>
                         </div>
 
                         {/* Input Section */}
