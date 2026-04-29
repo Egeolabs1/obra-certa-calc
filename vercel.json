@@ -1,17 +1,13 @@
 {
     "redirects": [
         {
-            "source": "http://suaobracerta.com.br/:path*",
-            "destination": "https://www.suaobracerta.com.br/:path*",
-            "permanent": true
-        },
-        {
-            "source": "https://suaobracerta.com.br/:path*",
-            "destination": "https://www.suaobracerta.com.br/:path*",
-            "permanent": true
-        },
-        {
-            "source": "http://www.suaobracerta.com.br/:path*",
+            "source": "/:path*",
+            "has": [
+                {
+                    "type": "host",
+                    "value": "suaobracerta.com.br"
+                }
+            ],
             "destination": "https://www.suaobracerta.com.br/:path*",
             "permanent": true
         }
