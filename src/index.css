@@ -1,0 +1,194 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Paleta Construção Civil */
+    --background: 210 17% 98%;
+    --foreground: 210 24% 16%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 210 24% 16%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 210 24% 16%;
+
+    /* Amarelo Trator/Segurança */
+    --primary: 45 100% 51%;
+    --primary-foreground: 210 24% 16%;
+
+    /* Cinza Concreto */
+    --secondary: 210 14% 89%;
+    --secondary-foreground: 210 24% 16%;
+
+    --muted: 210 14% 93%;
+    --muted-foreground: 210 11% 45%;
+
+    /* Azul Aço */
+    --accent: 210 79% 46%;
+    --accent-foreground: 0 0% 100%;
+
+    /* Verde Sucesso para botão afiliado */
+    --success: 142 71% 45%;
+    --success-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 210 14% 83%;
+    --input: 210 14% 89%;
+    --ring: 45 100% 51%;
+
+    --radius: 0.625rem;
+
+    /* Gradientes */
+    --gradient-hero: linear-gradient(135deg, hsl(210 24% 16%) 0%, hsl(210 20% 25%) 100%);
+    --gradient-card: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(210 14% 97%) 100%);
+    --gradient-result: linear-gradient(135deg, hsl(45 100% 95%) 0%, hsl(45 100% 88%) 100%);
+    --gradient-success: linear-gradient(135deg, hsl(142 71% 45%) 0%, hsl(142 71% 35%) 100%);
+
+    /* Sombras */
+    --shadow-sm: 0 1px 2px 0 hsl(210 24% 16% / 0.05);
+    --shadow-md: 0 4px 6px -1px hsl(210 24% 16% / 0.1), 0 2px 4px -2px hsl(210 24% 16% / 0.1);
+    --shadow-lg: 0 10px 15px -3px hsl(210 24% 16% / 0.1), 0 4px 6px -4px hsl(210 24% 16% / 0.1);
+    --shadow-card: 0 4px 20px -4px hsl(210 24% 16% / 0.15);
+    --shadow-button: 0 4px 14px -2px hsl(45 100% 51% / 0.4);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 210 24% 12%;
+    --foreground: 210 14% 93%;
+
+    --card: 210 24% 16%;
+    --card-foreground: 210 14% 93%;
+
+    --popover: 210 24% 16%;
+    --popover-foreground: 210 14% 93%;
+
+    --primary: 45 100% 51%;
+    --primary-foreground: 210 24% 16%;
+
+    --secondary: 210 20% 25%;
+    --secondary-foreground: 210 14% 93%;
+
+    --muted: 210 20% 20%;
+    --muted-foreground: 210 11% 60%;
+
+    --accent: 210 79% 55%;
+    --accent-foreground: 0 0% 100%;
+
+    --success: 142 71% 45%;
+    --success-foreground: 0 0% 100%;
+
+    --destructive: 0 62% 45%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 210 20% 25%;
+    --input: 210 20% 25%;
+    --ring: 45 100% 51%;
+
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold tracking-tight;
+  }
+}
+
+@layer components {
+  .ad-container {
+    @apply bg-muted/50 border border-dashed border-border rounded-lg flex items-center justify-center text-muted-foreground text-sm min-h-[90px];
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .animate-fade-up {
+    animation: fadeUp 0.5s ease-out forwards;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.4s ease-out forwards;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.3s ease-out forwards;
+  }
+
+  .animate-pulse-glow {
+    animation: pulseGlow 2s ease-in-out infinite;
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 hsl(var(--primary) / 0.4);
+  }
+  50% {
+    box-shadow: 0 0 20px 4px hsl(var(--primary) / 0.3);
+  }
+}
