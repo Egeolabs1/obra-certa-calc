@@ -32,10 +32,13 @@ export const appRoutes: AppRoute[] = [
     // Estrutura
     { title: "Calculadora de Tijolos", path: "/calculadora-tijolos", category: "Estrutura", icon: BrickWall, keywords: ["alvenaria", "bloco", "muro", "construção"] },
     { title: "Calculadora de Concreto", path: "/calculadora-concreto", category: "Estrutura", icon: Calculator, keywords: ["cimento", "areia", "pedra", "fundaçao", "laje"] },
+    { title: "Calculadora de Muro", path: "/calculadora-muro", category: "Estrutura", icon: BrickWall, keywords: ["muro", "arrimo", "bloco", "contenção"] },
     { title: "Calculadora de Telhado", path: "/calculadora-telhado", category: "Estrutura", icon: Home, keywords: ["telha", "cobertura", "calha", "madeira"] },
+    { title: "Calculadora de Peso Estrutura Telhado", path: "/calculadora-peso-estrutura-telhado", category: "Estrutura", icon: Calculator, keywords: ["peso", "carga", "estrutura", "telhado", "telha"] },
     { title: "Calculadora de Escada", path: "/calculadora-escada", category: "Estrutura", icon: Ruler, keywords: ["degrau", "blondel", "patamar", "espelho"] },
     { title: "Calculadora de Rampa", path: "/calculadora-rampa", category: "Estrutura", icon: Ruler, keywords: ["acessibilidade", "inclinação", "cadeirante"] },
     { title: "Calculadora de Vidro", path: "/calculadora-vidro", category: "Estrutura", icon: Calculator, keywords: ["janela", "peso", "temperado", "laminado"] },
+    { title: "Calculadora de Peso Alumínio", path: "/calculadora-peso-aluminio", category: "Estrutura", icon: Calculator, keywords: ["alumínio", "chapa", "perfil", "peso", "barra"] },
 
     // Acabamento
     { title: "Calculadora de Tinta", path: "/calculadora-tinta", category: "Acabamento", icon: PaintBucket, keywords: ["pintura", "parede", "teto", "demão"] },

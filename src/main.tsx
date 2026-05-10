@@ -2,11 +2,7 @@ import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
 
-import { HelmetProvider } from "react-helmet-async";
-
+// HelmetProvider is already inside App.tsx — no need to wrap here
 createRoot(document.getElementById("root")!).render(
-    <HelmetProvider>
-        <App />
-    </HelmetProvider>
+    <App />
 );
-
