@@ -7,6 +7,3 @@ Disallow: /meu-orcamento
 
 # Sitemap
 Sitemap: https://www.suaobracerta.com.br/sitemap.xml
-
-# Crawl-delay (gentileza com o servidor)
-Crawl-delay: 1

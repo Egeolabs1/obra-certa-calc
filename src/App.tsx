@@ -54,6 +54,7 @@ import TermosDeUso from "./pages/TermosDeUso";
 import PoliticaPrivacidade from "./pages/PoliticaPrivacidade";
 import Contato from "./pages/Contato";
 import MapaDoSite from "./pages/MapaDoSite";
+import Sobre from "./pages/Sobre";
 
 const queryClient = new QueryClient();
 
@@ -121,6 +122,7 @@ const App = () => (
               <Route path="/termos-de-uso" element={<TermosDeUso />} />
               <Route path="/politica-de-privacidade" element={<PoliticaPrivacidade />} />
               <Route path="/contato" element={<Contato />} />
+              <Route path="/sobre" element={<Sobre />} />
               <Route path="/mapa-do-site" element={<MapaDoSite />} />
 
               {/* Blog */}

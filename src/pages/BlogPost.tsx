@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { getBlogPostBySlug, getAllBlogPosts } from "@/data/blogPosts";
+import { generateArticleSchema } from "@/utils/schemas";
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
@@ -50,6 +51,14 @@ const BlogPost = () => {
                 description={post.excerpt}
                 url={shareUrl}
                 image={post.featuredImage}
+                schema={generateArticleSchema({
+                    title: post.title,
+                    description: post.excerpt,
+                    url: shareUrl,
+                    image: post.featuredImage,
+                    publishedAt: post.publishedAt,
+                    updatedAt: post.updatedAt,
+                })}
             />
 
             <Header />
@@ -113,8 +122,8 @@ const BlogPost = () => {
                                     {post.author.name.charAt(0)}
                                 </div>
                                 <div>
-                                    <p className="font-semibold text-foreground">{post.author.name}</p>
-                                    <p className="text-sm text-muted-foreground">{post.author.role}</p>
+                                    <p className="font-semibold text-foreground">Equipe editorial Sua Obra Certa</p>
+                                    <p className="text-sm text-muted-foreground">Conteúdo revisado para uso informativo</p>
                                 </div>
                             </div>
 
@@ -198,10 +207,17 @@ const BlogPost = () => {
                             <ReactMarkdown
                                 remarkPlugins={[remarkGfm]}
                                 rehypePlugins={[rehypeRaw]}
+                                components={{ h1: ({ children }) => <h2>{children}</h2> }}
                             >
                                 {post.content}
                             </ReactMarkdown>
                         </div>
+
+                        <aside className="mt-10 rounded-xl border border-amber-200 bg-amber-50 p-5 text-sm text-amber-950">
+                            <h2 className="mb-2 font-semibold">Limites e revisão</h2>
+                            <p>Este material é educativo e complementa as calculadoras do site. Medidas, custos, normas e soluções construtivas variam conforme o projeto, o local e o fabricante. Para decisões estruturais, elétricas, hidráulicas, legais ou financeiras, consulte um profissional habilitado e a documentação técnica aplicável.</p>
+                            <Link to="/sobre" className="mt-3 inline-block font-medium underline">Conheça o método editorial e as limitações das ferramentas</Link>
+                        </aside>
 
                         {/* Tags */}
                         <div className="mt-12 pt-8 border-t">

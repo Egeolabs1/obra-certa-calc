@@ -4,14 +4,30 @@ export const generateWebSiteSchema = () => {
         "@context": "https://schema.org",
         "@type": "WebSite",
         "name": "Sua Obra Certa",
-        "url": "https://www.suaobracerta.com.br",
-        "potentialAction": {
-            "@type": "SearchAction",
-            "target": "https://www.suaobracerta.com.br/search?q={search_term_string}",
-            "query-input": "required name=search_term_string"
-        }
+        "url": "https://www.suaobracerta.com.br"
     };
 };
+
+export const generateArticleSchema = (article: {
+    title: string;
+    description: string;
+    url: string;
+    image?: string;
+    publishedAt: string;
+    updatedAt?: string;
+}) => ({
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": article.title,
+    "description": article.description,
+    "mainEntityOfPage": article.url,
+    "image": article.image,
+    "datePublished": article.publishedAt,
+    "dateModified": article.updatedAt ?? article.publishedAt,
+    "author": { "@type": "Organization", "name": "Equipe editorial Sua Obra Certa" },
+    "publisher": { "@type": "Organization", "name": "Sua Obra Certa", "url": "https://www.suaobracerta.com.br" },
+    "inLanguage": "pt-BR"
+});
 
 export const generateCalculatorSchema = (
     name: string,

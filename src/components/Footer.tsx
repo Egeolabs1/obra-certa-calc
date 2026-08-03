@@ -1,4 +1,4 @@
-import { HardHat, Facebook, Instagram, Youtube, Mail, MapPin, Calculator, ShieldCheck } from "lucide-react";
+import { HardHat, Mail, MapPin, Calculator, ShieldCheck } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
 
@@ -23,11 +23,6 @@ const Footer = () => {
             <p className="text-sm text-slate-400 leading-relaxed max-w-xs">
               A plataforma mais completa de calculadoras e ferramentas para construção civil. Planeje, calcule e economize na sua obra.
             </p>
-            <div className="flex gap-4 pt-2">
-              <a href="#" aria-label="Instagram" className="hover:text-yellow-400 transition-colors"><Instagram className="h-5 w-5" /></a>
-              <a href="#" aria-label="Facebook" className="hover:text-yellow-400 transition-colors"><Facebook className="h-5 w-5" /></a>
-              <a href="#" aria-label="YouTube" className="hover:text-yellow-400 transition-colors"><Youtube className="h-5 w-5" /></a>
-            </div>
           </div>
 
           {/* Calculators Column */}
@@ -55,21 +50,18 @@ const Footer = () => {
               <li><Link to="/blog" className="hover:text-yellow-400 transition-colors">Blog</Link></li>
               <li><Link to="/meu-orcamento" className="hover:text-yellow-400 transition-colors">Meu Orçamento</Link></li>
               <li><Link to="/contato" className="hover:text-yellow-400 transition-colors">Fale Conosco</Link></li>
+              <li><Link to="/sobre" className="hover:text-yellow-400 transition-colors">Sobre e método</Link></li>
               <li><Link to="/mapa-do-site" className="hover:text-yellow-400 transition-colors">Mapa do Site</Link></li>
               <li><Link to="/politica-de-privacidade" className="hover:text-yellow-400 transition-colors">Política de Privacidade</Link></li>
               <li><Link to="/termos-de-uso" className="hover:text-yellow-400 transition-colors">Termos de Uso</Link></li>
             </ul>
           </div>
 
-          {/* Newsletter / Contact */}
+          {/* Contact */}
           <div className="space-y-4">
-            <h3 className="font-bold text-white mb-4">Fique por dentro</h3>
-            <p className="text-sm text-slate-400">Receba dicas de economia e checklists para sua obra.</p>
-            <div className="flex gap-2">
-              <Button className="w-full bg-yellow-500 hover:bg-yellow-600 text-slate-900 font-bold h-10">
-                Inscrever-se
-              </Button>
-            </div>
+            <h3 className="font-bold text-white mb-4">Contato</h3>
+            <p className="text-sm text-slate-400">Sugira uma ferramenta ou reporte um erro de cálculo.</p>
+            <Button asChild className="w-full bg-yellow-500 hover:bg-yellow-600 text-slate-900 font-bold h-10"><Link to="/contato">Falar com a equipe</Link></Button>
 
             <div className="pt-6 border-t border-slate-800 mt-6">
               <Link to="/calculadora-churrasco" className="flex items-center gap-3 group">

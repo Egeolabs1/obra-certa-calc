@@ -4,16 +4,11 @@ interface AdPlaceholderProps {
 }
 
 const AdPlaceholder = ({ id, className = "" }: AdPlaceholderProps) => {
-  return (
-    <div 
-      id={id} 
-      className={`ad-container ${className}`}
-      role="complementary"
-      aria-label="Espaço publicitário"
-    >
-      <span className="text-xs">Espaço para Anúncio</span>
-    </div>
-  );
+  // Do not reserve empty areas or invite clicks before a real, policy-compliant
+  // ad unit is configured. This keeps the product useful independently of ads.
+  if (import.meta.env.VITE_ENABLE_AD_SLOTS !== "true") return null;
+
+  return <div id={id} className={className} aria-hidden="true" />;
 };
 
 export default AdPlaceholder;
