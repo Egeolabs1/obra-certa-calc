@@ -15,7 +15,7 @@ export const affiliateLinks = {
 
     // Services
     services: {
-        findProfessional: "#", // Placeholder for GetNinjas or similar
+        findProfessional: "https://www.google.com/search?q=profissional+de+constru%C3%A7%C3%A3o+civil+na+minha+regi%C3%A3o",
     },
 
     // Furniture & Decor
@@ -29,8 +29,8 @@ export const affiliateLinks = {
     // Finishing Materials
     paints: {
         general: "https://amzn.to/3XlXq9d",
-        suvinil: "https://amzn.to/EXAMPLE",
-        coral: "https://amzn.to/EXAMPLE",
+        suvinil: "https://www.amazon.com.br/s?k=tinta+suvinil&tag=suaobracerta-20",
+        coral: "https://www.amazon.com.br/s?k=tinta+coral&tag=suaobracerta-20",
     },
 
     flooring: {
@@ -91,7 +91,9 @@ export const affiliateLinks = {
 
 export const adSenseConfig = {
     // Toggle ads on/off globally
-    enabled: true,
+    enabled: false,
     // Client ID
     clientId: "ca-pub-XXXXXXXXXXXXXXXX",
 };
+
+export const affiliateLinksEnabled = false;

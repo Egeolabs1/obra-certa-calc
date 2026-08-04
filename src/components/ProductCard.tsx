@@ -1,5 +1,6 @@
 import { ExternalLink, ShoppingCart } from "lucide-react";
 import { Button } from "./ui/button";
+import { affiliateLinksEnabled } from "@/config/affiliateLinks";
 
 interface ProductCardProps {
     image: string;
@@ -11,6 +12,7 @@ interface ProductCardProps {
 }
 
 export const ProductCard = ({ image, title, price, link, storeName = "Amazon", category }: ProductCardProps) => {
+    if (!affiliateLinksEnabled || !link || link === "#" || link.includes("EXAMPLE")) return null;
     return (
         <div className="group relative flex flex-col overflow-hidden rounded-xl border border-border bg-card shadow-sm transition-all hover:shadow-md hover:border-primary/50">
             <div className="aspect-square w-full overflow-hidden bg-muted/20 p-4 flex items-center justify-center">

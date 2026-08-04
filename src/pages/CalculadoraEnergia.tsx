@@ -288,10 +288,8 @@ const CalculadoraEnergia = () => {
                                                 <div className="absolute inset-0 bg-background/50 z-10 flex items-center justify-center pointer-events-none opacity-0 hover:opacity-100 transition-opacity">
                                                     {/* Optional hover effect */}
                                                 </div>
-                                                <Button asChild variant="outline" size="lg" className="w-full border-blue-200 hover:bg-blue-50 text-blue-700">
-                                                    <a href="#" className="opacity-50 cursor-not-allowed">
-                                                        Pedir Orçamento Profissional
-                                                    </a>
+                                                <Button type="button" disabled variant="outline" size="lg" className="w-full border-blue-200 hover:bg-blue-50 text-blue-700">
+                                                    <span className="opacity-70">Pedir orçamento profissional (em breve)</span>
                                                 </Button>
                                             </div>
 
