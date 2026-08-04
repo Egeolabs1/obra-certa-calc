@@ -62,6 +62,7 @@ const Footer = () => {
             <h3 className="font-bold text-white mb-4">Contato</h3>
             <p className="text-sm text-slate-400">Sugira uma ferramenta ou reporte um erro de cálculo.</p>
             <Button asChild className="w-full bg-yellow-500 hover:bg-yellow-600 text-slate-900 font-bold h-10"><Link to="/contato">Falar com a equipe</Link></Button>
+            <button type="button" className="text-left text-sm text-slate-400 underline hover:text-yellow-400" onClick={() => window.dispatchEvent(new Event("suaobracerta:open-consent"))}>Preferências de privacidade</button>
 
             <div className="pt-6 border-t border-slate-800 mt-6">
               <Link to="/calculadora-churrasco" className="flex items-center gap-3 group">

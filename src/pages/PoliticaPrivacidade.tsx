@@ -24,7 +24,7 @@ const PoliticaPrivacidade = () => {
 
                     <h2 className="text-xl font-semibold mt-6 mb-3 text-foreground">2. Uso de Cookies</h2>
                     <p className="mb-4">
-                        O site usa o Google Analytics para medir uso agregado. Caso anúncios do Google sejam ativados, o Google poderá usar cookies ou tecnologias semelhantes conforme suas próprias políticas e as escolhas de consentimento aplicáveis. Você pode gerenciar preferências de anúncios na sua <a href="https://myadcenter.google.com/" target="_blank" rel="noreferrer">Central de anúncios do Google</a> e conhecer o tratamento de dados na <a href="https://policies.google.com/privacy?hl=pt-BR" target="_blank" rel="noreferrer">Política de Privacidade do Google</a>.
+                        O Google Analytics e os serviços de publicidade do Google permanecem desativados até que você escolha a categoria correspondente no painel de consentimento. Depois da autorização, o Google poderá usar cookies ou tecnologias semelhantes conforme suas próprias políticas e as escolhas registradas. Você pode alterar suas preferências pelo link “Preferências de privacidade” no rodapé, gerenciar anúncios na sua <a href="https://myadcenter.google.com/" target="_blank" rel="noreferrer">Central de anúncios do Google</a> e conhecer o tratamento de dados na <a href="https://policies.google.com/privacy?hl=pt-BR" target="_blank" rel="noreferrer">Política de Privacidade do Google</a>.
                     </p>
 
                     <h2 className="text-xl font-semibold mt-6 mb-3 text-foreground">3. Armazenamento Local (LocalStorage)</h2>

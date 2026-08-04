@@ -55,6 +55,7 @@ import PoliticaPrivacidade from "./pages/PoliticaPrivacidade";
 import Contato from "./pages/Contato";
 import MapaDoSite from "./pages/MapaDoSite";
 import Sobre from "./pages/Sobre";
+import ConsentManager from "./components/ConsentManager";
 
 const queryClient = new QueryClient();
 
@@ -65,6 +66,7 @@ const App = () => (
         <OrcamentoProvider>
           <Toaster />
           <Sonner />
+          <ConsentManager />
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Index />} />
