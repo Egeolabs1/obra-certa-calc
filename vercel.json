@@ -9,7 +9,7 @@
                 }
             ],
             "destination": "https://www.suaobracerta.com.br/:path*",
-            "permanent": true
+            "statusCode": 308
         }
     ],
     "headers": [
