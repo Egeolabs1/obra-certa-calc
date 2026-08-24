@@ -10,6 +10,7 @@
     "audit:seo": "node scripts/audit-rendered-seo.mjs",
     "audit:links": "node scripts/audit-internal-links.mjs",
     "audit:bundle": "node scripts/check-bundle-budget.mjs",
+    "report:bundles": "node scripts/report-bundles.mjs",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview"

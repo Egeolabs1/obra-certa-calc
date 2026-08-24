@@ -56,9 +56,16 @@ export default defineConfig(({ mode }) => ({
   build: {
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ["react", "react-dom", "react-router-dom"],
-          ui: ["@radix-ui/react-slot", "@radix-ui/react-label", "class-variance-authority", "clsx", "tailwind-merge", "lucide-react"],
+        manualChunks(id) {
+          if (id.includes("node_modules")) {
+            if (id.includes("react") || id.includes("react-dom") || id.includes("react-router")) return "vendor";
+            if (id.includes("@radix-ui") || id.includes("lucide-react") || id.includes("class-variance-authority")) return "ui";
+            return "dependencies";
+          }
+          if (id.includes("/src/pages/Blog") || id.includes("/src/data/blogPosts")) return "content-blog";
+          if (id.includes("/src/pages/Calculadora")) return "calculators";
+          if (id.includes("/src/pages/Checklist") || id.includes("/src/pages/MeuOrcamento")) return "tools-secondary";
+          if (id.includes("/src/pages/") && !id.includes("/src/pages/Index")) return "institutional";
         },
       },
     },
