@@ -77,8 +77,10 @@ const ConsentManager = () => {
   const [open, setOpen] = useState(false);
   const [analytics, setAnalytics] = useState(false);
   const [ads, setAds] = useState(false);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
+    const reveal = window.requestAnimationFrame(() => setReady(true));
     const stored = readConsent();
     pushConsentMode(stored);
     if (stored) {
@@ -89,7 +91,7 @@ const ConsentManager = () => {
     }
     const openPreferences = () => setOpen(true);
     window.addEventListener("suaobracerta:open-consent", openPreferences);
-    return () => window.removeEventListener("suaobracerta:open-consent", openPreferences);
+    return () => { window.cancelAnimationFrame(reveal); window.removeEventListener("suaobracerta:open-consent", openPreferences); };
   }, []);
 
   const save = (next: Omit<ConsentState, "updatedAt">) => {
@@ -104,7 +106,7 @@ const ConsentManager = () => {
   const rejectAll = () => save({ analytics: false, ads: false });
   const acceptAll = () => save({ analytics: true, ads: true });
 
-  if (consent && !open) return null;
+  if (!ready || (consent && !open)) return null;
 
   return (
     <div className="fixed inset-x-0 bottom-0 z-[100] border-t border-slate-700 bg-slate-950 p-4 text-white shadow-2xl" role="dialog" aria-modal="false" aria-labelledby="consent-title">
