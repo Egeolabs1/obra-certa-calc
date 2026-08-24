@@ -4,7 +4,7 @@ import path from "node:path";
 const sitemap = fs.readFileSync("public/sitemap.xml", "utf8");
 const routes = [...sitemap.matchAll(/<loc>https:\/\/www\.suaobracerta\.com\.br([^<]*)<\/loc>/g)].map((m) => m[1] || "/");
 for (const route of routes) {
-  const file = path.join("dist", route === "/" ? "index.html" : route.slice(1), "index.html");
+  const file = route === "/" ? path.join("dist", "index.html") : path.join("dist", route.slice(1), "index.html");
   if (!fs.existsSync(file)) throw new Error(`Missing prerendered file: ${route}`);
   const html = fs.readFileSync(file, "utf8");
   if ((html.match(/<title[\s>]/gi) ?? []).length !== 1) throw new Error(`Expected one title: ${route}`);
