@@ -51,6 +51,7 @@ const BlogPost = () => {
                 description={post.excerpt}
                 url={shareUrl}
                 image={post.featuredImage}
+                noindex
                 schema={generateArticleSchema({
                     title: post.title,
                     description: post.excerpt,
@@ -88,6 +89,9 @@ const BlogPost = () => {
                     </Link>
 
                     <div className="max-w-4xl mx-auto">
+                        <div className="mb-6 rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-950">
+                            Este artigo está em revisão editorial. Enquanto as fontes e a data de revisão não forem confirmadas, ele não participa do índice de busca.
+                        </div>
                         {/* Meta Information */}
                         <div className="flex flex-wrap items-center gap-3 mb-4">
                             <Badge>{post.category}</Badge>
