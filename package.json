@@ -8,6 +8,8 @@
     "build": "node scripts/generate-sitemap.mjs && vite build && node scripts/prerender.mjs && node scripts/test-prerender-output.mjs",
     "audit:routes": "node scripts/audit-indexable-routes.mjs",
     "audit:seo": "node scripts/audit-rendered-seo.mjs",
+    "audit:links": "node scripts/audit-internal-links.mjs",
+    "audit:bundle": "node scripts/check-bundle-budget.mjs",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview"
