@@ -19,6 +19,10 @@ export const INDEXABLE_ROUTES: readonly IndexableRoute[] = [
   { path: "/calculadora-telhado", kind: "tool", priority: "core" },
   { path: "/blog/seguranca-em-obras-nr18-basico", kind: "article", priority: "supporting" },
   { path: "/blog/comparativo-precos-materiais-construcao-2026", kind: "article", priority: "supporting" },
+  { path: "/blog/como-contratar-profissionais-construcao-pedreiro-engenheiro", kind: "article", priority: "supporting" },
+  { path: "/blog/cronograma-de-obra-realista-passo-a-passo", kind: "article", priority: "supporting" },
+  { path: "/blog/orcamento-de-obra-completo-calcular-economizar", kind: "article", priority: "supporting" },
+  { path: "/blog/como-escolher-materiais-construcao-guia-2026", kind: "article", priority: "supporting" },
 ];
 
 export const INDEXABLE_PATHS = INDEXABLE_ROUTES.map((route) => route.path);
