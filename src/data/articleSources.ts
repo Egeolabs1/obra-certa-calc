@@ -1,4 +1,20 @@
 export const articleSources: Record<string, { label: string; url: string; publisher: string }[]> = {
+  "guia-completo-construcao-civil-2026": [
+    { label: "Planejamento técnico em obras e reformas", url: "https://caubr.gov.br/planejamento-tecnico-evita-desperdicio-e-retrabalho-em-obras/", publisher: "CAU/BR" },
+    { label: "Normas regulamentadoras vigentes", url: "https://www.gov.br/trabalho-e-emprego/pt-br/assuntos/inspecao-do-trabalho/seguranca-e-saude-no-trabalho/normas-regulamentadoras", publisher: "Ministério do Trabalho" },
+  ],
+  "normas-abnt-construcao-civil-nbr-essenciais": [
+    { label: "Catálogo oficial de normas técnicas", url: "https://www.abntcatalogo.com.br/", publisher: "ABNT" },
+    { label: "Norma de reformas em edificações", url: "https://caubr.gov.br/normadereformas/", publisher: "CAU/BR" },
+  ],
+  "erros-comuns-reformas-construcao": [
+    { label: "Planejamento técnico evita desperdício e retrabalho", url: "https://caubr.gov.br/planejamento-tecnico-evita-desperdicio-e-retrabalho-em-obras/", publisher: "CAU/BR" },
+    { label: "Norma de reformas em edificações", url: "https://caubr.gov.br/normadereformas/", publisher: "CAU/BR" },
+  ],
+  "construcao-sustentavel-2026-tendencias": [
+    { label: "Cidades sustentáveis", url: "https://www.gov.br/mma/pt-br/assuntos/meio-ambiente-urbano-recursos-hidricos-qualidade-ambiental/cidades-verdes-resilientes/cidades-sustentaveis/cidades-sustentaveis", publisher: "Ministério do Meio Ambiente" },
+    { label: "Eficiência energética nas edificações", url: "https://www.gov.br/mme/pt-br/assuntos/ee/indices-minimos-de-ee/eficiencia-energetica-das-edificacoes", publisher: "Ministério de Minas e Energia" },
+  ],
   "como-contratar-profissionais-construcao-pedreiro-engenheiro": [
     { label: "Sistema Confea/Crea e atribuições profissionais", url: "https://www.confea.org.br/", publisher: "CONFEA", },
     { label: "Registro de responsabilidade técnica", url: "https://www.caubr.gov.br/", publisher: "CAU/BR", },
