@@ -1,4 +1,5 @@
 import { Toaster } from "@/components/ui/toaster";
+import { lazy, Suspense } from "react";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -8,7 +9,7 @@ import { OrcamentoProvider } from "./context/OrcamentoProvider";
 import ConsentManager from "./components/ConsentManager";
 import Index from "./pages/Index"; import Blog from "./pages/Blog"; import BlogPost from "./pages/BlogPost"; import NotFound from "./pages/NotFound";
 import Sobre from "./pages/Sobre"; import Contato from "./pages/Contato"; import MapaDoSite from "./pages/MapaDoSite"; import TermosDeUso from "./pages/TermosDeUso"; import PoliticaPrivacidade from "./pages/PoliticaPrivacidade"; import MeuOrcamento from "./pages/MeuOrcamento";
-import CalculadoraTinta from "./pages/CalculadoraTinta"; import CalculadoraPisos from "./pages/CalculadoraPisos"; import CalculadoraTijolos from "./pages/CalculadoraTijolos"; import CalculadoraConcreto from "./pages/CalculadoraConcreto"; import CalculadoraTelhado from "./pages/CalculadoraTelhado";
+import CalculadoraTinta from "./pages/CalculadoraTinta";
 import CalculadoraDrywall from "./pages/CalculadoraDrywall"; import CalculadoraAzulejos from "./pages/CalculadoraAzulejos"; import CalculadoraRejunte from "./pages/CalculadoraRejunte"; import CalculadoraRodape from "./pages/CalculadoraRodape"; import CalculadoraDeck from "./pages/CalculadoraDeck"; import CalculadoraMuro from "./pages/CalculadoraMuro";
 import CalculadoraPesoEstruturaTelhado from "./pages/CalculadoraPesoEstruturaTelhado"; import CalculadoraEscada from "./pages/CalculadoraEscada"; import CalculadoraRampa from "./pages/CalculadoraRampa"; import CalculadoraVidro from "./pages/CalculadoraVidro"; import CalculadoraPesoAluminio from "./pages/CalculadoraPesoAluminio";
 import CalculadoraArCondicionado from "./pages/CalculadoraArCondicionado"; import CalculadoraIluminacao from "./pages/CalculadoraIluminacao"; import CalculadoraEnergia from "./pages/CalculadoraEnergia"; import CalculadoraFios from "./pages/CalculadoraFios"; import CalculadoraCaixaAgua from "./pages/CalculadoraCaixaAgua";
@@ -16,6 +17,10 @@ import ChecklistVistoria from "./pages/ChecklistVistoria"; import CalculadoraCro
 import CalculadoraCerca from "./pages/CalculadoraCerca"; import CalculadoraGrama from "./pages/CalculadoraGrama"; import CalculadoraPavers from "./pages/CalculadoraPavers"; import CalculadoraPiscina from "./pages/CalculadoraPiscina"; import CalculadoraChurrasco from "./pages/CalculadoraChurrasco"; import CalculadoraPapelParede from "./pages/CalculadoraPapelParede"; import CalculadoraCortinas from "./pages/CalculadoraCortinas";
 
 const queryClient = new QueryClient();
+const CalculadoraPisos = lazy(() => import("./pages/CalculadoraPisos"));
+const CalculadoraTijolos = lazy(() => import("./pages/CalculadoraTijolos"));
+const CalculadoraConcreto = lazy(() => import("./pages/CalculadoraConcreto"));
+const CalculadoraTelhado = lazy(() => import("./pages/CalculadoraTelhado"));
 const AppRoutes = () => <Routes>
   <Route path="/" element={<Index />} /><Route path="/meu-orcamento" element={<MeuOrcamento />} />
   <Route path="/calculadora-tinta" element={<CalculadoraTinta />} /><Route path="/calculadora-pisos" element={<CalculadoraPisos />} /><Route path="/calculadora-tijolos" element={<CalculadoraTijolos />} /><Route path="/calculadora-concreto" element={<CalculadoraConcreto />} /><Route path="/calculadora-telhado" element={<CalculadoraTelhado />} />
@@ -24,5 +29,5 @@ const AppRoutes = () => <Routes>
   <Route path="/calculadora-cerca" element={<CalculadoraCerca />} /><Route path="/calculadora-grama" element={<CalculadoraGrama />} /><Route path="/calculadora-pavers" element={<CalculadoraPavers />} /><Route path="/calculadora-piscina" element={<CalculadoraPiscina />} /><Route path="/calculadora-churrasco" element={<CalculadoraChurrasco />} /><Route path="/calculadora-papel-parede" element={<CalculadoraPapelParede />} /><Route path="/calculadora-cortinas" element={<CalculadoraCortinas />} />
   <Route path="/termos-de-uso" element={<TermosDeUso />} /><Route path="/politica-de-privacidade" element={<PoliticaPrivacidade />} /><Route path="/contato" element={<Contato />} /><Route path="/sobre" element={<Sobre />} /><Route path="/mapa-do-site" element={<MapaDoSite />} /><Route path="/blog" element={<Blog />} /><Route path="/blog/erros-comuns-reformas-como-evitar" element={<Navigate to="/blog/erros-comuns-reformas-construcao" replace />} /><Route path="/blog/:slug" element={<BlogPost />} /><Route path="*" element={<NotFound />} />
 </Routes>;
-const App = ({ location, helmetContext }: { location?: string; helmetContext?: object } = {}) => <QueryClientProvider client={queryClient}><HelmetProvider context={helmetContext}><TooltipProvider><OrcamentoProvider><Toaster /><Sonner /><ConsentManager />{location ? <MemoryRouter initialEntries={[location]}><AppRoutes /></MemoryRouter> : <BrowserRouter><AppRoutes /></BrowserRouter>}</OrcamentoProvider></TooltipProvider></HelmetProvider></QueryClientProvider>;
+const App = ({ location, helmetContext }: { location?: string; helmetContext?: object } = {}) => <QueryClientProvider client={queryClient}><HelmetProvider context={helmetContext}><TooltipProvider><OrcamentoProvider><Toaster /><Sonner /><ConsentManager /><Suspense fallback={<div className="min-h-screen p-8 text-center">Carregando ferramenta…</div>}>{location ? <MemoryRouter initialEntries={[location]}><AppRoutes /></MemoryRouter> : <BrowserRouter><AppRoutes /></BrowserRouter>}</Suspense></OrcamentoProvider></TooltipProvider></HelmetProvider></QueryClientProvider>;
 export default App;
