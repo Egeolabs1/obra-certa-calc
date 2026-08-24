@@ -69,7 +69,6 @@ const CalculadoraTelhado = () => {
                 title="Calculadora de Telhas | Quantidade por m² e Custo"
                 description="Calcule a quantidade exata de telhas (Romana, Portuguesa, Americana) para seu telhado. Evite desperdícios e economize na obra."
                 url="https://www.suaobracerta.com.br/calculadora-telhado"
-                noindex
                 keywords="calculadora de telhas, quantidade de telhas por metro quadrado, telha romana, telha portuguesa, telha americana, inclinação telhado, calculo de telhado 2 aguas, calculo de telhado 4 aguas, custo telhado"
                 schema={[
                     generateCalculatorSchema(

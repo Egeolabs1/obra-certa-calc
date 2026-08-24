@@ -12,6 +12,7 @@ import { getToolQuality } from "./content/toolQuality";
 import Index from "./pages/Index"; import Blog from "./pages/Blog"; import BlogPost from "./pages/BlogPost"; import NotFound from "./pages/NotFound";
 import Sobre from "./pages/Sobre"; import Contato from "./pages/Contato"; import MapaDoSite from "./pages/MapaDoSite"; import TermosDeUso from "./pages/TermosDeUso"; import PoliticaPrivacidade from "./pages/PoliticaPrivacidade"; import MeuOrcamento from "./pages/MeuOrcamento";
 import CalculadoraTinta from "./pages/CalculadoraTinta";
+import CalculadoraPisos from "./pages/CalculadoraPisos"; import CalculadoraTijolos from "./pages/CalculadoraTijolos"; import CalculadoraConcreto from "./pages/CalculadoraConcreto"; import CalculadoraTelhado from "./pages/CalculadoraTelhado";
 import CalculadoraDrywall from "./pages/CalculadoraDrywall"; import CalculadoraAzulejos from "./pages/CalculadoraAzulejos"; import CalculadoraRejunte from "./pages/CalculadoraRejunte"; import CalculadoraRodape from "./pages/CalculadoraRodape"; import CalculadoraDeck from "./pages/CalculadoraDeck"; import CalculadoraMuro from "./pages/CalculadoraMuro";
 import CalculadoraPesoEstruturaTelhado from "./pages/CalculadoraPesoEstruturaTelhado"; import CalculadoraEscada from "./pages/CalculadoraEscada"; import CalculadoraRampa from "./pages/CalculadoraRampa"; import CalculadoraVidro from "./pages/CalculadoraVidro"; import CalculadoraPesoAluminio from "./pages/CalculadoraPesoAluminio";
 import CalculadoraArCondicionado from "./pages/CalculadoraArCondicionado"; import CalculadoraIluminacao from "./pages/CalculadoraIluminacao"; import CalculadoraEnergia from "./pages/CalculadoraEnergia"; import CalculadoraFios from "./pages/CalculadoraFios"; import CalculadoraCaixaAgua from "./pages/CalculadoraCaixaAgua";
@@ -19,10 +20,6 @@ import ChecklistVistoria from "./pages/ChecklistVistoria"; import CalculadoraCro
 import CalculadoraCerca from "./pages/CalculadoraCerca"; import CalculadoraGrama from "./pages/CalculadoraGrama"; import CalculadoraPavers from "./pages/CalculadoraPavers"; import CalculadoraPiscina from "./pages/CalculadoraPiscina"; import CalculadoraChurrasco from "./pages/CalculadoraChurrasco"; import CalculadoraPapelParede from "./pages/CalculadoraPapelParede"; import CalculadoraCortinas from "./pages/CalculadoraCortinas";
 
 const queryClient = new QueryClient();
-const CalculadoraPisos = lazy(() => import("./pages/CalculadoraPisos"));
-const CalculadoraTijolos = lazy(() => import("./pages/CalculadoraTijolos"));
-const CalculadoraConcreto = lazy(() => import("./pages/CalculadoraConcreto"));
-const CalculadoraTelhado = lazy(() => import("./pages/CalculadoraTelhado"));
 const AppRoutes = () => <Routes>
   <Route path="/" element={<Index />} /><Route path="/meu-orcamento" element={<MeuOrcamento />} />
   <Route path="/calculadora-tinta" element={<CalculadoraTinta />} /><Route path="/calculadora-pisos" element={<><CalculadoraPisos /><ToolMethodology record={getToolQuality("/calculadora-pisos")!} /></>} /><Route path="/calculadora-tijolos" element={<><CalculadoraTijolos /><ToolMethodology record={getToolQuality("/calculadora-tijolos")!} /></>} /><Route path="/calculadora-concreto" element={<><CalculadoraConcreto /><ToolMethodology record={getToolQuality("/calculadora-concreto")!} /></>} /><Route path="/calculadora-telhado" element={<><CalculadoraTelhado /><ToolMethodology record={getToolQuality("/calculadora-telhado")!} /></>} />

@@ -13,6 +13,10 @@ export const INDEXABLE_ROUTES: readonly IndexableRoute[] = [
   { path: "/termos-de-uso", kind: "institutional", priority: "supporting" },
   { path: "/mapa-do-site", kind: "institutional", priority: "supporting" },
   { path: "/calculadora-tinta", kind: "tool", priority: "core" },
+  { path: "/calculadora-pisos", kind: "tool", priority: "core" },
+  { path: "/calculadora-tijolos", kind: "tool", priority: "core" },
+  { path: "/calculadora-concreto", kind: "tool", priority: "core" },
+  { path: "/calculadora-telhado", kind: "tool", priority: "core" },
 ];
 
 export const INDEXABLE_PATHS = INDEXABLE_ROUTES.map((route) => route.path);

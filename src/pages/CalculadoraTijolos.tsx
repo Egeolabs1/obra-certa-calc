@@ -195,7 +195,6 @@ const CalculadoraTijolos = () => {
         title="Calculadora de Tijolos por m2"
         description="Calcule quantos tijolos por metro quadrado e a quantidade de argamassa para sua parede, com desconto de portas e janelas."
         url="https://www.suaobracerta.com.br/calculadora-tijolos"
-        noindex
         schema={[
           generateCalculatorSchema(
             "Calculadora de Tijolos",

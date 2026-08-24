@@ -132,7 +132,6 @@ const CalculadoraPisos = () => {
         title="Calculadora de Piso e Porcelanato"
         description="Calcule quantas pecas e caixas de piso ou porcelanato voce precisa, com margem de corte e desconto de moveis."
         url="https://www.suaobracerta.com.br/calculadora-pisos"
-        noindex
         schema={[
           generateCalculatorSchema(
             "Calculadora de Pisos",
