@@ -16,6 +16,9 @@ export interface BlogPost {
     readTimeMinutes: number;
     featuredImage?: string;
     relatedPosts?: string[]; // Array of post IDs
+    reviewedAt?: string;
+    reviewedBy?: string;
+    sources?: { label: string; url: string; publisher: string }[];
 }
 
 export interface BlogCategory {

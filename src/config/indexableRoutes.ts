@@ -17,6 +17,8 @@ export const INDEXABLE_ROUTES: readonly IndexableRoute[] = [
   { path: "/calculadora-tijolos", kind: "tool", priority: "core" },
   { path: "/calculadora-concreto", kind: "tool", priority: "core" },
   { path: "/calculadora-telhado", kind: "tool", priority: "core" },
+  { path: "/blog/seguranca-em-obras-nr18-basico", kind: "article", priority: "supporting" },
+  { path: "/blog/comparativo-precos-materiais-construcao-2026", kind: "article", priority: "supporting" },
 ];
 
 export const INDEXABLE_PATHS = INDEXABLE_ROUTES.map((route) => route.path);

@@ -13,6 +13,8 @@ import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import ArticleSources from "@/components/ArticleSources";
+import { articleSources } from "@/data/articleSources";
 
 const BlogPost = () => {
     const { slug } = useParams<{ slug: string }>();
@@ -28,6 +30,7 @@ const BlogPost = () => {
         .slice(0, 3);
 
     const shareUrl = `https://www.suaobracerta.com.br/blog/${post.slug}`;
+    const sources = articleSources[post.slug] ?? [];
     const shareTitle = post.title;
 
     const handleShare = (platform: string) => {
@@ -51,7 +54,7 @@ const BlogPost = () => {
                 description={post.excerpt}
                 url={shareUrl}
                 image={post.featuredImage}
-                noindex
+                noindex={sources.length < 2}
                 schema={generateArticleSchema({
                     title: post.title,
                     description: post.excerpt,
@@ -217,6 +220,7 @@ const BlogPost = () => {
                             </ReactMarkdown>
                         </div>
 
+                        {sources.length >= 2 && <ArticleSources sources={sources} />}
                         <aside className="mt-10 rounded-xl border border-amber-200 bg-amber-50 p-5 text-sm text-amber-950">
                             <h2 className="mb-2 font-semibold">Limites e revisão</h2>
                             <p>Este material é educativo e complementa as calculadoras do site. Medidas, custos, normas e soluções construtivas variam conforme o projeto, o local e o fabricante. Para decisões estruturais, elétricas, hidráulicas, legais ou financeiras, consulte um profissional habilitado e a documentação técnica aplicável.</p>
