@@ -141,7 +141,7 @@ const ChecklistVistoria = () => {
                     "Checklist de Vistoria de Imóvel",
                     "Checklist interativo e completo para vistoria de recebimento de chaves de apartamento e casa.",
                     "https://www.suaobracerta.com.br/checklist-vistoria",
-                    "https://www.suaobracerta.com.br/og-image.png",
+                    "https://www.suaobracerta.com.br/og-image.jpg",
                     "UtilitiesApplication"
                 )}
             />
@@ -375,3 +375,4 @@ const ChecklistVistoria = () => {
 };
 
 export default ChecklistVistoria;
+

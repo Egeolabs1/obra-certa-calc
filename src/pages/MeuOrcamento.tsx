@@ -44,7 +44,7 @@ const MeuOrcamento = () => {
                     "Meu Orçamento de Obra",
                     "Ferramenta de orçamento para visualizar e gerenciar custos de materiais de construção.",
                     "https://www.suaobracerta.com.br/meu-orcamento",
-                    "https://www.suaobracerta.com.br/og-image.png",
+                    "https://www.suaobracerta.com.br/og-image.jpg",
                     "UtilitiesApplication"
                 )}
             />
@@ -149,3 +149,4 @@ const MeuOrcamento = () => {
 };
 
 export default MeuOrcamento;
+

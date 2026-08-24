@@ -1,0 +1,12 @@
+import fs from "node:fs";
+import assert from "node:assert/strict";
+const file = "dist/calculadora-tinta/index.html";
+assert.ok(fs.existsSync(file), `missing ${file}`);
+const html = fs.readFileSync(file, "utf8");
+assert.match(html, /<h1[^>]*>[^<]+/i);
+assert.match(html, /<link[^>]+rel="canonical"[^>]+calculadora-tinta/i);
+assert.match(html, /<meta[^>]+name="description"/i);
+assert.match(html, /<title[^>]*>[^<]+calculadora/i);
+const visible = html.replace(/<script[\s\S]*?<\/script>/gi, "").replace(/<style[\s\S]*?<\/style>/gi, "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+assert.ok(visible.length >= 400, `route HTML is too thin (${visible.length} chars)`);
+console.log("prerender output OK");

@@ -148,7 +148,7 @@ const CalculadoraCronograma = () => {
                     "Gerador de Cronograma",
                     "Estime o tempo e as etapas da sua obra com precisão.",
                     "https://www.suaobracerta.com.br/calculadora-cronograma",
-                    "https://www.suaobracerta.com.br/og-image.png",
+                    "https://www.suaobracerta.com.br/og-image.jpg",
                     "UtilitiesApplication"
                 )}
             />
@@ -387,3 +387,4 @@ const AlertBox = ({ duration }: { duration: number }) => (
 );
 
 export default CalculadoraCronograma;
+

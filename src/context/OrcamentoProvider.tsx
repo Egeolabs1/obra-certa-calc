@@ -5,12 +5,14 @@ import { OrcamentoContext } from "./OrcamentoContext";
 
 export const OrcamentoProvider = ({ children }: { children: ReactNode }) => {
     const [items, setItems] = useState<BudgetItem[]>(() => {
-        const saved = localStorage.getItem("orcamento_items");
+        const saved = typeof window !== "undefined" ? window.localStorage.getItem("orcamento_items") : null;
         return saved ? JSON.parse(saved) : [];
     });
 
     useEffect(() => {
-        localStorage.setItem("orcamento_items", JSON.stringify(items));
+        if (typeof window !== "undefined") {
+            window.localStorage.setItem("orcamento_items", JSON.stringify(items));
+        }
     }, [items]);
 
     const addItem = (newItem: BudgetItem) => {

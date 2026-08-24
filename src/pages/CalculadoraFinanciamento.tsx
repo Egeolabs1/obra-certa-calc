@@ -69,7 +69,7 @@ const CalculadoraFinanciamento = () => {
                     "Simulador de Financiamento de Reforma",
                     "Calculadora financeira para estimar parcelas de crédito para construção.",
                     "https://www.suaobracerta.com.br/calculadora-financiamento",
-                    "https://www.suaobracerta.com.br/og-image.png",
+                    "https://www.suaobracerta.com.br/og-image.jpg",
                     "FinancialApplication"
                 )}
             />
@@ -246,3 +246,4 @@ const CalculadoraFinanciamento = () => {
 };
 
 export default CalculadoraFinanciamento;
+

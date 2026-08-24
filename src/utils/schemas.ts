@@ -33,7 +33,7 @@ export const generateCalculatorSchema = (
     name: string,
     description: string,
     url: string,
-    image: string = "https://www.suaobracerta.com.br/og-image.png",
+    image: string = "https://www.suaobracerta.com.br/og-image.jpg",
     category: string = "CalculatorApplication"
 ) => {
     return {
@@ -73,3 +73,4 @@ export const generateFAQSchema = (
         }))
     };
 };
+
