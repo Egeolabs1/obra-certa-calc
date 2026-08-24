@@ -17,6 +17,8 @@ import { affiliateLinks } from "@/config/affiliateLinks";
 import { generateCalculatorSchema, generateFAQSchema } from "@/utils/schemas";
 import { useOrcamento } from "@/context/OrcamentoContext";
 import { ProductCard } from "@/components/ProductCard";
+import ToolMethodology from "@/components/ToolMethodology";
+import { getToolQuality } from "@/content/toolQuality";
 
 interface ResultadoCalculo {
   litrosNecessarios: number;
@@ -510,6 +512,7 @@ const CalculadoraTinta = () => {
             {/* Informações extras */}
             {/* Informações extras e FAQ */}
             <div className="mt-8 space-y-8 animate-fade-up print:hidden">
+              {getToolQuality("/calculadora-tinta") && <ToolMethodology record={getToolQuality("/calculadora-tinta")!} />}
               <div className="rounded-xl border border-border bg-muted/30 p-6">
                 <h2 className="mb-4 text-lg font-semibold text-foreground">
                   📋 Como é feito o cálculo de tinta?

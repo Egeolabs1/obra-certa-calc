@@ -190,6 +190,7 @@ const CalculadoraConcreto = () => {
         title="Calculadora de Concreto por m3"
         description="Calcule traco de concreto por m3: cimento, areia, brita e agua para laje, piso, viga e fundacao."
         url="https://www.suaobracerta.com.br/calculadora-concreto"
+        noindex
         schema={[
           generateCalculatorSchema(
             "Calculadora de Concreto",
